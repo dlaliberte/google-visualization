@@ -48,5 +48,3 @@ This directory contains modules for representing, manipulating, and laying out t
 *   **`common/`**: May use basic utilities if needed, but the core tree logic is largely self-contained or relies on data structures.
 
 This directory provides a robust and flexible system for handling hierarchical data, from basic tree representation to complex layout algorithms, forming the foundation for tree-based visualizations.The `README.md` for the `tree` directory has been created.
-
-Next, I'll analyze the `trendlines` directory.

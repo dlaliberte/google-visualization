@@ -22,5 +22,3 @@ The tests in this directory aim to:
 *   **`common/` and `format/`:** Some tests might indirectly involve utilities from these directories if the axis components being tested use them (e.g., for options handling or number/date formatting during label generation).
 
 The tests are crucial for maintaining the stability and correctness of the axis rendering logic, which is a fundamental part of the charting library.The `README.md` for `axis/tests` has been created.
-
-Next, I'll analyze the `axis/value_scale` directory.

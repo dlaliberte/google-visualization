@@ -52,5 +52,3 @@ The `data` directory is a cornerstone of the library, providing the data foundat
 *   **`common/object.ts`**: Utilities from here might be used for object manipulation within data structures.
 
 The integrity and consistency of the data layer are critical for the correct functioning of the entire charting library.The `README.md` for the `data` directory has been created.
-
-Next, I'll analyze the `dom` directory.

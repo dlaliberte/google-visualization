@@ -66,5 +66,3 @@ This directory contains modules related to the processing, styling, layout, and 
 *   **`visualization/corechart/`**: Chart definitions (`ChartDefinition`) store `TextBlock` objects for elements like titles, and chart builders use these text utilities to prepare text for rendering.
 
 The `text` directory provides a comprehensive suite of tools for managing all aspects of text in charts, from basic styling to complex layout and measurement, ensuring that textual information is displayed clearly and effectively.The `README.md` for the `text` directory has been created.
-
-Next, I'll analyze the `tooltip` directory.

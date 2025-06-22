@@ -50,5 +50,3 @@ This directory contains the core rendering pipeline and graphics utilities for t
     *   `theme.ts`: Themes provide default `Brush`-like properties.
 
 This directory forms the visual rendering engine of the charting library, abstracting away the specifics of SVG or Canvas and providing a consistent API for drawing chart elements.The `README.md` for the `graphics` directory has been created.
-
-Next, I'll analyze the `i18n` directory.

@@ -56,5 +56,3 @@ This directory is central to handling user interactions and managing the dynamic
 *   **`tooltip/`**: `ChartInteractivityDefiner` interacts with `TooltipDefiner` and `ActionsMenuDefiner` to manage the display of tooltips and context menus based on the chart's state.
 
 This directory is crucial for making charts interactive and responsive to user input, providing both visual feedback and a programmable event model.The `README.md` for the `events` directory has been created.
-
-Next, I'll analyze the `events/explorer` subdirectory.

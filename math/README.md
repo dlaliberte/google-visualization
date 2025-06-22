@@ -73,5 +73,3 @@ This sub-directory implements a system for representing, simplifying, and render
     *   `format/numberformat.ts`: The `StringRenderer` can accept a number formatter, which could be an instance of `NumberFormat` or a compatible custom function.
 
 The `math` directory provides both low-level geometric and trigonometric utilities essential for graphical rendering, and a more specialized, self-contained expression engine for symbolic math representation.The `README.md` for the `math` directory and its subdirectories has been created.
-
-Next, I'll analyze the `query` directory.

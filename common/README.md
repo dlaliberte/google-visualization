@@ -40,5 +40,3 @@ The modules in the `common/` directory are fundamental and are imported by almos
 *   **Event Handling (e.g., `events/`):** `selection.ts` is crucial for managing selection state, which often triggers events. `async_helper.ts` can be used for managing event-driven callbacks.
 
 Due to their foundational nature, changes in `common/` can have wide-ranging impacts across the entire library.The `README.md` for the `common` directory has been created.
-
-Next, I'll analyze the `common/cache` directory.

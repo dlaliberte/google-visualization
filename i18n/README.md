@@ -44,5 +44,3 @@ This directory contains modules related to internationalization and localization
 *   **`tooltip/tooltip_body_creator.ts`**: Indirectly uses `i18n/format.ts` through the `format/` classes for formatting values displayed in tooltips.
 
 The `i18n` directory provides essential internationalization support, ensuring that text is handled and displayed correctly according to locale-specific conventions, particularly for text segmentation (line breaking) and the underlying formatting of dates and numbers.The `README.md` for the `i18n` directory has been created.
-
-Next, I'll analyze the `legend` directory.

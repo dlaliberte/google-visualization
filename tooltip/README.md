@@ -73,5 +73,3 @@ This directory is responsible for the definition, creation, layout, and renderin
 *   **`loader/dynamic_loading.ts`**: `getSafeHtml` is used by `html_definer.ts` and `html_builder.ts` if HTML tooltips contain user-provided HTML.
 
 The tooltip system is a key component for providing users with detailed information about specific chart elements upon interaction.The `README.md` for the `tooltip` directory has been created.
-
-Next, I'll analyze the `tree` directory.

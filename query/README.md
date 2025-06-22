@@ -52,5 +52,3 @@ This directory contains modules related to fetching and handling data from Googl
 *   **`common/errors.ts`**: `QueryResponse.addError` uses this module to display error messages in a specified container.
 
 The `query` directory is essential for enabling Google Charts to consume data from external data sources that adhere to the Google Visualization API protocol.The `README.md` for the `query` directory has been created.
-
-Next, I'll analyze the `text` directory.

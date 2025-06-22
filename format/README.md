@@ -44,5 +44,3 @@ This directory contains modules responsible for formatting data values into huma
 *   **`i18n/`**: `DateFormat` and `NumberFormat` rely on Closure Library's i18n components (`goog.i18n.DateTimeFormat`, `goog.i18n.NumberFormat`) for locale-aware formatting.
 
 The formatters in this directory are essential for presenting data in a user-friendly and culturally appropriate manner throughout the charting library.The `README.md` for the `format` directory has been created.
-
-Next, I'll analyze the `graphics` directory.

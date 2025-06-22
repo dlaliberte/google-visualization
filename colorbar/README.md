@@ -40,5 +40,3 @@ This directory contains the TypeScript code for defining, building, and renderin
 *   **`format/`**:
     *   `numberformat.ts`: Used by `definer.ts` to format numeric labels for the color bar's extreme values.
 *   **`visualization/corechart/`**: The `CoreChart` or similar chart types would instantiate `ColorBarDefiner`, provide it with the necessary scale and area, and then use `colorbar.draw` to render the legend if configured. The `AxisDefiner` might interact with `ColorBarDefiner` to coordinate layout space.The `README.md` for the `colorbar` directory has been created.
-
-Next, I'll move to the `common` directory. This one looks like it has quite a few files, so the analysis might take a bit longer.

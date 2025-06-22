@@ -57,5 +57,3 @@ This directory is responsible for dynamically loading Google Charts packages, ex
 *   **Any component rendering HTML from data**: Might use `dynamic_loading.ts#getSafeHtml` for sanitization.
 
 The loader directory is fundamental for the modularity and on-demand loading capabilities of the Google Charts library, allowing users to only load the code they need for the specific charts they are using. It also plays a role in security through type vetting and HTML sanitization.The `README.md` for the `loader` directory has been created.
-
-Next, I'll analyze the `math` directory.

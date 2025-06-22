@@ -49,5 +49,3 @@ This directory contains modules that implement interactive chart exploration fea
     *   The ultimate effect of the explorer is to change the `viewWindow` options of the horizontal and vertical axes defined in `ChartDefinition`, leading to a re-rendering of the chart with a new data view.
 
 The explorer utilities provide powerful interactive capabilities, allowing users to focus on specific regions of their data within axis-based charts.The `README.md` for the `events/explorer` directory has been created.
-
-Next, I'll analyze the `format` directory.

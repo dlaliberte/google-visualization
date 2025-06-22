@@ -62,5 +62,3 @@ This directory is dedicated to the definition, layout, and rendering of chart le
 *   **`events/`**: User interactions with the legend (e.g., clicking on an entry, paginating) trigger events that are handled by the chart's event system. The legend definition might include information to link legend items to their corresponding series for interactivity.
 
 The legend directory is crucial for providing context to the data presented in charts, allowing users to identify and understand different series or categories.The `README.md` for the `legend` directory has been created.
-
-Next, I'll analyze the `loader` directory.
