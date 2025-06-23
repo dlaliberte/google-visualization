@@ -278,3 +278,82 @@ function binarySearchNumbers(arr: number[], target: number): number {
 
   return -(left + 1); // Return insertion point as negative
 }
+
+
+/**
+ * Clamps a number between a minimum and maximum value.
+ * @param value The value to clamp.
+ * @param min The minimum value.
+ * @param max The maximum value.
+ * @return The clamped value.
+ */
+export function clamp(value: number, min: number, max: number): number {
+  assert(min <= max, 'min must be less than or equal to max');
+  return Math.min(Math.max(value, min), max);
+}
+
+/**
+ * Linearly interpolates between two values.
+ * @param a The start value.
+ * @param b The end value.
+ * @param t The interpolation factor (0-1).
+ * @return The interpolated value.
+ */
+export function lerp(a: number, b: number, t: number): number {
+  return a + (b - a) * t;
+}
+
+/**
+ * Maps a value from one range to another.
+ * @param value The value to map.
+ * @param fromMin The minimum of the source range.
+ * @param fromMax The maximum of the source range.
+ * @param toMin The minimum of the target range.
+ * @param toMax The maximum of the target range.
+ * @return The mapped value.
+ */
+export function mapRange(
+  value: number,
+  fromMin: number,
+  fromMax: number,
+  toMin: number,
+  toMax: number,
+): number {
+  const fromRange = fromMax - fromMin;
+  const toRange = toMax - toMin;
+
+  if (fromRange === 0) {
+    return toMin;
+  }
+
+  return toMin + ((value - fromMin) * toRange) / fromRange;
+}
+
+/**
+ * Checks if a number is within a specified range (inclusive).
+ * @param value The value to check.
+ * @param min The minimum value.
+ * @param max The maximum value.
+ * @return True if the value is within the range.
+ */
+export function inRange(value: number, min: number, max: number): boolean {
+  return value >= min && value <= max;
+}
+
+/**
+ * Converts degrees to radians.
+ * @param degrees The angle in degrees.
+ * @return The angle in radians.
+ */
+export function degreesToRadians(degrees: number): number {
+  return degrees * (Math.PI / 180);
+}
+
+/**
+ * Converts radians to degrees.
+ * @param radians The angle in radians.
+ * @return The angle in degrees.
+ */
+export function radiansToDegrees(radians: number): number {
+  return radians * (180 / Math.PI);
+}

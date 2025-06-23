@@ -8,6 +8,12 @@ import {
   closestValueTo,
   extrapolatedClosestValueTo,
   findClosestValue,
+  clamp,
+  lerp,
+  mapRange,
+  inRange,
+  degreesToRadians,
+  radiansToDegrees,
 } from './math-utils';
 
 describe('math-utils', () => {
@@ -258,6 +264,193 @@ describe('math-utils', () => {
         it('should handle exact middle values consistently', () => {
             expect(findClosestValue(sortedArray, 4)).toBe(3); // exactly between 3 and 5
             expect(findClosestValue(sortedArray, 6)).toBe(5); // exactly between 5 and 7
+        });
+    });
+
+    describe('clamp', () => {
+        it('should clamp values within range', () => {
+            expect(clamp(5, 0, 10)).toBe(5);
+            expect(clamp(0, 0, 10)).toBe(0);
+            expect(clamp(10, 0, 10)).toBe(10);
+        });
+
+        it('should clamp values below minimum', () => {
+            expect(clamp(-5, 0, 10)).toBe(0);
+            expect(clamp(-100, -50, 50)).toBe(-50);
+        });
+
+        it('should clamp values above maximum', () => {
+            expect(clamp(15, 0, 10)).toBe(10);
+            expect(clamp(100, -50, 50)).toBe(50);
+        });
+
+        it('should handle negative ranges', () => {
+            expect(clamp(-5, -10, -1)).toBe(-5);
+            expect(clamp(-15, -10, -1)).toBe(-10);
+            expect(clamp(0, -10, -1)).toBe(-1);
+        });
+
+        it('should throw for invalid range', () => {
+            expect(() => clamp(5, 10, 0)).toThrow('min must be less than or equal to max');
+        });
+
+        it('should handle floating point numbers', () => {
+            expect(clamp(1.5, 0.5, 2.5)).toBe(1.5);
+            expect(clamp(0.1, 0.5, 2.5)).toBe(0.5);
+            expect(clamp(3.0, 0.5, 2.5)).toBe(2.5);
+        });
+    });
+
+    describe('lerp', () => {
+        it('should interpolate between two values', () => {
+            expect(lerp(0, 10, 0.5)).toBe(5);
+            expect(lerp(0, 10, 0)).toBe(0);
+            expect(lerp(0, 10, 1)).toBe(10);
+        });
+
+        it('should handle negative values', () => {
+            expect(lerp(-10, 10, 0.5)).toBe(0);
+            expect(lerp(-5, -1, 0.5)).toBe(-3);
+        });
+
+        it('should handle values outside 0-1 range', () => {
+            expect(lerp(0, 10, 1.5)).toBe(15);
+            expect(lerp(0, 10, -0.5)).toBe(-5);
+        });
+
+        it('should handle floating point interpolation', () => {
+            expect(lerp(1.0, 2.0, 0.25)).toBe(1.25);
+            expect(lerp(1.0, 2.0, 0.75)).toBe(1.75);
+        });
+
+        it('should handle same start and end values', () => {
+            expect(lerp(5, 5, 0.5)).toBe(5);
+            expect(lerp(5, 5, 0)).toBe(5);
+            expect(lerp(5, 5, 1)).toBe(5);
+        });
+    });
+
+    describe('mapRange', () => {
+        it('should map values between ranges', () => {
+            expect(mapRange(5, 0, 10, 0, 100)).toBe(50);
+            expect(mapRange(0, 0, 10, 0, 100)).toBe(0);
+            expect(mapRange(10, 0, 10, 0, 100)).toBe(100);
+        });
+
+        it('should handle negative ranges', () => {
+            expect(mapRange(0, -10, 10, 0, 100)).toBe(50);
+            expect(mapRange(-5, -10, 10, 0, 100)).toBe(25);
+        });
+
+        it('should handle inverted ranges', () => {
+            expect(mapRange(5, 0, 10, 100, 0)).toBe(50);
+            expect(mapRange(0, 0, 10, 100, 0)).toBe(100);
+            expect(mapRange(10, 0, 10, 100, 0)).toBe(0);
+        });
+
+        it('should handle zero source range', () => {
+            expect(mapRange(5, 5, 5, 0, 100)).toBe(0); // Should return toMin
+            expect(mapRange(5, 5, 5, 10, 20)).toBe(10);
+        });
+
+        it('should handle floating point ranges', () => {
+            expect(mapRange(1.5, 1.0, 2.0, 10.0, 20.0)).toBe(15.0);
+            expect(mapRange(0.25, 0, 1, -1, 1)).toBe(-0.5);
+        });
+
+        it('should handle values outside source range', () => {
+            expect(mapRange(15, 0, 10, 0, 100)).toBe(150); // Extrapolation
+            expect(mapRange(-5, 0, 10, 0, 100)).toBe(-50);
+        });
+    });
+
+    describe('inRange', () => {
+        it('should return true for values within range', () => {
+            expect(inRange(5, 0, 10)).toBe(true);
+            expect(inRange(0, 0, 10)).toBe(true);
+            expect(inRange(10, 0, 10)).toBe(true);
+        });
+
+        it('should return false for values outside range', () => {
+            expect(inRange(-1, 0, 10)).toBe(false);
+            expect(inRange(11, 0, 10)).toBe(false);
+        });
+
+        it('should handle negative ranges', () => {
+            expect(inRange(-5, -10, -1)).toBe(true);
+            expect(inRange(-15, -10, -1)).toBe(false);
+            expect(inRange(0, -10, -1)).toBe(false);
+        });
+
+        it('should handle floating point ranges', () => {
+            expect(inRange(1.5, 1.0, 2.0)).toBe(true);
+            expect(inRange(0.5, 1.0, 2.0)).toBe(false);
+            expect(inRange(2.5, 1.0, 2.0)).toBe(false);
+        });
+
+        it('should handle single point range', () => {
+            expect(inRange(5, 5, 5)).toBe(true);
+            expect(inRange(4, 5, 5)).toBe(false);
+            expect(inRange(6, 5, 5)).toBe(false);
+        });
+    });
+
+    describe('degreesToRadians', () => {
+        it('should convert common degree values', () => {
+            expect(degreesToRadians(0)).toBe(0);
+            expect(degreesToRadians(90)).toBeCloseTo(Math.PI / 2);
+            expect(degreesToRadians(180)).toBeCloseTo(Math.PI);
+            expect(degreesToRadians(270)).toBeCloseTo(3 * Math.PI / 2);
+            expect(degreesToRadians(360)).toBeCloseTo(2 * Math.PI);
+        });
+
+        it('should handle negative degrees', () => {
+            expect(degreesToRadians(-90)).toBeCloseTo(-Math.PI / 2);
+            expect(degreesToRadians(-180)).toBeCloseTo(-Math.PI);
+        });
+
+        it('should handle fractional degrees', () => {
+            expect(degreesToRadians(45)).toBeCloseTo(Math.PI / 4);
+            expect(degreesToRadians(30)).toBeCloseTo(Math.PI / 6);
+            expect(degreesToRadians(60)).toBeCloseTo(Math.PI / 3);
+        });
+
+        it('should handle large degree values', () => {
+            expect(degreesToRadians(720)).toBeCloseTo(4 * Math.PI);
+            expect(degreesToRadians(450)).toBeCloseTo(2.5 * Math.PI);
+        });
+    });
+
+    describe('radiansToDegrees', () => {
+        it('should convert common radian values', () => {
+            expect(radiansToDegrees(0)).toBe(0);
+            expect(radiansToDegrees(Math.PI / 2)).toBeCloseTo(90);
+            expect(radiansToDegrees(Math.PI)).toBeCloseTo(180);
+            expect(radiansToDegrees(3 * Math.PI / 2)).toBeCloseTo(270);
+            expect(radiansToDegrees(2 * Math.PI)).toBeCloseTo(360);
+        });
+
+        it('should handle negative radians', () => {
+            expect(radiansToDegrees(-Math.PI / 2)).toBeCloseTo(-90);
+            expect(radiansToDegrees(-Math.PI)).toBeCloseTo(-180);
+        });
+
+        it('should handle fractional radians', () => {
+            expect(radiansToDegrees(Math.PI / 4)).toBeCloseTo(45);
+            expect(radiansToDegrees(Math.PI / 6)).toBeCloseTo(30);
+            expect(radiansToDegrees(Math.PI / 3)).toBeCloseTo(60);
+        });
+
+        it('should handle large radian values', () => {
+            expect(radiansToDegrees(4 * Math.PI)).toBeCloseTo(720);
+            expect(radiansToDegrees(2.5 * Math.PI)).toBeCloseTo(450);
+        });
+
+        it('should be inverse of degreesToRadians', () => {
+            const degrees = [0, 30, 45, 90, 180, 270, 360, -90, -180];
+            degrees.forEach(deg => {
+                expect(radiansToDegrees(degreesToRadians(deg))).toBeCloseTo(deg);
+            });
         });
     });
 });
