@@ -1,5 +1,5 @@
 {
-  "name": "google-visualization-1",
+  "name": "google-visualization",
   "version": "1.0.0",
   "description": "This repository contains the open-source subset of the Google Visualization API, aka Google Charts.",
   "main": "index.js",
@@ -11,12 +11,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^24.0.3",
+    "@types/three": "^0.177.0",
     "@vitest/ui": "^3.2.4",
     "jsdom": "^26.1.0",
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@types/three": "^0.177.0",
     "fp-ts": "^2.16.10",
     "three": "^0.177.0",
     "ts-essentials": "^10.1.1"
