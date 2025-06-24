@@ -308,3 +308,35 @@ export function rangeMap<T>(
   }
   return res;
 }
+
+/**
+ * Iterate over an array, starting from a given index and in a given direction,
+ * search for the first non null value whose index is greater (or smaller,
+ * depends on direction) than the given index. Also supports cyclic behaviour.
+ * @param array The array.
+ * @param index The index to start from.
+ * @param direction The direction to traverse the array (+1 or -1).
+ * @param isCircular If set to true the array is treated as circular.
+ * @return The index found or null if none was found.
+ */
+export function nextNonNull<T>(
+  array: T[],
+  index: number,
+  direction: number,
+  isCircular: boolean,
+): number | null {
+  let result = index + direction;
+  if (isCircular) {
+    result = (result + array.length) % array.length;
+  }
+  while (result !== index && result >= 0 && result < array.length) {
+    if (array[result] != null) {
+      return result;
+    }
+    result = result + direction;
+    if (isCircular) {
+      result = (result + array.length) % array.length;
+    }
+  }
+  return null;
+}

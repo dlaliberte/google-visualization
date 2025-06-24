@@ -16,6 +16,55 @@
  * limitations under the License.
  */
 
+// This file is mostly obsolete, since it is replaced by several other *-utils.ts
+
+// Looking at the remaining functions in `common/util.ts`,
+// here are the ones that haven't been moved to other utility files yet:
+
+// ## Search/Lookup Functions:
+// - `closestValueTo`
+// - `extrapolatedClosestValueTo`
+// - `findClosestValue`
+
+// ## Range/Box Functions:
+// - `extendRangeToInclude`
+// - `getOverriddenRange`
+// - `calcBoundingBox`
+// - `RangeCompat` class
+
+// ## Array Merging:
+// - `mergeArrays`
+
+// ## Numeric/Math Functions:
+// - `roughlyEquals`
+// - `countRequiredDecimalPrecision`
+// - `getExponent`
+// - `roundToNumSignificantDigits`
+
+// ## Algorithm Functions:
+// - `calcEditDistance` and related helpers
+// - `fillFirstNBuckets`
+// - `fillCommunicatingVessels`
+// - `distributeRealEstate`
+// - `distributeRealEstateWithKeys`
+
+// ## Utility Functions:
+// - `rangeMap`
+// - `getPieChartColorMapping`
+// - `arrayMultiSlice`
+// - `containsNoOtherProperties`
+// - `concatSuffix`
+
+// These could be organized into files like:
+// - `common/search-utils.ts` (search/lookup functions)
+// - `common/range-utils.ts` (range and box utilities)
+// - `common/merge-utils.ts` (array merging)
+// - `common/math-utils.ts` (numeric/precision functions)
+// - `common/algorithm-utils.ts` (complex algorithms like edit distance, bucket filling)
+// - `common/misc-utils.ts` (remaining utility functions)
+
+// Which category would you like to tackle first?
+
 import { assert, NonEmptyArray } from 'ts-essentials';
 import * as A from 'fp-ts/Array';
 import * as O from 'fp-ts/Option';
