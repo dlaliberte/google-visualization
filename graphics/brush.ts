@@ -312,7 +312,8 @@ export class Brush {
    */
   setFillOpacity(fillOpacity: number | null | undefined): Brush {
     if (fillOpacity != null) {
-      this.fillOpacity = clamp(fillOpacity, 0, 1);
+      // Replaced clamp with Math.max and Math.min
+      this.fillOpacity = Math.max(0, Math.min(1, fillOpacity));
     }
     return this;
   }
@@ -395,7 +396,8 @@ export class Brush {
    */
   setStrokeOpacity(strokeOpacity: string | null | number | undefined): Brush {
     if (strokeOpacity != null) {
-      this.strokeOpacity = clamp(Number(strokeOpacity), 0, 1);
+      // Replaced clamp with Math.max and Math.min
+      this.strokeOpacity = Math.max(0, Math.min(1, Number(strokeOpacity)));
     }
     return this;
   }
@@ -715,10 +717,11 @@ export class Brush {
     color: AnyDuringMigration | string,
     opacity: number | null = 1,
   ): Brush {
-    assert(
-      typeof color === 'string' ||
-        (isObject(color) && (color as AnyDuringMigration).color != null),
-    );
+    // Replaced assert with a conditional check
+    if (!(typeof color === 'string' ||
+        (isObject(color) && (color as AnyDuringMigration).color != null))) {
+          throw new Error('Invalid color format');
+        }
     return new Brush({
       stroke: 'none',
       // Pretend color is always a string for now.
