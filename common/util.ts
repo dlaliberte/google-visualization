@@ -100,7 +100,7 @@ type Line = Line3;
 
 // Compatibility adapters for math utilities
 export class RangeCompat {
-  constructor(public start: number, public end: number) {}
+  constructor(public start: number, public end: number) { }
 
   static boundingRange(range1: RangeCompat, range2: RangeCompat): RangeCompat {
     return new RangeCompat(
@@ -275,7 +275,7 @@ export function functionTangentCalculator(
     } else {
       dy = vectorToNext.y;
     }
-    return {x: 0, y: (dy * smoothingFactor) / 6};
+    return { x: 0, y: (dy * smoothingFactor) / 6 };
   }
   // When smoothing factor is 1, dx is exactly one third of the smaller of
   // two vectors' x value. Slope is simply the average of the two slopes.
@@ -288,9 +288,9 @@ export function functionTangentCalculator(
     2;
   // Directionality can be deduced by any of the two vectors' x value.
   if (vectorFromPrevious.x > 0) {
-    return {x: dx, y: dx * slope};
+    return { x: dx, y: dx * slope };
   } else {
-    return {x: -dx, y: -dx * slope};
+    return { x: -dx, y: -dx * slope };
   }
 }
 
@@ -729,23 +729,23 @@ export function fillFirstNBuckets(
       // whether to apply the penalty.
       if (idx >= penaltyIndex) {
         // No need to apply penalty.
-        return {num: idx, last, remainder: total - (sum - bucketMin)};
+        return { num: idx, last, remainder: total - (sum - bucketMin) };
       }
       // Yes, apply penalty.
       return resWithPenalty == null
         ? null
         : {
-            num: resWithPenalty,
-            last: lastWithPenalty,
-            remainder: penaltyTotal - sumWithPenalty,
-          };
+          num: resWithPenalty,
+          last: lastWithPenalty,
+          remainder: penaltyTotal - sumWithPenalty,
+        };
     }
     const cappedDiff = Math.min(total - sum, diff);
     sum += cappedDiff;
     last = bucketMin + cappedDiff;
     idx++;
   }
-  return {num: idx, last, remainder: total - sum};
+  return { num: idx, last, remainder: total - sum };
 }
 
 /**
@@ -767,7 +767,7 @@ export function fillCommunicatingVessels(
   buckets: AnyDuringMigration[],
   total: number,
   getSize?: (p1: AnyDuringMigration) => number,
-): {waterLevel: number; remainder: number} {
+): { waterLevel: number; remainder: number; } {
   getSize = getSize || identity;
   const sizes = buckets.map(getSize);
   // Sort in ascending order.
@@ -797,7 +797,7 @@ export function fillCommunicatingVessels(
     }
   }
 
-  return {waterLevel, remainder: total};
+  return { waterLevel, remainder: total };
 }
 
 /**
@@ -1169,13 +1169,13 @@ function calcEditDistanceStep(
   return results.length > 0
     ? results[0]
     : {
-        pathLink: null,
-        score: 0,
-        key1: null,
-        value1: null,
-        key2: null,
-        value2: null,
-      };
+      pathLink: null,
+      score: 0,
+      key1: null,
+      value1: null,
+      key2: null,
+      value2: null,
+    };
 }
 
 /**
@@ -1245,7 +1245,7 @@ export function calcEditDistance(
     }
     pathElement = pathElement.pathLink;
   }
-  return {score, map1, map2};
+  return { score, map1, map2 };
 }
 
 /**
@@ -1277,7 +1277,7 @@ export function mergeArrays<T>(
   ar2Array: T[], //
   getValue?: (p1: T) => number,
 ): //
-MergedItems[] | null {
+  MergedItems[] | null {
   if (
     !ar1Array ||
     !ar2Array ||
@@ -1314,7 +1314,7 @@ MergedItems[] | null {
       ar1Value! === ar2Value!
     ) {
       // The two values are the same.
-      merged.push({value: ar1Value, ar1, ar2});
+      merged.push({ value: ar1Value, ar1, ar2 });
       ar1++;
       ar2++;
     } else if (
@@ -1325,7 +1325,7 @@ MergedItems[] | null {
         ar1Value! < (ar2Value! as number))
     ) {
       // ar1Value is low, so bump ar1 forward.
-      merged.push({value: ar1Value!, ar1, ar2: undefined});
+      merged.push({ value: ar1Value!, ar1, ar2: undefined });
       ar1++;
     } else if (
       ar2 < ar2Array.length &&
@@ -1335,7 +1335,7 @@ MergedItems[] | null {
         ar2Value! < (ar1Value! as number))
     ) {
       // ar2Value is low, so bump ar2 forward.
-      merged.push({value: ar2Value!, ar1: undefined, ar2});
+      merged.push({ value: ar2Value!, ar1: undefined, ar2 });
       ar2++;
     }
   }

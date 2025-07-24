@@ -16,8 +16,7 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-
+import { assert } from 'ts-essentials';
 import {memoize} from './cache/memoize';
 
 // tslint:disable:ban-types Migration
@@ -107,8 +106,8 @@ export function unsafeEquals(
     // primitive values to work correctly.
     return true;
   }
-  const type1 = goog.typeOf(obj1);
-  const type2 = goog.typeOf(obj2);
+  const type1 = typeof obj1;
+  const type2 = typeof obj2;
   if (type1 !== type2) {
     return false;
   }

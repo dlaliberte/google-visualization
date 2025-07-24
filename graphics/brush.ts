@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {clamp} from '@npm//@closure/math/math';
+import { assert } from 'ts-essentials';
+import {
+  clamp
+} from '../common/interpolation-utils'
 import {isObject} from '../common/object';
 
 import * as gvizJson from '../common/json';
@@ -175,7 +177,7 @@ export class Brush {
    */
   getProperties(): BrushProperties {
     const pattern = this.getPattern();
-    let patternProps = null;
+    let patternProps: Object|null = null;
     if (pattern) {
       patternProps = {
         style: pattern.getStyle(),
@@ -192,7 +194,7 @@ export class Brush {
       strokeDashStyle: this.getStrokeDashStyle(),
       rx: this.getRadiusX(),
       ry: this.getRadiusY(),
-      pattern: patternProps,
+      pattern: patternProps as PatternProperties,
       // Note: unsafeClone of null is null.
       gradient: unsafeClone(this.getGradient()),
       shadow: unsafeClone(this.getShadow()),

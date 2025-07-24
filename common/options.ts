@@ -16,7 +16,9 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import { assert, NonEmptyArray } from 'ts-essentials';
+
+import { AnyArray } from 'ts-essentials';
 import {Brush, BrushProperties} from '../graphics/brush';
 import {PatternStyle, StrokeDashStyleType} from '../graphics/types';
 import * as util from '../graphics/util';
@@ -27,7 +29,7 @@ import * as gvizObject from './object';
 // tslint:disable-next-line:no-any For use by external code.
 // tslint:disable:no-implicit-dictionary-conversion
 
-// type AnyDuringMigration = any;
+type AnyDuringMigration = any;
 
 /**
  * GViz user options are currently typeless.
@@ -320,13 +322,13 @@ export class Options {
       return paths1;
     }
     const output: AnyDuringMigration[] = [];
-    asserts.assertArray(paths1);
-    for (const path1 of paths1) {
+    const paths3: AnyArray<string> = paths1;
+    for (const path1 of paths3) {
       const path1IsEmpty = path1 == null || path1 === '';
 
       // For some reason, if we do this assert outside of the forEach, it
-      // doesn't work. So we have to do it inside the loop.
-      asserts.assertArray(paths2);
+      // doesn't work. So maybe we have to do it inside the loop.
+      // asserts.assertArray(paths2);
       for (const path2 of paths2) {
         const path2IsEmpty = path2 == null || path2 === '';
         if (!path1IsEmpty && !path2IsEmpty) {
@@ -486,7 +488,7 @@ export class Options {
     // Because extending an object overwrites existing fields, scan the layers
     // from lowest to highest priority.
     for (let i = this.layers.length - 1; i >= 0; i--) {
-      asserts.assert(dstOptions);
+      assert(dstOptions);
       Options.flattenHelper(dstOptions, this.layers[i]);
     }
     return dstOptions;
@@ -569,9 +571,9 @@ export class Options {
    */
   getValues(
     optionPath: OptionPath,
-    defaultValue?: Object | null,
+    defaultValue?: Object | any,
   ): AnyDuringMigration[] {
-    const values = [];
+    const values: AnyDuringMigration[] = [];
     if (defaultValue != null) {
       values.push(defaultValue);
     }
@@ -628,7 +630,7 @@ export class Options {
       if (typeof optionValue !== 'object') {
         return;
       }
-      asserts.assert(typeof optionValue === 'object');
+      assert(typeof optionValue === 'object');
       gvizObject.deepExtend(result, optionValue);
     }
     return result;
@@ -651,7 +653,7 @@ export class Options {
     defaultValue?: Q | null,
     func?: (value: T | Q) => T | null,
   ): T | null {
-    let value = null;
+    let value: AnyDuringMigration = null;
     optionPath = this.canonicalizePaths(optionPath);
     for (let i = 0; i < this.layers.length; i++) {
       value = Options.getValue(this.layers[i], optionPath, func, this.isFlat);
@@ -840,7 +842,7 @@ export class Options {
       settings?: AnyDuringMigration,
     ): AnyDuringMigration => {
       // The returned value
-      let optionValue = null;
+      let optionValue: AnyDuringMigration = null;
 
       /**
        * Helper to handle the case when optionType is an ObjectTypeSpec.
@@ -850,18 +852,18 @@ export class Options {
         const type = objectTypeSpec.type;
 
         // optionType MUST HAVE a type property.
-        asserts.assert(type);
+        assert(type);
 
         // Is it an 'object' type spec, or some other type.
         if (type === 'object') {
           // { type: 'object', properties: { a: typeSpec, b: typeSpec }}
           // Recurse on the ObjectProperties in properties.
           const objectType = objectTypeSpec.properties!;
-          asserts.assert(
+          assert(
             objectType,
             'Properties required for "object" type of ' + optionName,
           );
-          asserts.assert(
+          assert(
             settings === undefined || typeof settings === 'object',
             'Non-null settings for ObjectProperties of ' +
               optionName +
@@ -879,9 +881,11 @@ export class Options {
           // For any other type, handle recursively.
           // e.g. { type: 'string', settings: enum }
           // Override the type's name and settings with dynamic values.
+          const name = (optionName as string || objectTypeSpec.name);
+          assert(typeof name === 'string', 'Invalid optionName: ' + name);
           optionValue = handleAnyTypeSpec(
             type,
-            asserts.assertString(optionName || objectTypeSpec.name),
+            name,
             settings || objectTypeSpec.settings,
           );
         }
@@ -905,7 +909,7 @@ export class Options {
             // e.g. 'string' or 'arrayOfString'
             const namedType = optionType;
             const typeSpec = NAMED_TYPE_SPEC_MAP[namedType];
-            asserts.assert(typeSpec, 'Unknown option type: ' + namedType);
+            assert(typeSpec, 'Unknown option type: ' + namedType);
             optionValue = handleAnyTypeSpec(typeSpec, optionName, settings);
           } else {
             if (typeof optionType === 'function') {
@@ -927,7 +931,7 @@ export class Options {
       if (!objectProperties.hasOwnProperty(p)) continue;
       const typeSpec = objectProperties[p];
       const optionName = typeSpec.name!;
-      asserts.assert(optionName, `Name required for type of property ${p}`);
+      assert(optionName, `Name required for type of property ${p}`);
       const optionValue = handleAnyTypeSpec(
         typeSpec,
         optionName,
@@ -1656,7 +1660,7 @@ export class Options {
     whole?: number,
   ): number | null {
     whole = whole != null ? whole : 1;
-    asserts.assert(isFinite(whole), '"whole" must be a finite number.');
+    assert(isFinite(whole), '"whole" must be a finite number.');
     let result = Options.convertToNumber(value);
     if (result == null) {
       // Check if value is a percentage string.
@@ -1739,17 +1743,18 @@ export class Options {
   ): Brush {
     // Determine how to handle the defaultValue.
     let defaultBrush = null;
-    let value = null;
+    let dbrush: Brush | null = null;
+    let value : string | undefined;
     if (defaultValue instanceof Brush) {
       // Use this as the starting brush below.
-      defaultBrush = new Brush(defaultValue.getProperties());
+      dbrush = new Brush(defaultValue.getProperties());
     } else {
       // Must be a string or a gviz.graphics.Brush.BrushProperties.
       // or null or undefined.
       if (typeof defaultValue === 'object') {
         // Must be gviz.graphics.Brush.BrushProperties, so create a defaultBrush
         // with these properties.
-        defaultBrush = new Brush(defaultValue);
+        dbrush = new Brush(defaultValue);
       } else {
         // Must be a string, so use it as the fill color.
         value = defaultValue;
