@@ -8,7 +8,7 @@ Focus first on the files that have fewer dependencies. Then gradually move towar
 
 These are used throughout the codebase and should be replaced first:
 
-- **@closure/array/array**: Replace with native JavaScript array methods or lodash/fp-ts
+- **@closure/array/array**: Replace with native JavaScript array methods or es-toolkit/fp-ts
   - `forEach`, `map`, `every`, `extend`, `binarySearch` → Native JS or fp-ts equivalents
 
 - **@closure/asserts/asserts**: Replace with a lightweight assertion library
@@ -113,7 +113,7 @@ Testing utilities can be replaced independently:
 - **tiny-invariant**: Lightweight assertions
 - **tippy.js**: Modern tooltip library
 - **math.js**: Comprehensive math library (if needed)
-- **lodash-es**: Modern utility library with tree-shaking support
+- **es-toolkit**: Modern utility library with tree-shaking support
 
 ## Progress Update
 

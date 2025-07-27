@@ -17,23 +17,17 @@
  * limitations under the License.
  */
 
-import * as googArray from '../../common/array';
+import {forEach} from '../../common/array';
 import {assert} from '../../common/assert';
-import * as googColor from '../../common/closure-color';
+import * as color from '../../common/closure-color';
 import {dispose} from '../../common/disposable';
-import {getDomHelper} from '../../common/closure-dom';
-import {TagName} from '../../common/closure-dom';
+import {getDomHelper} from '../../common/dom';
 import * as events from '../../common/events';
-import {clamp} from '../../common/closure-math';
-import {Rect} from '../../common/closure-math';
-import {Size} from '../../common/closure-math';
-import {clone} from '../../common/closure-object';
+import {clamp, Rect, Size} from '../../common/math';
+import {clone} from '../../common/object';
 import * as style from '../../common/style';
 import * as tooltip from '../../tooltip/tooltip_builder';
-import {
-  createHtml,
-  htmlEscape,
-} from '@npm//@safevalues';
+// import {createHtml, htmlEscape,} from '@npm//@safevalues'; // Commented out for now
 import {AnyCallbackWrapper} from '../../common/async_helper';
 import {Options, UserOptions} from '../../common/options';
 import {Selection} from '../../common/selection';
@@ -1021,9 +1015,9 @@ export class TreeMap extends AbstractVisualization {
       // When '' is used as color option, 'none' is the resulting special
       // value. We replace these with computed colors.
       if (highlight === '' || highlight === 'none') {
-        return googColor.rgbToHex(
-          googColor.lighten(
-            googColor.hexToRgb(color),
+        return color.rgbToHex(
+          color.lighten(
+            color.hexToRgb(color),
             0.35,
           ),
         );
@@ -1261,9 +1255,9 @@ export class TreeMap extends AbstractVisualization {
     let maxColor = this.maxColor;
 
     if (this.rotatingHue && hue != null) {
-      minColor = googColor.hslToHex(hue, this.minSaturation, this.minLightness);
-      midColor = googColor.hslToHex(hue, this.midSaturation, this.midLightness);
-      maxColor = googColor.hslToHex(hue, this.maxSaturation, this.maxLightness);
+      minColor = color.hslToHex(hue, this.minSaturation, this.minLightness);
+      midColor = color.hslToHex(hue, this.midSaturation, this.midLightness);
+      maxColor = color.hslToHex(hue, this.maxSaturation, this.maxLightness);
     }
 
     const midOffset = rect!.width / 2;
@@ -1627,20 +1621,20 @@ export class TreeNode extends NodeBase {
 
     if (this.hue === null) {
       if (highlight) {
-        max = googColor.hexToRgb(
-          googColor.parse(this.treemap.maxHighlightColor).hex,
+        max = color.hexToRgb(
+          color.parse(this.treemap.maxHighlightColor).hex,
         );
-        min = googColor.hexToRgb(
-          googColor.parse(this.treemap.minHighlightColor).hex,
+        min = color.hexToRgb(
+          color.parse(this.treemap.minHighlightColor).hex,
         );
-        mid = googColor.hexToRgb(
-          googColor.parse(this.treemap.midHighlightColor).hex,
+        mid = color.hexToRgb(
+          color.parse(this.treemap.midHighlightColor).hex,
         );
-        head = googColor.hexToRgb(
-          googColor.parse(this.treemap.headerHighlightColor).hex,
+        head = color.hexToRgb(
+          color.parse(this.treemap.headerHighlightColor).hex,
         );
-        undef = googColor.hexToRgb(
-          googColor.parse(this.treemap.undefinedHighlightColor).hex,
+        undef = color.hexToRgb(
+          color.parse(this.treemap.undefinedHighlightColor).hex,
         );
       } else {
         max = googColor.hexToRgb(this.treemap.maxColor);
@@ -1654,59 +1648,59 @@ export class TreeNode extends NodeBase {
         );
       }
     } else {
-      max = googColor.hslToRgb(
+      max = color.hslToRgb(
         this.hue,
         this.treemap.maxSaturation,
         this.treemap.maxLightness,
       );
-      min = googColor.hslToRgb(
+      min = color.hslToRgb(
         this.hue,
         this.treemap.minSaturation,
         this.treemap.minLightness,
       );
-      mid = googColor.hslToRgb(
+      mid = color.hslToRgb(
         this.hue,
         this.treemap.midSaturation,
         this.treemap.midLightness,
       );
       if (highlight) {
-        max = googColor.lighten(googColor.rgbToHex(max[0], max[1], max[2]), 0.35);
-        min = googColor.lighten(googColor.rgbToHex(min[0], min[1], min[2]), 0.35);
-        mid = googColor.lighten(googColor.rgbToHex(mid[0], mid[1], mid[2]), 0.35);
+        max = color.lighten(color.rgbToHex(max[0], max[1], max[2]), 0.35);
+        min = color.lighten(color.rgbToHex(min[0], min[1], min[2]), 0.35);
+        mid = color.lighten(color.rgbToHex(mid[0], mid[1], mid[2]), 0.35);
       }
       if (
         this.treemap.headerSaturation !== null &&
         this.treemap.headerLightness !== null
       ) {
-        head = googColor.hslToRgb(
+        head = color.hslToRgb(
           this.hue,
           this.treemap.headerSaturation,
           this.treemap.headerLightness,
         );
         if (highlight) {
-          head = googColor.lighten(googColor.rgbToHex(head[0], head[1], head[2]), 0.35);
+          head = color.lighten(color.rgbToHex(head[0], head[1], head[2]), 0.35);
         }
       }
       if (
         this.treemap.undefinedSaturation !== null &&
         this.treemap.undefinedLightness !== null
       ) {
-        undef = googColor.hslToRgb(
+        undef = color.hslToRgb(
           this.hue,
           this.treemap.undefinedSaturation,
           this.treemap.undefinedLightness,
         );
         if (highlight) {
-          undef = googColor.lighten(googColor.rgbToHex(undef[0], undef[1], undef[2]), 0.35);
+          undef = color.lighten(color.rgbToHex(undef[0], undef[1], undef[2]), 0.35);
         }
       } else {
         if (highlight) {
-          undef = googColor.hexToRgb(
-            googColor.parse(this.treemap.undefinedHighlightColor).hex,
+          undef = color.hexToRgb(
+            color.parse(this.treemap.undefinedHighlightColor).hex,
           );
         } else {
-          undef = googColor.hexToRgb(
-            googColor.parse(this.treemap.undefinedColor).hex,
+          undef = color.hexToRgb(
+            color.parse(this.treemap.undefinedColor).hex,
           );
         }
       }
@@ -1718,7 +1712,7 @@ export class TreeNode extends NodeBase {
       blend = undef;
     } else {
       if (this.color < 0.5) {
-        blend = googColor.blend(googColor.rgbToHex(mid[0], mid[1], mid[2]), googColor.rgbToHex(min[0], min[1], min[2]), this.color * 2);
+        blend = color.blend(color.rgbToHex(mid[0], mid[1], mid[2]), color.rgbToHex(min[0], min[1], min[2]), this.color * 2);
       } else {
         blend = googColor.blend(googColor.rgbToHex(max[0], max[1], max[2]), googColor.rgbToHex(mid[0], mid[1], mid[2]), (this.color - 0.5) * 2);
       }
