@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import {fail} from '@npm//@closure/asserts/asserts';
-import * as googObject from '@npm//@closure/object/object';
+import {fail} from '../common/assert';
+import * as googObject from '../common/closure-object';
 
 import * as gvizDom from '../dom/dom';
 import {AbstractVisualization} from '../visualization/abstract_visualization';

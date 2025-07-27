@@ -22,10 +22,10 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as googColor from '@npm//@closure/color/color';
-import {Range} from '@npm//@closure/math/range';
+import {binarySearch, peek} from '../common/array';
+import {assert} from '../common/assert';
+import * as googColor from '../common/closure-color';
+import {Range} from '../common/closure-math';
 import {Options} from '../common/options';
 import {getOverriddenRange} from '../common/util';
 import * as util from '../graphics/util';
@@ -131,7 +131,7 @@ export class Scale {
       return this.colorsScale[0];
     }
     // Find the position of the value in valuesScale
-    const valuePos = googArray.binarySearch(this.valuesScale, value);
+    const valuePos = binarySearch(this.valuesScale, value);
     if (valuePos >= 0) {
       return this.colorsScale[valuePos];
     }
@@ -174,14 +174,14 @@ export class Scale {
       colors = [ONE_SIDED_DEFAULT_COLORS[0], colors[0]];
     }
 
-    asserts.assert(Array.isArray(colors));
+    assert(Array.isArray(colors));
     colors = colors;
 
     if (!values || values.length < 2) {
       // There's no value range, so take the last color as the only color. The
       // color bar can display this color visually, but it can't convert values
       // to colors.
-      return {values: null, colors: [googArray.peek(colors)]};
+      return {values: null, colors: [peek(colors)]};
     }
 
     const minValue = values[0];
@@ -190,7 +190,7 @@ export class Scale {
     if (rangeWidth === 0) {
       // The low end of the value range is equal to the high end, so all values
       // are converted to a single color, which is the last color.
-      return {values: [maxValue], colors: [googArray.peek(colors)]};
+      return {values: [maxValue], colors: [peek(colors)]};
     }
 
     if (values.length !== 2) {

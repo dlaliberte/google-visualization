@@ -17,8 +17,7 @@
  * limitations under the License.
  */
 
-import {BrowserEvent} from '@npm//@closure/events/events';
-import {EventTarget as GoogEventTarget} from '@npm//@closure/events/eventtarget';
+import {BrowserEvent, EventTarget as GoogEventTarget} from '../common/events';
 
 import {ChartType} from '../common/option_types';
 import {AbstractRenderer} from '../graphics/abstract_renderer';

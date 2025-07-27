@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {Resolver} from '@npm//@closure/promise/resolver';
+import {Resolver} from '../common/closure-promise';
 
 // tslint:disable:ban-types Migration
 

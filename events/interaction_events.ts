@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-import {Coordinate} from '@npm//@closure/math/coordinate';
+import {Coordinate} from '../common/closure-math';
 
 // tslint:disable:ban-types
 

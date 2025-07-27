@@ -363,6 +363,157 @@ export class Vec2 {
 }
 
 /**
+ * Rectangle class representing a rectangular area.
+ */
+export class Rect {
+  constructor(
+    public x: number,
+    public y: number,
+    public width: number,
+    public height: number
+  ) {}
+
+  /**
+   * Gets the left edge of the rectangle.
+   */
+  get left(): number {
+    return this.x;
+  }
+
+  /**
+   * Gets the top edge of the rectangle.
+   */
+  get top(): number {
+    return this.y;
+  }
+
+  /**
+   * Gets the right edge of the rectangle.
+   */
+  get right(): number {
+    return this.x + this.width;
+  }
+
+  /**
+   * Gets the bottom edge of the rectangle.
+   */
+  get bottom(): number {
+    return this.y + this.height;
+  }
+
+  /**
+   * Creates a copy of this rectangle.
+   * @returns A new Rect instance.
+   */
+  clone(): Rect {
+    return new Rect(this.x, this.y, this.width, this.height);
+  }
+
+  /**
+   * Checks if this rectangle contains a point.
+   * @param x The x coordinate.
+   * @param y The y coordinate.
+   * @returns true if the point is inside the rectangle.
+   */
+  contains(x: number, y: number): boolean {
+    return x >= this.left && x <= this.right && y >= this.top && y <= this.bottom;
+  }
+
+  /**
+   * Checks if this rectangle intersects with another rectangle.
+   * @param other The other rectangle.
+   * @returns true if the rectangles intersect.
+   */
+  intersects(other: Rect): boolean {
+    return !(
+      this.right < other.left ||
+      this.left > other.right ||
+      this.bottom < other.top ||
+      this.top > other.bottom
+    );
+  }
+
+  /**
+   * Gets the intersection of this rectangle with another rectangle.
+   * @param other The other rectangle.
+   * @returns The intersection rectangle, or null if they don't intersect.
+   */
+  intersection(other: Rect): Rect | null {
+    if (!this.intersects(other)) {
+      return null;
+    }
+    const left = Math.max(this.left, other.left);
+    const top = Math.max(this.top, other.top);
+    const right = Math.min(this.right, other.right);
+    const bottom = Math.min(this.bottom, other.bottom);
+    return new Rect(left, top, right - left, bottom - top);
+  }
+
+  /**
+   * Gets the union of this rectangle with another rectangle.
+   * @param other The other rectangle.
+   * @returns The union rectangle.
+   */
+  union(other: Rect): Rect {
+    const left = Math.min(this.left, other.left);
+    const top = Math.min(this.top, other.top);
+    const right = Math.max(this.right, other.right);
+    const bottom = Math.max(this.bottom, other.bottom);
+    return new Rect(left, top, right - left, bottom - top);
+  }
+
+  /**
+   * Expands the rectangle by the given amount in all directions.
+   * @param amount The amount to expand by.
+   * @returns A new expanded rectangle.
+   */
+  expand(amount: number): Rect {
+    return new Rect(
+      this.x - amount,
+      this.y - amount,
+      this.width + 2 * amount,
+      this.height + 2 * amount
+    );
+  }
+
+  /**
+   * Gets the area of this rectangle.
+   * @returns The area (width * height).
+   */
+  area(): number {
+    return this.width * this.height;
+  }
+
+  /**
+   * Checks if this rectangle is empty (width or height is 0).
+   * @returns true if the rectangle is empty.
+   */
+  isEmpty(): boolean {
+    return this.width === 0 || this.height === 0;
+  }
+
+  /**
+   * Converts the rectangle to a string representation.
+   * @returns String representation.
+   */
+  toString(): string {
+    return `Rect(${this.x}, ${this.y}, ${this.width}, ${this.height})`;
+  }
+
+  /**
+   * Creates a Rect from coordinates and dimensions.
+   * @param x The x coordinate.
+   * @param y The y coordinate.
+   * @param width The width.
+   * @param height The height.
+   * @returns A new Rect instance.
+   */
+  static create(x: number, y: number, width: number, height: number): Rect {
+    return new Rect(x, y, width, height);
+  }
+}
+
+/**
  * Size class representing width and height.
  */
 export class Size {

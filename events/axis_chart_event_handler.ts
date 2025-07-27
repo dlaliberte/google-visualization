@@ -17,16 +17,10 @@
  * limitations under the License.
  */
 
-import {
-  indexOf,
-  peek,
-} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
-import {BrowserEvent} from '@npm//@closure/events/events';
-import {EventTarget} from '@npm//@closure/events/eventtarget';
-import {EventType} from '@npm//@closure/events/eventtype';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import {Rect} from '@npm//@closure/math/rect';
+import {indexOf, peek} from '../common/array';
+import {assert} from '../common/assert';
+import {BrowserEvent, EventTarget, EventType} from '../common/events';
+import {Coordinate, Rect} from '../common/closure-math';
 
 import {ChartType, FocusTarget} from '../common/option_types';
 import {numberOrNull} from '../common/util';

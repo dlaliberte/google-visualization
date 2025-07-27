@@ -4,6 +4,21 @@
  */
 
 /**
+ * A type for string constants that mimics Closure's Const type.
+ * This is used for trusted string constants.
+ */
+export type Const = string & { readonly __brand: 'Const' };
+
+/**
+ * Creates a Const from a string literal.
+ * @param value The string literal value.
+ * @returns A Const value.
+ */
+export function createConst(value: string): Const {
+  return value as Const;
+}
+
+/**
  * Checks if a string is empty or contains only whitespace.
  * @param str The string to check.
  * @returns true if the string is empty or whitespace-only.

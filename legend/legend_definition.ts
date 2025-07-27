@@ -20,8 +20,7 @@
  * limitations under the License.
  */
 
-import {Box} from '@npm//@closure/math/box';
-import {Rect} from '@npm//@closure/math/rect';
+import {Box, Rect} from '../common/closure-math';
 import {LegendPosition} from '../common/option_types';
 import {Brush} from '../graphics/brush';
 import {TextBlock} from '../text/text_block_object';

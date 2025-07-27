@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
+import {Rect as GoogRect} from '../common/closure-math';
 import {Brush} from '../graphics/brush';
 import {TextStyle} from '../text/text_style';
 

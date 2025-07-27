@@ -18,13 +18,8 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import {
-  Size,
-  toRadians,
-} from '@npm//@closure/math/math';
-import {Vec2} from '@npm//@closure/math/vec2';
+import {assert} from '../common/assert';
+import {Coordinate, Size, Vec2, toRadians} from '../common/closure-math';
 
 import {FocusTarget, InteractivityModel} from '../common/option_types';
 import {Options} from '../common/options';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Const} from '@npm//@closure/string/const';
+import {Const} from '../common/closure-string';
 
 /**
  * A structure for accumulating components for a TrustedResourceUrl.

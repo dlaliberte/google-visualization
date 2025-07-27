@@ -16,16 +16,15 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import {Size} from '@npm//@closure/math/size';
+import {assert} from '../common/assert';
+import {Coordinate, Size} from '../common/closure-math';
 import {
   getDomain,
   getParamValue,
   getPath,
   getPort,
   setParam,
-} from '@npm//@closure/uri/utils';
+} from '../common/uri';
 
 /**
  * Regular expression that matches trix paths.

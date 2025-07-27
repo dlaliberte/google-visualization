@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as graphemeBreak from '@npm//@closure/i18n/graphemebreak';
+import {assert} from '../common/assert';
 import {BreakIteratorInterface} from './break_iterator_interface';
 import * as constants from './constants';
 

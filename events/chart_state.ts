@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as googMath from '@npm//@closure/math/coordinate';
+import {Coordinate} from '../common/closure-math';
 import {LayeredObject} from '../common/layered_object';
 import * as gvizObject from '../common/object';
 import {Selection} from '../common/selection';
@@ -222,8 +222,8 @@ export interface Annotations {
 
 /** chart_state.Cursor */
 export interface Cursor {
-  position: googMath.Coordinate | null;
-  positionAtLastClick: googMath.Coordinate | null;
+  position: Coordinate | null;
+  positionAtLastClick: Coordinate | null;
 }
 
 /** chart_state.FocusType */

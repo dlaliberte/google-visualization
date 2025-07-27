@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
+import {Rect as GoogRect} from '../common/closure-math';
 import * as numberformat from '../format/numberformat';
 import {Brush, Gradient} from '../graphics/brush';
 import {TextMeasureFunction} from '../text/text_measure_function';

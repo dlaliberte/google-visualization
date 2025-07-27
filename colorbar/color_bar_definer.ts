@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-import {Box} from '@npm//@closure/math/box';
+import {Box} from '../common/closure-math';
 import {ColorBarPosition} from '../common/option_types';
 import {Options as GvizOptions} from '../common/options';
 import {TextMeasureFunction} from '../text/text_measure_function';

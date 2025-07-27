@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {DomHelper} from '@npm//@closure/dom/dom';
+import {DomHelper} from '../common/closure-dom';
 
 // tslint:disable:ban-types Migration
 

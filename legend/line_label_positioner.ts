@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as googMath from '@npm//@closure/math/math';
+import {clamp} from '../common/closure-math';
 
 import {LineLabelDescriptor} from './line_label_descriptor';
 
@@ -158,6 +158,6 @@ export class LineLabelPositioner {
    * @return The possibly adjusted position.
    */
   private adjustToFitInRange(pos: number, height: number): number {
-    return googMath.clamp(pos, 0, this.totalHeight - height);
+    return clamp(pos, 0, this.totalHeight - height);
   }
 }
