@@ -18,7 +18,6 @@
  * limitations under the License.
  */
 
-import * as dom from '@npm//@closure/dom/dom';
 
 // tslint:disable:ban-types Migration
 // tslint:disable-next-line:no-any For use by external code.
@@ -54,18 +53,17 @@ export function setLogicalName(element: Element | null, name: string) {
  * @return The matching logical name.
  */
 export function getLogicalName(element: Element | null): string {
-  const namedElement = dom.getAncestor(
-    element,
-    (e) => (e as AnyDuringMigration)[LOGICAL_NAME_ATTRIBUTE] != null,
-    true,
-  );
+  let currentElement = element;
+  while (currentElement) {
+    if ((currentElement as AnyDuringMigration)[LOGICAL_NAME_ATTRIBUTE] != null) {
+      return (currentElement as AnyDuringMigration)[LOGICAL_NAME_ATTRIBUTE];
+    }
+    currentElement = currentElement.parentElement;
+  }
   // In case we reached the end of the dom without finding a logical name then
   // namedElement would be null. In such a case we simply return
   // gviz.graphics.logicalname.DEFAULT_NAME. This is not expected to happen as
   // we set a logical name to the main canvas group, but better to be on the
   // safe side here.
-  if (!namedElement) {
-    return DEFAULT_NAME;
-  }
-  return (namedElement as AnyDuringMigration)[LOGICAL_NAME_ATTRIBUTE];
+  return DEFAULT_NAME;
 }

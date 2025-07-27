@@ -150,11 +150,13 @@ export function getDesiredColors(
 /**
  * Creates a dom tree according to a given dom structure and returns its root.
  * TODO(dlaliberte): Move this to dom utilities.
- * @param domHelper A dom helper used for creating html nodes.
  * @param definition The html structure to create.
  * @return The built DOM Node.
  */
 export function createDom(definition: string): Element {
+  if (typeof document === 'undefined') {
+    throw new Error('DOM is not available in this environment.');
+  }
   const template = document.createElement('template');
   template.innerHTML = DOMPurify.sanitize(definition.trim());
   const element = template.content.firstChild as Element;

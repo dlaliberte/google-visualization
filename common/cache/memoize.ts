@@ -16,12 +16,11 @@
  * limitations under the License.
  */
 
-import {memoize as googMemoize} from '@npm//@closure/memoize/memoize';
+import memoize from 'lodash/memoize';
 
 import {Cache} from './cache';
 import {LRU} from './lru';
 
-const {simpleSerializer} = googMemoize;
 
 // tslint:disable:ban-types Migration
 // tslint:disable-next-line:no-any For use by external code.
@@ -58,7 +57,7 @@ const DEFAULT_CACHE_SIZE = 1000;
  *   size: number The max size of the cache.
  * @return The wrapped function.
  */
-export function memoize<TArgs extends unknown[], TResult>(
+export function customMemoize<TArgs extends unknown[], TResult>(
   fn: Fn<TArgs, TResult>,
   options: {
     serializer?: (...args: TArgs) => string; // try: SerializerFn<TArgs>
