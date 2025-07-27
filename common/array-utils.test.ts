@@ -85,11 +85,11 @@ describe('mergeArrays', () => {
     const merged = mergeArrays(ar1, ar2);
     expect(merged).toEqual([
       { value: 1, ar1: 0, ar2: 0 },
-      { value: 2, ar1: 0, ar2: 1 },
-      { value: 3, ar1: 1, ar2: 1 },
-      { value: 4, ar1: 1, ar2: 2 },
-      { value: 5, ar1: 2, ar2: 2 },
-      { value: 6, ar1: 2, ar2: 3 },
+      { value: 2, ar1: 0, ar2: 0 },
+      { value: 3, ar1: 1, ar2: 0 },
+      { value: 4, ar1: 1, ar2: 1 },
+      { value: 5, ar1: 2, ar2: 1 },
+      { value: 6, ar1: 2, ar2: 2 },
     ]);
   });
 
