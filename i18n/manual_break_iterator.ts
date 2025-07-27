@@ -16,6 +16,7 @@
  */
 
 import {assert} from '../common/assert';
+import {hasGraphemeBreak} from '../common/closure-i18n';
 import {BreakIteratorInterface} from './break_iterator_interface';
 import * as constants from './constants';
 
@@ -119,7 +120,7 @@ export class ManualBreakIterator implements BreakIteratorInterface {
     const leni = this.text!.length;
     for (let i = this.cursor! + 1; i < leni; i++) {
       if (
-        graphemeBreak.hasGraphemeBreak(
+        hasGraphemeBreak(
           this.text!.charCodeAt(i - 1),
           this.text!.charCodeAt(i),
           /* opt_extended */ false,

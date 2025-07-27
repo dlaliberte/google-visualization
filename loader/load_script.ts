@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import {TrustedResourceUrl} from '@npm//@closure/html/trustedresourceurl';
-import {Deferred} from '@npm//@closure/mochikit/async/deferred';
-import * as jsloader from '@npm//@closure/net/jsloader';
-import {Const} from '@npm//@closure/string/const';
-import * as userAgent from '@npm//@closure/useragent/useragent';
+import {TrustedResourceUrl} from '../common/closure-html';
+import {Deferred, jsloader} from '../common/closure-net';
+import {Const} from '../common/closure-string';
+import * as userAgent from '../common/closure-useragent';
 
 import {UrlStruct} from './url_struct';
 

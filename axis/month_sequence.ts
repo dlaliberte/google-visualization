@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
+import {assert} from '../common/assert';
 
 import {LinearSequence} from './linear_sequence';
 import {Sequence} from './sequence';

@@ -18,8 +18,7 @@
 
 import DateTimePatterns from 'goog:goog.i18n.DateTimePatterns'; // from //third_party/javascript/closure/i18n:datetimepatterns
 import DateTimeSymbols from 'goog:goog.i18n.DateTimeSymbols'; // from //third_party/javascript/closure/i18n:datetimesymbols
-import {DateTimeFormat} from '@npm//@closure/i18n/datetimeformat';
-import {TimeZone} from '@npm//@closure/i18n/timezone';
+import {DateTimeFormat, TimeZone} from '../common/closure-i18n';
 import {Options} from '../common/options';
 import {Formatter} from '../data/abstract_datatable_interface';
 import {ColumnType, Value} from '../data/types';

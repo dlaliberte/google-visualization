@@ -18,13 +18,9 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as googColor from '@npm//@closure/color/color';
-import {Box} from '@npm//@closure/math/box';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import * as googMath from '@npm//@closure/math/math';
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
-import {Size} from '@npm//@closure/math/size';
+import {assert} from '../common/assert';
+import {Box, Coordinate, Rect as GoogRect, Size, clamp} from '../common/closure-math';
+import * as googColor from '../common/closure-color';
 
 import {ColorBarDefinition} from '../colorbar/color_bar_definition';
 import * as colorbarDefiner from '../colorbar/definer';
@@ -476,8 +472,8 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
       const selectedCell = selectedCells[i];
       const selectedColumn = selectedCell.column;
       const selectedRow = selectedCell.row;
-      // asserts.assert(selectedColumn != null);
-      // asserts.assert(selectedRow != null);
+      // assert(selectedColumn != null);
+      // assert(selectedRow != null);
 
       const selectedColumnInfo =
         chartDefinition.dataTableColumnRoleInfo[selectedColumn];
@@ -494,7 +490,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
 
       switch (selectedColumnInfo.role) {
         case ColumnRole.DATA:
-          asserts.assert(selectedSerieIndex != null);
+          assert(selectedSerieIndex != null);
           // Selected data points receive a ring and possibly a tooltip.
           this.ringDatum(
             chartDefinition,
@@ -680,7 +676,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
     const focusedDatumIndex = chartState.focused.datum;
     if (focusedDatumIndex != null) {
       // Focused datum has no meaning without the serie it belongs to.
-      asserts.assert(focusedSerieIndex != null);
+      assert(focusedSerieIndex != null);
     }
 
     if (focusedDatumIndex != null) {
@@ -1031,7 +1027,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
         // Skip null data points.
         continue;
       }
-      asserts.assert(datum != null); // avoid compiler warning
+      assert(datum != null); // avoid compiler warning
       // Check whether the datum is visible by default or by interactivity.
       if (
         chartDefinitionUtil.isDatumVisible(datum!, serie) ||
@@ -1402,7 +1398,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
         // Skip null data points.
         continue;
       }
-      asserts.assert(datum != null);
+      assert(datum != null);
       if (
         chartDefinitionUtil.isDatumVisible(datum!, serie) ||
         (chartDefinitionUtil.isLonelyPoint(serie, datumIndex) &&
@@ -1480,12 +1476,12 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
     const embedActionsMenu = interactionState.actionsMenuState != null;
 
     // Only an annotation can have a null tooltip.
-    asserts.assert(tooltipDefinitionOrNull);
+    assert(tooltipDefinitionOrNull);
     interactiveDatum.tooltip = tooltipDefinitionOrNull;
 
     // Allow an embedded actions menu to extend the interactivity layer.
     if (embedActionsMenu) {
-      asserts.assert(this.actionsMenuDefiner);
+      assert(this.actionsMenuDefiner);
       const actionsMenuState = interactionState.actionsMenuState as ActionsMenu;
       // Note that because the entire tooltip definition is generated on
       // interaction, tooltipDefinition is the same as interactiveDatum.tooltip.
@@ -1519,12 +1515,12 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
     // Create the tooltip definition and attach it to the category.
     const embedActionsMenu = interactionState.actionsMenuState != null;
 
-    asserts.assert(tooltipDefinitionOrNull != null);
+    assert(tooltipDefinitionOrNull != null);
     interactiveCategory.tooltip = tooltipDefinitionOrNull;
 
     // Allow an embedded actions menu to extend the interactivity layer.
     if (embedActionsMenu) {
-      asserts.assert(this.actionsMenuDefiner != null);
+      assert(this.actionsMenuDefiner != null);
       const actionsMenuState = interactionState.actionsMenuState as ActionsMenu;
       // Note that because the entire tooltip definition is generated on
       // interaction, tooltipDefinitionOrNull is the same as
@@ -1658,7 +1654,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
 
     // Allow an embedded actions menu to extend the interactivity layer.
     if (embedActionsMenu) {
-      asserts.assert(this.actionsMenuDefiner != null);
+      assert(this.actionsMenuDefiner != null);
       const actionsMenuState = interactionState.actionsMenuState as ActionsMenu;
       // Note that because the entire tooltip definition is generated on
       // interaction, tooltipDefinition is the same as
@@ -1717,8 +1713,8 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
     if (embedActionsMenu && tooltipDefinition) {
       // TODO(dlaliberte): Allow tooltip to be null. In this case create a dummy
       // tooltip for text ' ' and embed the actions menu in it.
-      asserts.assert(interactiveLabel.tooltipHtml != null);
-      asserts.assert(this.actionsMenuDefiner != null);
+      assert(interactiveLabel.tooltipHtml != null);
+      assert(this.actionsMenuDefiner != null);
       const actionsMenuState = interactionState.actionsMenuState as ActionsMenu;
       // Note that because the entire tooltip definition is generated on
       // interaction, tooltipDefinition is the same as
@@ -1756,7 +1752,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
         chartDefinition.textMeasureFunction,
       );
       // definition should not be null
-      asserts.assert(definition != null);
+      assert(definition != null);
       interactivityLayer.colorBar = {
         definition,
       } as ColorBarDefinition;
@@ -1817,7 +1813,7 @@ export class AxisChartInteractivityDefiner extends ChartInteractivityDefiner {
     let focusedDatumIndex = chartState.focused.datum;
     if (focusedDatumIndex != null) {
       // Focused datum has no meaning without the serie it belongs to.
-      asserts.assert(focusedSerieIndex != null);
+      assert(focusedSerieIndex != null);
     }
 
     const DIMMED_OPACITY = 0.3;

@@ -19,17 +19,11 @@
  * limitations under the License.
  */
 
-import {
-  forEach,
-  slice,
-} from '@npm//@closure/array/array';
-import {
-  assert,
-  fail,
-} from '@npm//@closure/asserts/asserts';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {every} from '@npm//@closure/object/object';
-import {Timer} from '@npm//@closure/timer/timer';
+import {forEach, slice} from '../common/array';
+import {assert, fail} from '../common/assert';
+import {Disposable} from '../common/disposable';
+import {every} from '../common/closure-object';
+import {Timer} from '../common/closure-timer';
 
 import {ErrorHandler} from '../common/error_handler';
 import {createProtectedCallback} from '../common/errors';

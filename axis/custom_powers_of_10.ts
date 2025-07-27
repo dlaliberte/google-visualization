@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import {assert} from '../common/assert';
 
 import * as pow10Math from './pow_10_math';
 import {Sequence} from './sequence';
@@ -103,9 +103,9 @@ export class CustomPowersOf10 extends Sequence {
    */
   checkMultipliers(multipliers: number[]) {
     const length = multipliers.length;
-    asserts.assert(length > 0, 'Multiplier is empty.');
-    asserts.assert(multipliers[0] >= 1, 'Multipliers first value is too low.');
-    asserts.assert(
+    assert(length > 0, 'Multiplier is empty.');
+    assert(multipliers[0] >= 1, 'Multipliers first value is too low.');
+    assert(
       multipliers[length - 1] < 10,
       'Multipliers last value is too high.',
     );
@@ -116,11 +116,11 @@ export class CustomPowersOf10 extends Sequence {
     // value and that it's greater than the preceding value
     for (let i = 0; i < length; i++) {
       value = multipliers[i];
-      asserts.assert(
+      assert(
         typeof value === 'number',
         'Multipliers contain non-numerical values.',
       );
-      asserts.assert(value > previous, 'Multipliers are not sorted.');
+      assert(value > previous, 'Multipliers are not sorted.');
       previous = value;
     }
   }
@@ -145,7 +145,7 @@ export class CustomPowersOf10 extends Sequence {
    * @return The new value of the sequence.
    */
   floor(value: number): number {
-    asserts.assert(value > 0, `Value, ${value}, must be positive`);
+    assert(value > 0, `Value, ${value}, must be positive`);
 
     this.position = this.levelLength * pow10Math.ceilExponent(value);
     // If values aren't equal keep decreasing until internal value is
@@ -164,7 +164,7 @@ export class CustomPowersOf10 extends Sequence {
    * @return The new value of the sequence.
    */
   ceil(value: number): number {
-    asserts.assert(value > 0, `Value ${value} must be positive`);
+    assert(value > 0, `Value ${value} must be positive`);
 
     this.position = this.levelLength * pow10Math.floorExponent(value);
     // If values aren't equal keep increasing until internal value is
@@ -183,7 +183,7 @@ export class CustomPowersOf10 extends Sequence {
    * @return The new value of the sequence.
    */
   round(value: number): number {
-    asserts.assert(value > 0, 'Value must be positive');
+    assert(value > 0, 'Value must be positive');
 
     this.position = this.levelLength * pow10Math.ceilExponent(value);
     if (this.getValue() !== value) {

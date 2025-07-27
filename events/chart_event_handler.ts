@@ -19,18 +19,11 @@
  */
 
 import MouseWheelHandler from 'goog:goog.events.MouseWheelHandler'; // from //third_party/javascript/closure/events:mousewheelhandler
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import {
-  BrowserEvent,
-  EventTarget,
-  listen,
-  MouseWheelEvent,
-} from '@npm//@closure/events/events';
-import {EventType} from '@npm//@closure/events/eventtype';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import {getClientPosition} from '@npm//@closure/style/style';
+import {assert} from '../common/assert';
+import {Disposable, dispose} from '../common/disposable';
+import {BrowserEvent, EventTarget, listen, MouseWheelEvent, EventType} from '../common/events';
+import {Coordinate} from '../common/closure-math';
+import {getClientPosition} from '../common/style';
 import {ChartType} from '../common/option_types';
 import {numberOrNull} from '../common/util';
 import {getDocument} from '../dom/dom';

@@ -16,12 +16,10 @@
  * limitations under the License.
  */
 
-import {assertIsElement} from '@npm//@closure/asserts/dom';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import {removeChildren} from '@npm//@closure/dom/dom';
-import {EventHandler} from '@npm//@closure/events/eventhandler';
-import {EventTarget as GoogEventTarget} from '@npm//@closure/events/eventtarget';
+import {assertIsElement} from '../common/assert';
+import {Disposable, dispose} from '../common/disposable';
+import {removeChildren} from '../common/closure-dom';
+import {EventHandler, EventTarget as GoogEventTarget} from '../common/events';
 import {UserOptions} from '../common/options';
 
 // tslint:disable:ban-types Migration

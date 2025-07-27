@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import {map} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
+import {map} from '../common/array';
+import {assert} from '../common/assert';
 
 // tslint:disable:ban-types  Migration
 

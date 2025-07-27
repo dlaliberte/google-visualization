@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import * as events from '@npm//@closure/events/events';
-import {EventType} from '@npm//@closure/events/eventtype';
+import * as events from '../../common/events';
+import {EventType} from '../../common/events';
 import {merge, partition, Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {ChartEventType} from '../../events/chart_event_types';

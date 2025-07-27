@@ -17,19 +17,19 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
-import * as googColor from '@npm//@closure/color/color';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import {getDomHelper} from '@npm//@closure/dom/dom';
-import {TagName} from '@npm//@closure/dom/tagname';
-import * as events from '@npm//@closure/events/events';
-import {clamp} from '@npm//@closure/math/math';
-import {Rect} from '@npm//@closure/math/rect';
-import {Size} from '@npm//@closure/math/size';
-import {clone} from '@npm//@closure/object/object';
-import * as style from '@npm//@closure/style/style';
-import {Tooltip} from '@npm//@closure/ui/tooltip';
+import * as googArray from '../../common/array';
+import {assert} from '../../common/assert';
+import * as googColor from '../../common/closure-color';
+import {dispose} from '../../common/disposable';
+import {getDomHelper} from '../../common/closure-dom';
+import {TagName} from '../../common/closure-dom';
+import * as events from '../../common/events';
+import {clamp} from '../../common/closure-math';
+import {Rect} from '../../common/closure-math';
+import {Size} from '../../common/closure-math';
+import {clone} from '../../common/closure-object';
+import * as style from '../../common/style';
+import * as tooltip from '../../tooltip/tooltip_builder';
 import {
   createHtml,
   htmlEscape,

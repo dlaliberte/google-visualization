@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import {assert} from '../common/assert';
 
 /**
  * A structure that is capable of registering classifications for line breaks.
@@ -55,7 +55,7 @@ export class LevelClassifier {
   ) {
     // If a classifier is specified, then level must be an array. If it's not,
     // then level must be a number.
-    asserts.assert(
+    assert(
       (optClassifier && Array.isArray(level)) ||
         (!optClassifier && !Array.isArray(level)),
     );

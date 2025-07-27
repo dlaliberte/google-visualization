@@ -28,7 +28,7 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
+import {assert} from '../common/assert';
 
 /**
  * Milliseconds in a millisecond.

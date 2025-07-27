@@ -134,7 +134,7 @@ export class BrowserEvent {
   constructor(
     public originalEvent: Event,
     public type: string = originalEvent.type,
-    public target: EventTarget | null = originalEvent.target as EventTarget
+    public target: EventTarget | null = originalEvent.target as HTMLElement
   ) {}
 
   /**
@@ -295,6 +295,7 @@ export class EventHandler extends Disposable {
  */
 export const EventType = {
   CLICK: 'click',
+  CONTEXTMENU: 'contextmenu',
   DBLCLICK: 'dblclick',
   MOUSEDOWN: 'mousedown',
   MOUSEUP: 'mouseup',

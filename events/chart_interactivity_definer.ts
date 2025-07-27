@@ -20,8 +20,8 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Size as GoogSize} from '@npm//@closure/math/size';
+import {assert} from '../common/assert';
+import {Size as GoogSize} from '../common/closure-math';
 import {FocusTarget, InteractivityModel} from '../common/option_types';
 import {Options} from '../common/options';
 import {LegendDefinition, ScrollItems} from '../legend/legend_definition';

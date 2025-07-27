@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import {forEach} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
+import {forEach} from '../common/array';
+import {assert} from '../common/assert';
 import {Options} from '../common/options';
 import * as util from '../common/util';
 import {AxisDecoration, Decorations} from './axis_decoration';

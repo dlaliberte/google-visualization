@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {every, map} from '@npm//@closure/array/array';
+import {every, map} from '../common/array';
 import {
   PRECISION_THRESHOLD,
   countRequiredDecimalPrecision,

@@ -43,6 +43,25 @@ export { Const, createConst } from './closure-string';
 export * as promiseUtils from './closure-promise';
 export { Resolver, createResolver } from './closure-promise';
 
+// I18n utilities
+export * as i18nUtils from './closure-i18n';
+export { hasGraphemeBreak, DateTimeFormat, TimeZone } from './closure-i18n';
+
+// Network utilities
+export * as netUtils from './closure-net';
+export { Deferred, jsloader } from './closure-net';
+
+// User agent utilities
+export * as userAgentUtils from './closure-useragent';
+
+// HTML utilities
+export * as htmlUtils from './closure-html';
+export { TrustedResourceUrl, createTrustedResourceUrl, formatWithParams } from './closure-html';
+
+// Timer utilities
+export * as timerUtils from './closure-timer';
+export { Timer, callOnce, clear, debounce, throttle } from './closure-timer';
+
 // Re-export commonly used functions with their original names for easier migration
 export { forEach } from './array';
 export { assert, assertIsElement, assertExists } from './assert';
