@@ -294,3 +294,38 @@ export function setScrollPosition(element: Element, scrollLeft: number, scrollTo
   element.scrollLeft = scrollLeft;
   element.scrollTop = scrollTop;
 }
+
+/**
+ * Converts a style object to a CSS style attribute string.
+ * @param styleObj The style object.
+ * @returns The CSS style attribute string.
+ */
+export function toStyleAttribute(styleObj: Record<string, string>): string {
+  return Object.entries(styleObj)
+    .map(([key, value]) => `${kebabCase(key)}: ${value}`)
+    .join('; ');
+}
+
+/**
+ * Parses a CSS style attribute string into a style object.
+ * @param styleAttribute The CSS style attribute string.
+ * @returns The style object.
+ */
+export function parseStyleAttribute(styleAttribute: string): Record<string, string> {
+  const styleObj: Record<string, string> = {};
+  styleAttribute.split(';').forEach(part => {
+    const [key, value] = part.split(':').map(s => s.trim());
+    if (key && value) {
+      styleObj[camelCase(key)] = value;
+    }
+  });
+  return styleObj;
+}
+
+function kebabCase(str: string): string {
+  return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+function camelCase(str: string): string {
+  return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+}
