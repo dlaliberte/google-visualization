@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
+// Removed googArray import as we will use native JavaScript methods
 import {AbstractDataTable} from '../data/abstract_datatable';
 
 import {DataNode} from './data_node';
@@ -126,7 +126,7 @@ export class DataNodeImpl extends NodeBase implements DataNode {
     const row = this.getRow();
     if (row != null) {
       const fullArgs = [row];
-      googArray.extend(fullArgs, Array.prototype.slice.call(arguments, 1));
+      Array.prototype.push.apply(fullArgs, Array.prototype.slice.call(arguments, 1));
       return getter.apply(this.dataTable, fullArgs);
     } else {
       return null;

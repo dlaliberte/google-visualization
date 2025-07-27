@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
+// Removed googArray import as we will use native JavaScript methods
 
 import {LayeredObject} from '../common/layered_object';
 import {AbstractDataTable} from '../data/abstract_datatable';
@@ -113,7 +113,7 @@ export class DataTree extends TreeBase implements Tree {
               throw new Error(
                 'Data contains a cycle: ' +
                   this.nodesToString(
-                    googArray.concat(parentNode, parentNode.getAncestors()),
+                    [parentNode].concat(parentNode.getAncestors()),
                   ) +
                   '.',
               );

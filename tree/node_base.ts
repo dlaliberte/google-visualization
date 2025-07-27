@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+// Removed asserts import as we will use native JavaScript assertions
 import {Disposable} from '@npm//@closure/disposable/disposable';
 
 import {Node} from './node';
@@ -304,7 +304,9 @@ export class NodeBase extends Disposable implements Node {
    * @param child Orphan child node.
    */
   addChild(child: NodeBase) {
-    asserts.assert(!child.getParent());
+    if (child.getParent()) {
+      throw new Error('Child already has a parent.');
+    }
 
     child.setParent(this);
     this.children = this.children || [];

@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "dompurify": "^3.2.6",
+    "es-toolkit": "^1.39.8",
     "fp-ts": "^2.16.10",
     "three": "^0.177.0",
     "ts-essentials": "^10.1.1"

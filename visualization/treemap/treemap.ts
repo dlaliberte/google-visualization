@@ -19,7 +19,7 @@
 
 import {forEach} from '../../common/array';
 import {assert} from '../../common/assert';
-import * as color from '../../common/closure-color';
+import { hslToHex, hexToRgb, lighten, rgbToHex, blend } from 'es-toolkit';
 import {dispose} from '../../common/disposable';
 import {getDomHelper} from '../../common/dom';
 import * as events from '../../common/events';
@@ -803,7 +803,7 @@ export class TreeMap extends AbstractVisualization {
     this.setSelection([]);
 
     // Let the client know that we are done.
-    gvizEvents.trigger(this, READY, {});
+    this.emit('ready');
   }
 
   /**
@@ -1015,9 +1015,9 @@ export class TreeMap extends AbstractVisualization {
       // When '' is used as color option, 'none' is the resulting special
       // value. We replace these with computed colors.
       if (highlight === '' || highlight === 'none') {
-        return color.rgbToHex(
-          color.lighten(
-            color.hexToRgb(color),
+        return rgbToHex(
+          lighten(
+            hexToRgb(color),
             0.35,
           ),
         );
@@ -1255,9 +1255,9 @@ export class TreeMap extends AbstractVisualization {
     let maxColor = this.maxColor;
 
     if (this.rotatingHue && hue != null) {
-      minColor = color.hslToHex(hue, this.minSaturation, this.minLightness);
-      midColor = color.hslToHex(hue, this.midSaturation, this.midLightness);
-      maxColor = color.hslToHex(hue, this.maxSaturation, this.maxLightness);
+      minColor = hslToHex(hue, this.minSaturation, this.minLightness);
+      midColor = hslToHex(hue, this.midSaturation, this.midLightness);
+      maxColor = hslToHex(hue, this.maxSaturation, this.maxLightness);
     }
 
     const midOffset = rect!.width / 2;
@@ -1648,50 +1648,50 @@ export class TreeNode extends NodeBase {
         );
       }
     } else {
-      max = color.hslToRgb(
-        this.hue,
-        this.treemap.maxSaturation,
-        this.treemap.maxLightness,
+      max = hslToRgb(
+      this.hue,
+      this.treemap.maxSaturation,
+      this.treemap.maxLightness,
       );
-      min = color.hslToRgb(
-        this.hue,
-        this.treemap.minSaturation,
-        this.treemap.minLightness,
+      min = hslToRgb(
+      this.hue,
+      this.treemap.minSaturation,
+      this.treemap.minLightness,
       );
-      mid = color.hslToRgb(
-        this.hue,
-        this.treemap.midSaturation,
-        this.treemap.midLightness,
+      mid = hslToRgb(
+      this.hue,
+      this.treemap.midSaturation,
+      this.treemap.midLightness,
       );
       if (highlight) {
-        max = color.lighten(color.rgbToHex(max[0], max[1], max[2]), 0.35);
-        min = color.lighten(color.rgbToHex(min[0], min[1], min[2]), 0.35);
-        mid = color.lighten(color.rgbToHex(mid[0], mid[1], mid[2]), 0.35);
+        max = lighten(rgbToHex(max[0], max[1], max[2]), 0.35);
+        min = lighten(rgbToHex(min[0], min[1], min[2]), 0.35);
+        mid = lighten(rgbToHex(mid[0], mid[1], mid[2]), 0.35);
       }
       if (
         this.treemap.headerSaturation !== null &&
         this.treemap.headerLightness !== null
       ) {
-        head = color.hslToRgb(
+        head = hslToRgb(
           this.hue,
           this.treemap.headerSaturation,
           this.treemap.headerLightness,
         );
         if (highlight) {
-          head = color.lighten(color.rgbToHex(head[0], head[1], head[2]), 0.35);
+          head = lighten(rgbToHex(head[0], head[1], head[2]), 0.35);
         }
       }
       if (
         this.treemap.undefinedSaturation !== null &&
         this.treemap.undefinedLightness !== null
       ) {
-        undef = color.hslToRgb(
+        undef = hslToRgb(
           this.hue,
           this.treemap.undefinedSaturation,
           this.treemap.undefinedLightness,
         );
         if (highlight) {
-          undef = color.lighten(color.rgbToHex(undef[0], undef[1], undef[2]), 0.35);
+          undef = lighten(rgbToHex(undef[0], undef[1], undef[2]), 0.35);
         }
       } else {
         if (highlight) {
@@ -1712,7 +1712,7 @@ export class TreeNode extends NodeBase {
       blend = undef;
     } else {
       if (this.color < 0.5) {
-        blend = color.blend(color.rgbToHex(mid[0], mid[1], mid[2]), color.rgbToHex(min[0], min[1], min[2]), this.color * 2);
+        blend = blend(rgbToHex(mid[0], mid[1], mid[2]), rgbToHex(min[0], min[1], min[2]), this.color * 2);
       } else {
         blend = googColor.blend(googColor.rgbToHex(max[0], max[1], max[2]), googColor.rgbToHex(mid[0], mid[1], mid[2]), (this.color - 0.5) * 2);
       }
