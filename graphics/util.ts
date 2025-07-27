@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-import * as assertsDom from '@npm//@closure/asserts/dom';
-import * as googColor from '@npm//@closure/color/color';
-import {DomHelper} from '@npm//@closure/dom/dom';
-import {SafeHtml} from '@npm//@safevalues';
+import { parseToRgb, rgbToHex, blendColors } from '../common/colorUtils.ts';
+
+import { isElement } from '../common/domUtils';
+import DOMPurify from 'dompurify';
 import {isObject} from '../common/object';
 
 import * as logicalname from './logicalname';
@@ -70,7 +70,7 @@ export function parseColor(
         if (color.includes('rgba')) {
           return color;
         }
-        return googColor.parse(color).hex;
+        return parseToRgb(color);
       } catch (e: unknown) {
         if (!ignoreError) {
           // An unknown color string will cause an exception.
@@ -96,9 +96,9 @@ export function grayOutColor(color: string): string {
   // original color, and returning a color for which R = G = B = this average.
   // It seems this is not the default graying out of an image/movie, but it is
   // not clear what is best here. See http://en.wikipedia.org/wiki/Grayscale.
-  const colorRgb = googColor.hexToRgb(color);
+  const colorRgb = parseToRgb(color);
   const value = Math.round((colorRgb[0] + colorRgb[1] + colorRgb[2]) / 3);
-  return googColor.rgbToHex(value, value, value);
+  return rgbToHex(value, value, value);
 }
 
 /**
@@ -123,13 +123,7 @@ export function blendHexColors(
   if (!color2 || color2 === NO_COLOR) {
     return color1;
   }
-  return googColor.rgbArrayToHex(
-    googColor.blend(
-      googColor.hexToRgb(color1),
-      googColor.hexToRgb(color2),
-      factor,
-    ),
-  );
+  return blendColors(color1, color2, factor);
 }
 
 /**
@@ -160,10 +154,13 @@ export function getDesiredColors(
  * @param definition The html structure to create.
  * @return The built DOM Node.
  */
-export function createDom(domHelper: DomHelper, definition: SafeHtml): Element {
-  const element = assertsDom.assertIsElement(
-    domHelper.safeHtmlToNode(definition),
-  );
+export function createDom(definition: string): Element {
+  const template = document.createElement('template');
+  template.innerHTML = DOMPurify.sanitize(definition.trim());
+  const element = template.content.firstChild as Element;
+  if (!isElement(element)) {
+    throw new Error('Invalid element creation');
+  }
   const needLogicalName: Element[] = [];
   if (element.hasAttribute('data-logicalname')) {
     needLogicalName.push(element);

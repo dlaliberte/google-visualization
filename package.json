@@ -17,6 +17,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "dompurify": "^3.2.6",
     "fp-ts": "^2.16.10",
     "three": "^0.177.0",
     "ts-essentials": "^10.1.1"
