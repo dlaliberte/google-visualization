@@ -17,8 +17,21 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as googColor from '@npm//@closure/color/color';
+import * as asserts from '../common/assert';
+// TODO: Replace with modern color library
+const googColor = {
+  parse: (colorStr: string) => {
+    // Basic color parsing - should be replaced with proper color library
+    if (colorStr.startsWith('#')) {
+      const hex = colorStr.slice(1);
+      const r = parseInt(hex.slice(0, 2), 16);
+      const g = parseInt(hex.slice(2, 4), 16);
+      const b = parseInt(hex.slice(4, 6), 16);
+      return { r, g, b };
+    }
+    return null;
+  }
+};
 import {AbstractDataTableInterface} from '../data/abstract_datatable_interface';
 import {ColumnType, Value} from '../data/types';
 

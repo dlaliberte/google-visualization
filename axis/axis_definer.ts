@@ -31,12 +31,12 @@ import {
   slice,
   sort,
   stableSort,
-} from '@npm//@closure/array/array';
+} from '../common/array';
 import {
   assert,
   assertNumber,
-} from '@npm//@closure/asserts/asserts';
-import * as googObject from '@npm//@closure/object/object';
+} from '../common/assert';
+import * as googObject from '../common/closure-object';
 import {AxisDecoration, Decorations} from '../axis/axis_decoration';
 import {ColorBarDefiner} from '../colorbar/color_bar_definer';
 import {GOLDEN_RATIO} from '../common/constants';

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {forEach} from '@npm//@closure/array/array';
+import {forEach} from '../common/array';
 
 import {Options} from '../common/options';
 import {AbstractDataTable} from '../data/abstract_datatable';

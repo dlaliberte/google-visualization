@@ -19,13 +19,13 @@
 import {
   filter,
   removeDuplicates,
-} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
+} from '../common/array';
+import {assert} from '../common/assert';
 import {
   isEmptyOrWhitespace,
   makeSafe,
   repeat,
-} from '@npm//@closure/string/string';
+} from '../common/closure-string';
 
 import {UserOptions} from '../common/options';
 import {AbstractDataTable} from '../data/abstract_datatable';

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import {Size} from '@npm//@closure/math/size';
-import * as googString from '@npm//@closure/string/string';
+import {Size} from './closure-math';
+import * as googString from './closure-string';
 import {BreakIteratorFactory} from '../i18n/break_iterator_factory';
 import {BreakIteratorInterface} from '../i18n/break_iterator_interface';
 import * as constants from '../i18n/constants';

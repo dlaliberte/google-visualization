@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-import {forEach} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
-import {assertIsElement} from '@npm//@closure/asserts/dom';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import {Coordinate} from '@npm//@closure/math/coordinate';
+import {forEach} from '../common/array';
+import {assert} from '../common/assert';
+import {assertIsElement} from '../common/assert';
+import {Disposable} from '../common/disposable';
+import {dispose} from '../common/disposable';
+import {Coordinate} from '../common/closure-math';
 
 import * as errors from '../common/errors';
 import * as gvizJson from '../common/json';

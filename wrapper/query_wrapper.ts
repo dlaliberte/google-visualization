@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import * as asserts from '../common/assert';
 import * as errors from '../common/errors';
 import {DataTable} from '../data/datatable';
 import {Query} from '../query/query';

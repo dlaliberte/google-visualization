@@ -18,9 +18,9 @@
  * limitations under the License.
  */
 
-import {assertIsElement} from '@npm//@closure/asserts/dom';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {dispose} from '@npm//@closure/disposable/dispose';
+import {assertIsElement} from '../common/assert';
+import {Disposable} from '../common/disposable';
+import {dispose} from '../common/disposable';
 
 import {AbstractDataTable} from '../data/abstract_datatable';
 import {ControlEventType} from '../events/chart_event_types';

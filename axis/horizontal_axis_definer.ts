@@ -27,14 +27,14 @@ import {
   map,
   peek,
   stableSort,
-} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Box} from '@npm//@closure/math/box';
+} from '../common/array';
+import {assert} from '../common/assert';
+import {Box} from '../common/closure-math';
 import {
   modulo,
   toRadians,
-} from '@npm//@closure/math/math';
-import {clone} from '@npm//@closure/object/object';
+} from '../common/closure-math';
+import {clone} from '../common/closure-object';
 import {ColorBarDefiner} from '../colorbar/color_bar_definer';
 import {GOLDEN_RATIO} from '../common/constants';
 import {MSG_MISSING_TEXT_INDICATION} from '../common/messages';

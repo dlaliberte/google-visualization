@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import * as asserts from '../common/assert';
 
 // tslint:disable:ban-types Migration
 // tslint:disable-next-line:no-any For use by external code.

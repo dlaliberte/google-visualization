@@ -16,8 +16,42 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as googJson from '@npm//@closure/json/json';
+import * as asserts from './assert';
+// Using native JSON instead of Closure JSON
+const googJson = {
+  serialize: JSON.stringify
+};
+
+/**
+ * Returns the type of a value as a string.
+ * This replaces goog.typeOf functionality.
+ */
+function typeOf(value: unknown): string {
+  if (value === null) {
+    return 'null';
+  }
+  if (value === undefined) {
+    return 'undefined';
+  }
+  if (Array.isArray(value)) {
+    return 'array';
+  }
+  const type = typeof value;
+  if (type === 'object') {
+    if (value instanceof Date) {
+      return 'date';
+    }
+    if (value instanceof RegExp) {
+      return 'regexp';
+    }
+  }
+  return type;
+}
+
+// Create a goog-like object for compatibility
+const goog = {
+  typeOf
+};
 import {isObject} from '../common/object';
 import {isDateLike} from './object';
 
@@ -37,8 +71,8 @@ export const parse = JSON.parse as (p1: string) => AnyDuringMigration;
  * @param object The object to stringify.
  * @return The JSON string representing the object.
  */
-export const stringify: (v: unknown) => string = //
-  (goog.global['JSON'] && goog.global['JSON']['stringify']) || //
+export const stringify: (v: unknown) => string =
+  (typeof JSON !== 'undefined' && JSON.stringify) ||
   googJson.serialize;
 
 /**

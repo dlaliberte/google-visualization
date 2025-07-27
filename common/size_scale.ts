@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as googMath from '@npm//@closure/math/math';
-import {Range} from '@npm//@closure/math/range';
+import * as asserts from './assert';
+import * as googMath from './closure-math';
+import {Range} from './closure-math';
 
 import * as numberScale from './number_scale_util';
 import {Options} from './options';

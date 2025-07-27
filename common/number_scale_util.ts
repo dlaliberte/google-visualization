@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
+import {assert} from './assert';
 
 import {BoxCoxMapper} from '../axis/box_cox_mapper';
 

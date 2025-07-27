@@ -22,8 +22,8 @@
  * limitations under the License.
  */
 
-import * as googObject from '@npm//@closure/object/object';
-import {Uri} from '@npm//@closure/uri/uri';
+import * as googObject from '../common/closure-object';
+import {Uri} from '../common/uri';
 import {DataTable} from '../data/datatable';
 import * as events from '../events/events';
 import {Query} from '../query/query';

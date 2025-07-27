@@ -33,9 +33,9 @@ import {
   findIndex,
   forEach,
   map,
-} from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Range} from '@npm//@closure/math/range';
+} from '../common/array';
+import {assert} from '../common/assert';
+import {Range} from '../common/closure-math';
 import {Options} from '../common/options';
 import {
   DateRangeIter,

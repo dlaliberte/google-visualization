@@ -15,9 +15,34 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Matrix} from '@npm//@closure/math/matrix';
+import * as googArray from '../common/array';
+import * as asserts from '../common/assert';
+// TODO: Replace with modern matrix library
+class Matrix {
+  constructor(public data: number[][]) {}
+
+  static createIdentityMatrix(size: number): Matrix {
+    const data = Array(size).fill(null).map((_, i) =>
+      Array(size).fill(0).map((_, j) => i === j ? 1 : 0)
+    );
+    return new Matrix(data);
+  }
+
+  getValueAt(row: number, col: number): number {
+    return this.data[row][col];
+  }
+
+  setValueAt(row: number, col: number, value: number): void {
+    this.data[row][col] = value;
+  }
+
+  getSize(): { height: number; width: number } {
+    return {
+      height: this.data.length,
+      width: this.data[0]?.length || 0
+    };
+  }
+}
 import * as numberScale from '../common/number_scale_util';
 import {Add} from '../math/expression/add';
 import {Eq} from '../math/expression/eq';

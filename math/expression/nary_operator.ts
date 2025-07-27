@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
+import * as googArray from '../../common/array';
 
 import {Expression} from './expression';
 import {CloseParen} from './tokens/close_paren';

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Disposable} from '@npm//@closure/disposable/disposable';
+import * as asserts from '../common/assert';
+import {Disposable} from '../common/disposable';
 import {ChartType} from '../common/option_types';
 import * as visualizationEvents from './events';
 

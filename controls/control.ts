@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import {removeChildren} from '@npm//@closure/dom/dom';
+import {assert} from '../common/assert';
+import {dispose} from '../common/disposable';
+import {removeChildren} from '../common/closure-dom';
 
 import {AnyCallbackWrapper} from '../common/async_helper';
 import * as gvizJson from '../common/json';

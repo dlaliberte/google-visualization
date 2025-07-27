@@ -28,9 +28,25 @@
  */
 
 import DateTimePatterns from 'goog:goog.i18n.DateTimePatterns'; // from //third_party/javascript/closure/i18n:datetimepatterns
-import {assert} from '@npm//@closure/asserts/asserts';
-import {DateTimeFormat} from '@npm//@closure/i18n/datetimeformat';
-import {clone} from '@npm//@closure/object/object';
+import {assert} from '../common/assert';
+// TODO: Replace with modern i18n library
+const DateTimeFormat = {
+  Format: {
+    FULL_DATE: 'full_date',
+    LONG_DATE: 'long_date',
+    MEDIUM_DATE: 'medium_date',
+    SHORT_DATE: 'short_date',
+    FULL_TIME: 'full_time',
+    LONG_TIME: 'long_time',
+    MEDIUM_TIME: 'medium_time',
+    SHORT_TIME: 'short_time',
+    FULL_DATETIME: 'full_datetime',
+    LONG_DATETIME: 'long_datetime',
+    MEDIUM_DATETIME: 'medium_datetime',
+    SHORT_DATETIME: 'short_datetime',
+  }
+};
+import {clone} from '../common/closure-object';
 
 import {TimeUnit} from '../axis/milliseconds';
 import {UserOptions} from '../common/options';

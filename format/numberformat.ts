@@ -17,8 +17,18 @@
  */
 
 import NumberFormatSymbols from 'goog:goog.i18n.NumberFormatSymbols'; // from //third_party/javascript/closure/i18n:numberformatsymbols
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {NumberFormat as I18nNumberFormat} from '@npm//@closure/i18n/numberformat';
+import * as asserts from '../common/assert';
+// TODO: Replace with modern i18n number formatting library
+const I18nNumberFormat = {
+  Format: {
+    DECIMAL: 'decimal',
+    SCIENTIFIC: 'scientific',
+    PERCENT: 'percent',
+    CURRENCY: 'currency',
+    COMPACT_SHORT: 'compact_short',
+    COMPACT_LONG: 'compact_long',
+  }
+};
 import {Options} from '../common/options';
 import {
   AbstractDataTableInterface,

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import * as asserts from '../../../common/assert';
 
 import {Symbol} from './symbols';
 import {Token} from './token';

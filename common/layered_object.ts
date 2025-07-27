@@ -45,7 +45,7 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
+import {assert} from './assert';
 
 import {isDateLike} from './object';
 

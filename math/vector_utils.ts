@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import * as googMath from '@npm//@closure/math/math';
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
-import {Size} from '@npm//@closure/math/size';
-import {Vec2} from '@npm//@closure/math/vec2';
+import * as googMath from '../common/closure-math';
+import {Box as GoogRect} from '../common/closure-math';
+import {Size} from '../common/closure-math';
+import {Vec2} from '../common/closure-math';
 
 /**
  * Rounds the coordinates of a vector.
