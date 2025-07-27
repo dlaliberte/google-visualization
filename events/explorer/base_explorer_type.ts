@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {PubSub} from '@npm//@closure/pubsub/pubsub';
+import {PubSub} from '../../common/closure-pubsub';
 import {ViewWindowMode} from '../../common/option_types';
 import {ChartLayoutInterface} from '../../visualization/corechart/chart_layout_interface';
 import {ChartEventType} from '../chart_event_types';

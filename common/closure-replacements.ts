@@ -62,6 +62,14 @@ export { TrustedResourceUrl, createTrustedResourceUrl, formatWithParams } from '
 export * as timerUtils from './closure-timer';
 export { Timer, callOnce, clear, debounce, throttle } from './closure-timer';
 
+// PubSub utilities
+export * as pubsubUtils from './closure-pubsub';
+export { PubSub, createPubSub, subscribe, unsubscribe, publish } from './closure-pubsub';
+
+// Tooltip utilities
+export * as tooltipUtils from './closure-tooltip';
+export { Tooltip, TooltipPosition, TooltipState } from './closure-tooltip';
+
 // Re-export commonly used functions with their original names for easier migration
 export { forEach } from './array';
 export { assert, assertIsElement, assertExists } from './assert';

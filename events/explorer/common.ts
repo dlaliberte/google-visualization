@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import * as googMath from '@npm//@closure/math/math';
+import {clamp} from '../../common/closure-math';
 import {EventData} from '../interaction_events';
 
 /**
@@ -59,9 +59,9 @@ export function isInChart(
   bounds: {left: number; top: number; width: number; height: number},
 ): boolean {
   if (
-    googMath.clamp(event.x, bounds.left, bounds.left + bounds.width) ===
+    clamp(event.x, bounds.left, bounds.left + bounds.width) ===
       event.x &&
-    googMath.clamp(event.y, bounds.top, bounds.top + bounds.height) === event.y
+    clamp(event.y, bounds.top, bounds.top + bounds.height) === event.y
   ) {
     return true;
   }

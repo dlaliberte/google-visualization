@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {EventTarget} from '@npm//@closure/events/eventtarget';
-import {Coordinate} from '@npm//@closure/math/coordinate';
+import {assert} from '../common/assert';
+import {Disposable} from '../common/disposable';
+import {EventTarget} from '../common/events';
+import {Coordinate} from '../common/closure-math';
 
 import {Event, EventType} from './interaction_events';
 
@@ -148,7 +148,7 @@ export class GestureHandler extends Disposable {
    */
   // tslint:disable-next-line:ban-types  Migration
   protected dispatchEvent(type: EventType, data: AnyDuringMigration | null) {
-    asserts.assert(this.interactionEventTarget != null);
+    assert(this.interactionEventTarget != null);
     this.interactionEventTarget!.dispatchEvent({type, data} as Event);
   }
 

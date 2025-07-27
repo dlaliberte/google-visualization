@@ -22,10 +22,9 @@
  * limitations under the License.
  */
 
-import {dispose} from '@npm//@closure/disposable/dispose';
-import {Event as googEvent} from '@npm//@closure/events/event';
-import * as events from '@npm//@closure/events/events';
-import {EventTarget} from '@npm//@closure/events/eventtarget';
+import {dispose} from '../common/disposable';
+import {Event as googEvent, EventTarget} from '../common/events';
+import * as events from '../common/events';
 
 // tslint:disable:ban-types Migration
 // tslint:disable-next-line:no-any For use by external code.

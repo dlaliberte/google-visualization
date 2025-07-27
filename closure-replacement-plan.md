@@ -1,8 +1,12 @@
 # Google Closure Replacement Plan
 
+Focus first on the files that have fewer dependencies. Then gradually move towards more complex areas.
+
+
 ## Priority Areas for Replacement
 
 ### 1. Core Utilities (High Priority)
+
 These are used throughout the codebase and should be replaced first:
 
 - **@closure/array/array**: Replace with native JavaScript array methods or lodash/fp-ts
@@ -18,6 +22,7 @@ These are used throughout the codebase and should be replaced first:
   - `clamp`, `Box`, `Range` → Custom implementations or math.js
 
 ### 2. DOM Manipulation (Medium Priority)
+
 These are used in rendering components:
 
 - **@closure/dom/dom**: Replace with direct DOM APIs or a lightweight DOM utility
@@ -27,6 +32,7 @@ These are used in rendering components:
   - `setStyle` → Direct style manipulation or a lightweight styling library
 
 ### 3. Event Handling (Medium Priority)
+
 Event handling is critical for interactive charts:
 
 - **@closure/events/events**: Replace with native event handling or a lightweight event library
@@ -36,6 +42,7 @@ Event handling is critical for interactive charts:
   - `EventHandler` → Custom implementation or tiny-emitter
 
 ### 4. UI Components (Lower Priority)
+
 These are used in specific visualizations:
 
 - **@closure/ui/tooltip**: Replace with a custom tooltip implementation
@@ -45,6 +52,7 @@ These are used in specific visualizations:
   - `Component`, `CustomButton` → Custom implementations
 
 ### 5. Testing (Separate Track)
+
 Testing utilities can be replaced independently:
 
 - **@closure/testing/asserts**: Replace with Vitest assertions
@@ -72,6 +80,7 @@ Testing utilities can be replaced independently:
    - Consider adding lightweight utilities like tiny-invariant for assertions
 
 5. **Modernize Testing**:
+
    - Migrate tests to use Vitest's native assertions and test structure
    - This can be done in parallel with the main code migration
 
@@ -88,6 +97,7 @@ Testing utilities can be replaced independently:
 ### ✅ Completed Steps
 
 1. **Created adapter modules for core Closure utilities:**
+
    - ✅ `common/array.ts` - Replaces @closure/array/array
    - ✅ `common/assert.ts` - Replaces @closure/asserts/asserts
    - ✅ `common/closure-object.ts` - Replaces @closure/object/object

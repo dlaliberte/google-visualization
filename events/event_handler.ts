@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import * as events from '@npm//@closure/events/events';
+import {assert} from '../common/assert';
+import {Disposable} from '../common/disposable';
+import * as events from '../common/events';
 import {
   ChartType,
   FocusTarget,
@@ -395,7 +395,7 @@ export class EventHandler extends Disposable {
     this.chartState.cursor.positionAtLastClick =
       this.chartState.cursor.position!.clone();
 
-    const categoryIndex = asserts.assertNumber(event.data.datumIndex);
+    const categoryIndex = assertNumber(event.data.datumIndex);
 
     const isAnySeriesInteractive = chartDefinition.series.some(
       (series) => series.enableInteractivity,
@@ -497,7 +497,7 @@ export class EventHandler extends Disposable {
     }
     // TODO(dlaliberte): Select the legend entry, not the serie.
     this.toggleSerieSelection(
-      asserts.assertNumber(event.data.legendEntryIndex),
+      assertNumber(event.data.legendEntryIndex),
     );
     this.scheduler.updateCountdown(0);
   }
@@ -580,7 +580,7 @@ export class EventHandler extends Disposable {
     const focusTarget = this.chartDefinition.focusTarget;
     if (focusTarget.has(FocusTarget.SERIES)) {
       const serieIndex = event.data.serieIndex;
-      this.toggleSerieSelection(asserts.assertNumber(serieIndex));
+      this.toggleSerieSelection(assertNumber(serieIndex));
       this.scheduler.updateCountdown(0);
     }
   }
@@ -662,8 +662,8 @@ export class EventHandler extends Disposable {
 
     if (chartDefinition.focusTarget.has(FocusTarget.DATUM)) {
       const isSingle = chartDefinition.selectionMode === SelectionMode.SINGLE;
-      asserts.assertNumber(event.data.datumIndex);
-      asserts.assertNumber(event.data.serieIndex);
+      assertNumber(event.data.datumIndex);
+      assertNumber(event.data.serieIndex);
       const datum: Datum = {
         category: event.data.datumIndex,
         serie: event.data.serieIndex,
@@ -711,8 +711,8 @@ export class EventHandler extends Disposable {
       return;
     }
     // Mark the annotation as focused.
-    asserts.assertNumber(event.data.datumIndex);
-    asserts.assertNumber(annotationIndex);
+    assertNumber(event.data.datumIndex);
+    assertNumber(annotationIndex);
     this.chartState.annotations.focused = {
       row: event.data.datumIndex!,
       column: this.getAnnotationColumn(
@@ -751,7 +751,7 @@ export class EventHandler extends Disposable {
   private handleAnnotationClick(event: InteractionEventsEvent) {
     const chartDefinition = this.chartDefinition;
     const isSingle = chartDefinition.selectionMode === SelectionMode.SINGLE;
-    const datumIndex = asserts.assertNumber(event.data.datumIndex);
+    const datumIndex = assertNumber(event.data.datumIndex);
     const serieIndex = event.data.serieIndex ?? null;
     const annotationIndex = event.data.annotationIndex;
 
@@ -769,7 +769,7 @@ export class EventHandler extends Disposable {
       } else {
         // Select the annotation cells corresponding to the serie and datum
         // index.
-        asserts.assertNumber(annotationIndex);
+        assertNumber(annotationIndex);
         const column = this.getAnnotationColumn(serieIndex, annotationIndex!);
         this.chartState.selected.toggleCell(datumIndex, column, isSingle);
       }
@@ -877,7 +877,7 @@ export class EventHandler extends Disposable {
     }
     // This code assumes there are columns with the ANNOTATION role for the
     // given serie index.
-    asserts.assert(
+    assert(
       annotationColumns != null && annotationIndex < annotationColumns.length,
     );
     return annotationColumns![annotationIndex];

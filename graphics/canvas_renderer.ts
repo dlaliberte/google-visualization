@@ -17,14 +17,10 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as googColor from '@npm//@closure/color/color';
-import * as dom from '@npm//@closure/dom/dom';
-import {Box} from '@npm//@closure/math/box';
-import {Line} from '@npm//@closure/math/line';
-import * as googMath from '@npm//@closure/math/math';
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
-import {Size} from '@npm//@closure/math/size';
+import {assert} from '../common/assert';
+import * as googColor from '../common/closure-color';
+import {getDomHelper} from '../common/closure-dom';
+import {Box, Line, Rect as GoogRect, Size, clamp} from '../common/closure-math';
 
 import {getRelativeCoordinate, TextAlign} from '../text/text_align';
 import {TextStyle} from '../text/text_style';
@@ -111,12 +107,12 @@ export class CanvasRenderer extends BrowserRenderer {
    * @return The topmost created group.
    */
   createCanvasInternal(width: number, height: number): DrawingGroup {
-    asserts.assert(!isNaN(width));
-    asserts.assert(!isNaN(height));
-    asserts.assert(isFinite(width));
-    asserts.assert(isFinite(height));
-    asserts.assert(width >= 0);
-    asserts.assert(height >= 0);
+    assert(!isNaN(width));
+    assert(!isNaN(height));
+    assert(isFinite(width));
+    assert(isFinite(height));
+    assert(width >= 0);
+    assert(height >= 0);
 
     const canvas = dom
       .getDomHelper(this.container)
@@ -140,7 +136,7 @@ export class CanvasRenderer extends BrowserRenderer {
    * hacky, but should work until we need interactivity.
    */
   private emptyElement(): Element {
-    return dom.getDomHelper(this.container).createElement('empty');
+    return getDomHelper(this.container).createElement('empty');
   }
 
   /**
@@ -272,7 +268,7 @@ export class CanvasRenderer extends BrowserRenderer {
           ctx.fillStyle = ctx.createPattern(canvas, 'repeat')!;
           break;
         default:
-          asserts.assert(
+          assert(
             false,
             `Unsupported pattern style ${pattern.getStyle()}`,
           );
@@ -356,13 +352,13 @@ export class CanvasRenderer extends BrowserRenderer {
    * @return The created element.
    */
   createCircle(cx: number, cy: number, r: number, brush: Brush): Element {
-    asserts.assert(!isNaN(cx));
-    asserts.assert(!isNaN(cy));
-    asserts.assert(!isNaN(r));
-    asserts.assert(isFinite(cx));
-    asserts.assert(isFinite(cy));
-    asserts.assert(isFinite(r));
-    asserts.assert(r >= 0);
+    assert(!isNaN(cx));
+    assert(!isNaN(cy));
+    assert(!isNaN(r));
+    assert(isFinite(cx));
+    assert(isFinite(cy));
+    assert(isFinite(r));
+    assert(r >= 0);
     const ctx = this.ctx!;
 
     ctx.beginPath();
@@ -391,16 +387,16 @@ export class CanvasRenderer extends BrowserRenderer {
     ry: number,
     brush: Brush,
   ): Element {
-    asserts.assert(!isNaN(cx));
-    asserts.assert(!isNaN(cy));
-    asserts.assert(!isNaN(rx));
-    asserts.assert(!isNaN(ry));
-    asserts.assert(isFinite(cx));
-    asserts.assert(isFinite(cy));
-    asserts.assert(isFinite(rx));
-    asserts.assert(isFinite(ry));
-    asserts.assert(rx >= 0);
-    asserts.assert(ry >= 0);
+    assert(!isNaN(cx));
+    assert(!isNaN(cy));
+    assert(!isNaN(rx));
+    assert(!isNaN(ry));
+    assert(isFinite(cx));
+    assert(isFinite(cy));
+    assert(isFinite(rx));
+    assert(isFinite(ry));
+    assert(rx >= 0);
+    assert(ry >= 0);
     const ctx = this.ctx!;
 
     // Draw the ellipse. We do this by translating the context to the center of
@@ -442,16 +438,16 @@ export class CanvasRenderer extends BrowserRenderer {
     height: number,
     brush: Brush,
   ): Element {
-    asserts.assert(!isNaN(x));
-    asserts.assert(!isNaN(y));
-    asserts.assert(!isNaN(width));
-    asserts.assert(!isNaN(height));
-    asserts.assert(isFinite(x));
-    asserts.assert(isFinite(y));
-    asserts.assert(isFinite(width));
-    asserts.assert(isFinite(height));
-    asserts.assert(width >= 0);
-    asserts.assert(height >= 0);
+    assert(!isNaN(x));
+    assert(!isNaN(y));
+    assert(!isNaN(width));
+    assert(!isNaN(height));
+    assert(isFinite(x));
+    assert(isFinite(y));
+    assert(isFinite(width));
+    assert(isFinite(height));
+    assert(width >= 0);
+    assert(height >= 0);
     const ctx = this.ctx!;
 
     this.setCanvasBrush(brush, new GoogRect(x, y, width, height));
@@ -557,16 +553,16 @@ export class CanvasRenderer extends BrowserRenderer {
     textStyle: TextStyle,
     rtl?: boolean,
   ): Element {
-    asserts.assert(!isNaN(x));
-    asserts.assert(!isNaN(y));
-    asserts.assert(!isNaN(length));
-    asserts.assert(!isNaN(angle));
-    asserts.assert(isFinite(x));
-    asserts.assert(isFinite(y));
-    asserts.assert(isFinite(length));
-    asserts.assert(isFinite(angle));
+    assert(!isNaN(x));
+    assert(!isNaN(y));
+    assert(!isNaN(length));
+    assert(!isNaN(angle));
+    assert(isFinite(x));
+    assert(isFinite(y));
+    assert(isFinite(length));
+    assert(isFinite(angle));
 
-    asserts.assert(this.ctx);
+    assert(this.ctx);
     const ctx = this.ctx!;
 
     this.setTextFromStyle(ctx, textStyle);
@@ -664,10 +660,10 @@ export class CanvasRenderer extends BrowserRenderer {
   }
 
   addPathMove(path: string[], x: number, y: number) {
-    asserts.assert(!isNaN(x));
-    asserts.assert(!isNaN(y));
-    asserts.assert(isFinite(x));
-    asserts.assert(isFinite(y));
+    assert(!isNaN(x));
+    assert(!isNaN(y));
+    assert(isFinite(x));
+    assert(isFinite(y));
     const ctx = this.ctx!;
 
     this.createCanvasPath();
@@ -676,10 +672,10 @@ export class CanvasRenderer extends BrowserRenderer {
   }
 
   addPathLine(path: string[], x: number, y: number) {
-    asserts.assert(!isNaN(x));
-    asserts.assert(!isNaN(y));
-    asserts.assert(isFinite(x));
-    asserts.assert(isFinite(y));
+    assert(!isNaN(x));
+    assert(!isNaN(y));
+    assert(isFinite(x));
+    assert(isFinite(y));
     const ctx = this.ctx!;
 
     this.createCanvasPath();
@@ -702,18 +698,18 @@ export class CanvasRenderer extends BrowserRenderer {
     x: number,
     y: number,
   ) {
-    asserts.assert(!isNaN(x1));
-    asserts.assert(!isNaN(y1));
-    asserts.assert(!isNaN(x2));
-    asserts.assert(!isNaN(y2));
-    asserts.assert(!isNaN(x));
-    asserts.assert(!isNaN(y));
-    asserts.assert(isFinite(x1));
-    asserts.assert(isFinite(y1));
-    asserts.assert(isFinite(x2));
-    asserts.assert(isFinite(y2));
-    asserts.assert(isFinite(x));
-    asserts.assert(isFinite(y));
+    assert(!isNaN(x1));
+    assert(!isNaN(y1));
+    assert(!isNaN(x2));
+    assert(!isNaN(y2));
+    assert(!isNaN(x));
+    assert(!isNaN(y));
+    assert(isFinite(x1));
+    assert(isFinite(y1));
+    assert(isFinite(x2));
+    assert(isFinite(y2));
+    assert(isFinite(x));
+    assert(isFinite(y));
     const ctx = this.ctx!;
 
     this.createCanvasPath();
@@ -747,18 +743,18 @@ export class CanvasRenderer extends BrowserRenderer {
     toAngle: number,
     isClockwise: boolean,
   ) {
-    asserts.assert(!isNaN(cx));
-    asserts.assert(!isNaN(cy));
-    asserts.assert(!isNaN(rx));
-    asserts.assert(!isNaN(ry));
-    asserts.assert(!isNaN(fromAngle));
-    asserts.assert(!isNaN(toAngle));
-    asserts.assert(isFinite(cx));
-    asserts.assert(isFinite(cy));
-    asserts.assert(isFinite(rx));
-    asserts.assert(isFinite(ry));
-    asserts.assert(isFinite(fromAngle));
-    asserts.assert(isFinite(toAngle));
+    assert(!isNaN(cx));
+    assert(!isNaN(cy));
+    assert(!isNaN(rx));
+    assert(!isNaN(ry));
+    assert(!isNaN(fromAngle));
+    assert(!isNaN(toAngle));
+    assert(isFinite(cx));
+    assert(isFinite(cy));
+    assert(isFinite(rx));
+    assert(isFinite(ry));
+    assert(isFinite(fromAngle));
+    assert(isFinite(toAngle));
 
     this.createCanvasPath();
     const ctx = this.ctx!;
@@ -807,7 +803,7 @@ export class CanvasRenderer extends BrowserRenderer {
     textStyle: TextStyle,
     rotation?: number,
   ): Size {
-    asserts.assert(this.textCtx != null);
+    assert(this.textCtx != null);
     this.setTextFromStyle(this.textCtx, textStyle);
     const width = this.textCtx.measureText(text).width;
     // TODO(dlaliberte): Our height calculation is incorrect. It's not easy getting

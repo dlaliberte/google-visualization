@@ -18,19 +18,13 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import * as dom from '@npm//@closure/dom/dom';
-import {NodeType} from '@npm//@closure/dom/nodetype';
-import {TagName} from '@npm//@closure/dom/tagname';
-import {BrowserEvent} from '@npm//@closure/events/browserevent';
-import {EventHandler} from '@npm//@closure/events/eventhandler';
-import * as events from '@npm//@closure/events/events';
-import {EventType} from '@npm//@closure/events/eventtype';
-import {Box} from '@npm//@closure/math/box';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import * as style from '@npm//@closure/style/style';
-import {Tooltip} from '@npm//@closure/ui/tooltip';
+import {forEach} from '../common/array';
+import {dispose} from '../common/disposable';
+import {getDomHelper, NodeType, TagName} from '../common/closure-dom';
+import {BrowserEvent, EventHandler, EventType} from '../common/events';
+import * as events from '../common/events';
+import {Box, Coordinate} from '../common/closure-math';
+import {setStyle} from '../common/style';
 
 import {AbstractRenderer} from './abstract_renderer';
 import * as cursorposition from './cursor_position';
