@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Disposable} from '@npm//@closure/disposable/disposable';
+import {extend} from '../common/array';
+import {assert} from '../common/assert';
+import {Disposable} from '../common/disposable';
 
 import {Node} from './node';
 import {NodeId} from './nodeid';
@@ -27,6 +27,7 @@ import {Tree} from './tree';
 import {Aggregator} from './tree_aggregation';
 
 // tslint:disable:ban-types Migration
+type AnyDuringMigration = any;
 
 /**
  * Base class for tree data structures.
@@ -67,7 +68,7 @@ export class TreeBase extends Disposable implements Tree {
 
     if (id != null) {
       // Make sure the node id is unique.
-      asserts.assert(this.nodeById[id] === undefined);
+      assert(this.nodeById[id] === undefined);
 
       // Add an entry to the id to node dictionary.
       this.nodeById[id] = node;
@@ -147,7 +148,7 @@ export class TreeBase extends Disposable implements Tree {
     const rootNodes = this.getRootNodes();
     for (let i = 0; i < rootNodes.length; i++) {
       const rootNode = rootNodes[i];
-      googArray.extend(nodes, rootNode.find(f, thisObj));
+      extend(nodes, rootNode.find(f, thisObj));
     }
     return nodes;
   }

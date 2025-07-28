@@ -16,6 +16,7 @@ export interface IDisposable {
  */
 export class Disposable implements IDisposable {
   private disposed = false;
+  private registeredDisposables: any[] = [];
 
   /**
    * Disposes of the object. Subclasses should override disposeInternal.
@@ -24,6 +25,11 @@ export class Disposable implements IDisposable {
     if (!this.disposed) {
       this.disposed = true;
       this.disposeInternal();
+      // Dispose of all registered disposables
+      for (const disposable of this.registeredDisposables) {
+        dispose(disposable);
+      }
+      this.registeredDisposables.length = 0;
     }
   }
 
@@ -33,6 +39,19 @@ export class Disposable implements IDisposable {
    */
   isDisposed(): boolean {
     return this.disposed;
+  }
+
+  /**
+   * Registers a disposable object to be disposed when this object is disposed.
+   * @param disposable The disposable object to register.
+   * @returns The disposable object (for chaining).
+   */
+  protected registerDisposable<T>(disposable: T): T {
+    if (this.disposed) {
+      throw new Error('Cannot register disposable on disposed object');
+    }
+    this.registeredDisposables.push(disposable);
+    return disposable;
   }
 
   /**
