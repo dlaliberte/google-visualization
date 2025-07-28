@@ -9,49 +9,161 @@ const mockTextMeasureFunction: TextMeasureFunction = (text, style) => ({
   height: 20, // Assume fixed height
 });
 
-// Tests for calcTextLayout
-describe('calcTextLayout', () => {
-  it('should return empty layout for zero width', () => {
-    const layout = calcTextLayout(mockTextMeasureFunction, 'test', {}, 0);
-    expect(layout).toEqual({ lines: [], needTooltip: true, maxLineWidth: 0 });
-  });
+describe('text/text_utils', () => {
+  describe('calcTextLayout', () => {
+    it('should return empty layout for zero width', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'test', {}, 0);
+      expect(layout).toEqual({ lines: [], needTooltip: true, maxLineWidth: 0 });
+    });
 
-  it('should return single line layout for short text', () => {
-    const layout = calcTextLayout(mockTextMeasureFunction, 'test', {}, 100);
-    expect(layout).toEqual({ lines: ['test'], needTooltip: false, maxLineWidth: 40 });
-  });
+    it('should return single line layout for short text', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'test', {}, 100);
+      expect(layout).toEqual({ lines: ['test'], needTooltip: false, maxLineWidth: 40 });
+    });
 
-  it('should return truncated layout for long text', () => {
-    const layout = calcTextLayout(mockTextMeasureFunction, 'longtext', {}, 50);
-    expect(layout).toEqual({ lines: ['longt...'], needTooltip: true, maxLineWidth: 50 });
-  });
-});
+    it('should return truncated layout for long text', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'longtext', {}, 50);
+      expect(layout).toEqual({ lines: ['longt...'], needTooltip: true, maxLineWidth: 50 });
+    });
 
-// Tests for tooltipCssStyle
-describe('tooltipCssStyle', () => {
-  it('should return correct CSS style for given TextStyle', () => {
-    const textStyle: TextStyle = { fontSize: 12, fontName: 'Arial' };
-    const cssStyle = tooltipCssStyle(textStyle);
-    expect(cssStyle).toEqual({
-      'background': 'infobackground',
-      'padding': '1px',
-      'border': '1px solid infotext',
-      'fontSize': '12px',
-      'fontFamily': 'Arial',
-      'margin': '12px',
+    it('should handle multi-line text', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'line1\nline2', {}, 100);
+      expect(layout.lines).toHaveLength(2);
+      expect(layout.lines).toEqual(['line1', 'line2']);
+      expect(layout.needTooltip).toBe(false);
+      expect(layout.maxLineWidth).toBe(50); // max of 'line1' and 'line2'
+    });
+
+    it('should handle empty text', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, '', {}, 100);
+      expect(layout.lines).toEqual(['']);
+      expect(layout.needTooltip).toBe(false);
+      expect(layout.maxLineWidth).toBe(0);
+    });
+
+    it('should handle very long single word', () => {
+      const longWord = 'supercalifragilisticexpialidocious';
+      const layout = calcTextLayout(mockTextMeasureFunction, longWord, {}, 100);
+      expect(layout.needTooltip).toBe(true);
+      expect(layout.lines[0]).toContain('...');
+    });
+
+    it('should respect different text styles', () => {
+      const textStyle: TextStyle = { fontSize: 16, fontName: 'Helvetica' };
+      const layout = calcTextLayout(mockTextMeasureFunction, 'test', textStyle, 100);
+      expect(layout).toBeDefined();
+      expect(layout.lines).toContain('test');
+    });
+
+    it('should handle whitespace-only text', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, '   ', {}, 100);
+      expect(layout.lines).toEqual(['   ']);
+      expect(layout.maxLineWidth).toBe(30); // 3 spaces * 10px
+    });
+
+    it('should handle text with mixed content', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'Short\nThis is a much longer line', {}, 100);
+      expect(layout.lines.length).toBeGreaterThanOrEqual(2);
+      expect(layout.maxLineWidth).toBeGreaterThan(50);
     });
   });
 
-  it('should handle missing fontSize and fontName', () => {
-    const textStyle: TextStyle = {};
-    const cssStyle = tooltipCssStyle(textStyle);
-    expect(cssStyle).toEqual({
-      'background': 'infobackground',
-      'padding': '1px',
-      'border': '1px solid infotext',
-      'fontSize': undefined,
-      'fontFamily': undefined,
-      'margin': undefined,
+  describe('tooltipCssStyle', () => {
+    it('should return correct CSS style for given TextStyle', () => {
+      const textStyle: TextStyle = { fontSize: 12, fontName: 'Arial' };
+      const cssStyle = tooltipCssStyle(textStyle);
+      expect(cssStyle).toEqual({
+        'background': 'infobackground',
+        'padding': '1px',
+        'border': '1px solid infotext',
+        'fontSize': '12px',
+        'fontFamily': 'Arial',
+        'margin': '12px',
+      });
+    });
+
+    it('should handle missing fontSize and fontName', () => {
+      const textStyle: TextStyle = {};
+      const cssStyle = tooltipCssStyle(textStyle);
+      expect(cssStyle).toEqual({
+        'background': 'infobackground',
+        'padding': '1px',
+        'border': '1px solid infotext',
+        'fontSize': undefined,
+        'fontFamily': undefined,
+        'margin': undefined,
+      });
+    });
+
+    it('should handle null text style', () => {
+      const cssStyle = tooltipCssStyle(null as any);
+      expect(cssStyle).toEqual({
+        'background': 'infobackground',
+        'padding': '1px',
+        'border': '1px solid infotext',
+        'fontSize': undefined,
+        'fontFamily': undefined,
+        'margin': undefined,
+      });
+    });
+
+    it('should handle complete text style', () => {
+      const textStyle: TextStyle = {
+        fontSize: 14,
+        fontName: 'Helvetica',
+        bold: true,
+        italic: true,
+        color: '#333333'
+      };
+      const cssStyle = tooltipCssStyle(textStyle);
+      expect(cssStyle.fontSize).toBe('14px');
+      expect(cssStyle.fontFamily).toBe('Helvetica');
+      expect(cssStyle.margin).toBe('14px');
+    });
+
+    it('should handle zero font size', () => {
+      const textStyle: TextStyle = { fontSize: 0, fontName: 'Arial' };
+      const cssStyle = tooltipCssStyle(textStyle);
+      expect(cssStyle.fontSize).toBe('0px');
+      expect(cssStyle.margin).toBe('0px');
+    });
+
+    it('should handle very large font size', () => {
+      const textStyle: TextStyle = { fontSize: 100, fontName: 'Arial' };
+      const cssStyle = tooltipCssStyle(textStyle);
+      expect(cssStyle.fontSize).toBe('100px');
+      expect(cssStyle.margin).toBe('100px');
+    });
+
+    it('should handle special font names', () => {
+      const textStyle: TextStyle = { fontSize: 12, fontName: 'Times New Roman, serif' };
+      const cssStyle = tooltipCssStyle(textStyle);
+      expect(cssStyle.fontFamily).toBe('Times New Roman, serif');
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should handle very small width constraints', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'Hello', {}, 1);
+      expect(layout.needTooltip).toBe(true);
+      expect(layout.lines).toHaveLength(1);
+    });
+
+    it('should handle negative width', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'Hello', {}, -10);
+      expect(layout.lines).toEqual([]);
+      expect(layout.needTooltip).toBe(true);
+    });
+
+    it('should handle undefined text', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, undefined as any, {}, 100);
+      expect(layout).toBeDefined();
+    });
+
+    it('should handle very wide width constraints', () => {
+      const layout = calcTextLayout(mockTextMeasureFunction, 'Short text', {}, 10000);
+      expect(layout.needTooltip).toBe(false);
+      expect(layout.lines).toEqual(['Short text']);
     });
   });
 });
