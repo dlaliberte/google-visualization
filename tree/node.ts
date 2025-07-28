@@ -17,12 +17,13 @@
  * limitations under the License.
  */
 
-import {IDisposable} from '@npm//@closure/disposable/idisposable';
+import {IDisposable} from '../common/disposable';
 
 import {NodeId} from './nodeid';
 import {Aggregator} from './tree_aggregation';
 
 // tslint:disable:ban-types Migration
+type AnyDuringMigration = any;
 
 /**
  * An interface for a read-only access to a tree node.

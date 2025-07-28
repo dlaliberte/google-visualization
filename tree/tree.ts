@@ -18,13 +18,14 @@
  * limitations under the License.
  */
 
-import {IDisposable} from '@npm//@closure/disposable/idisposable';
+import {IDisposable} from '../common/disposable';
 
 import {Node} from './node';
 import {NodeId} from './nodeid';
 import {Aggregator} from './tree_aggregation';
 
 // tslint:disable:ban-types Migration
+type AnyDuringMigration = any;
 
 /**
  * An interface of a tree data structure.

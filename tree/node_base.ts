@@ -18,13 +18,14 @@
  */
 
 // Removed asserts import as we will use native JavaScript assertions
-import {Disposable} from '@npm//@closure/disposable/disposable';
+import {Disposable} from '../common/disposable';
 
 import {Node} from './node';
 import {NodeId} from './nodeid';
 import {Aggregator} from './tree_aggregation';
 
 // tslint:disable:ban-types Migration
+type AnyDuringMigration = any;
 
 /**
  * A class that implements the basic functionality of a tree node.
