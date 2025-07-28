@@ -18,11 +18,11 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import * as dom from '@npm//@closure/dom/dom';
-import {BrowserEvent} from '@npm//@closure/events/browserevent';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import * as style from '@npm//@closure/style/style';
+import * as asserts from '../common/assert';
+import * as dom from '../common/closure-dom';
+import {BrowserEvent} from '../common/events';
+import {Coordinate} from '../common/closure-math';
+import * as style from '../common/style';
 
 // tslint:disable:ban-types  Migration
 

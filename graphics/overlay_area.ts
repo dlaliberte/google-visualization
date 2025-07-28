@@ -19,11 +19,11 @@
  * limitations under the License.
  */
 
-import {Disposable} from '@npm//@closure/disposable/disposable';
-import {dispose} from '@npm//@closure/disposable/dispose';
-import * as dom from '@npm//@closure/dom/dom';
-import {EventHandler} from '@npm//@closure/events/eventhandler';
-import {EventType} from '@npm//@closure/events/eventtype';
+import {Disposable} from '../common/disposable';
+import {dispose} from '../common/disposable';
+import * as dom from '../common/closure-dom';
+import {EventHandler} from '../common/events';
+import {EventType} from '../common/events';
 
 // tslint:disable:ban-types Migration
 

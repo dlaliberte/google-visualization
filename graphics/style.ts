@@ -21,14 +21,14 @@ import {
   filter,
   forEach,
   map,
-} from '@npm//@closure/array/array';
-import {isValidColor} from '@npm//@closure/color/color';
-import * as googObject from '@npm//@closure/object/object';
+} from '../common/array';
+import {isValidColor} from '../common/closure-color';
+import * as googObject from '../common/closure-object';
 import {
   contains,
   trim,
-} from '@npm//@closure/string/string';
-import {parseStyleAttribute} from '@npm//@closure/style/style';
+} from '../common/closure-string';
+import {parseStyleAttribute} from '../common/style';
 
 import * as gvizJson from '../common/json';
 import {Options} from '../common/options';

@@ -20,9 +20,9 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import * as googMath from '@npm//@closure/math/math';
+import * as asserts from '../common/assert';
+import {Coordinate} from '../common/closure-math';
+import * as googMath from '../common/closure-math';
 import {
   ArcData,
   PathSegments,

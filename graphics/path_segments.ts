@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import * as asserts from '../common/assert';
 
 /**
  * Constructor for a PathSegments object.

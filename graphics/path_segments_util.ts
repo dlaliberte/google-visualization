@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import {Line} from '@npm//@closure/math/line';
-import * as googMath from '@npm//@closure/math/math';
-import {Range} from '@npm//@closure/math/range';
-import * as googObject from '@npm//@closure/object/object';
+import * as asserts from '../common/assert';
+import {Coordinate} from '../common/closure-math';
+import {Line} from '../common/closure-math';
+import * as googMath from '../common/closure-math';
+import {Range} from '../common/closure-math';
+import * as googObject from '../common/closure-object';
 
 import {roughlyEquals} from '../common/util';
 import {

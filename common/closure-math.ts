@@ -232,6 +232,85 @@ export class Range {
 }
 
 /**
+ * Represents a 2D line defined by two points.
+ */
+export class Line {
+  constructor(public x1: number, public y1: number, public x2: number, public y2: number) {}
+
+  /**
+   * Creates a copy of this line.
+   * @returns A new Line instance with the same values.
+   */
+  clone(): Line {
+    return new Line(this.x1, this.y1, this.x2, this.y2);
+  }
+
+  /**
+   * Gets the length of the line.
+   * @returns The length of the line.
+   */
+  getLength(): number {
+    const dx = this.x2 - this.x1;
+    const dy = this.y2 - this.y1;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  /**
+   * Gets the slope of the line.
+   * @returns The slope of the line, or Infinity for vertical lines.
+   */
+  getSlope(): number {
+    if (this.x2 === this.x1) {
+      return Infinity;
+    }
+    return (this.y2 - this.y1) / (this.x2 - this.x1);
+  }
+
+  /**
+   * Checks if a point lies on this line.
+   * @param x The x coordinate of the point.
+   * @param y The y coordinate of the point.
+   * @param tolerance The tolerance for the check (default: 1e-6).
+   * @returns true if the point lies on the line.
+   */
+  containsPoint(x: number, y: number, tolerance: number = 1e-6): boolean {
+    // Check if point is within the bounding box of the line segment
+    const minX = Math.min(this.x1, this.x2);
+    const maxX = Math.max(this.x1, this.x2);
+    const minY = Math.min(this.y1, this.y2);
+    const maxY = Math.max(this.y1, this.y2);
+
+    if (x < minX - tolerance || x > maxX + tolerance || y < minY - tolerance || y > maxY + tolerance) {
+      return false;
+    }
+
+    // Check if point lies on the line using cross product
+    const crossProduct = (y - this.y1) * (this.x2 - this.x1) - (x - this.x1) * (this.y2 - this.y1);
+    return Math.abs(crossProduct) <= tolerance;
+  }
+
+  /**
+   * Gets the intersection point with another line.
+   * @param other The other line.
+   * @returns The intersection point, or null if lines are parallel.
+   */
+  getIntersection(other: Line): Coordinate | null {
+    const denom = (this.x1 - this.x2) * (other.y1 - other.y2) - (this.y1 - this.y2) * (other.x1 - other.x2);
+
+    if (Math.abs(denom) < 1e-10) {
+      return null; // Lines are parallel
+    }
+
+    const t = ((this.x1 - other.x1) * (other.y1 - other.y2) - (this.y1 - other.y1) * (other.x1 - other.x2)) / denom;
+
+    const x = this.x1 + t * (this.x2 - this.x1);
+    const y = this.y1 + t * (this.y2 - this.y1);
+
+    return new Coordinate(x, y);
+  }
+}
+
+/**
  * Represents a 2D coordinate.
  */
 export class Coordinate {
