@@ -154,6 +154,7 @@ Testing utilities can be replaced independently:
    - ✅ Common utilities (`layout_utils.ts`, `layered_object.ts`, `size_scale.ts`) - COMPLETED
    - ✅ Format utilities (`patterns.ts`, `formatting.ts`, `colorformat.ts`, `numberformat.ts`) - COMPLETED
    - ✅ Text utilities (`text_align.ts`, `text_utils.ts`, `text_block.ts`, `text_block_object.ts`, `text_measure_function.ts`) - COMPLETED
+   - 🔄 Graphics utilities (`style.ts`, `path_segments.ts`, `path_segments_util.ts`, `multi_brush_path_segments.ts`, `overlay_area.ts`, `cursor_position.ts`) - IN PROGRESS
    - 🔄 Continue with visualization/, colorbar/, and remaining files
 
 2. **Address remaining Closure dependencies:**
