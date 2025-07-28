@@ -131,3 +131,13 @@ export function assertInstanceof<T>(
   }
   return value;
 }
+
+/**
+ * Throws an error with the given message. This is used to indicate that
+ * a code path should never be reached.
+ * @param message The error message.
+ * @throws Error always.
+ */
+export function fail(message?: string): never {
+  throw new Error(message || 'Assertion failed');
+}

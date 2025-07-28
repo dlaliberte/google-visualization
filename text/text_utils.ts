@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {Size} from '@npm//@closure/math/size';
+import {Size} from '../common/closure-math';
 import * as util from '../common/layout_utils';
 import {TextMeasureFunction} from './text_measure_function';
 import {TextStyle} from './text_style';

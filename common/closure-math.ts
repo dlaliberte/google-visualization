@@ -74,6 +74,16 @@ export function lerp(a: number, b: number, t: number): number {
 }
 
 /**
+ * Calculates the average of two numbers.
+ * @param a The first number.
+ * @param b The second number.
+ * @returns The average of the two numbers.
+ */
+export function average(a: number, b: number): number {
+  return (a + b) / 2;
+}
+
+/**
  * Represents a 2D box with left, top, width, and height.
  */
 export class Box {

@@ -153,6 +153,7 @@ Testing utilities can be replaced independently:
    - ✅ Key axis files (`axis_definer.ts`, `date_tick_definer.ts`, `horizontal_axis_definer.ts`) - COMPLETED
    - ✅ Common utilities (`layout_utils.ts`, `layered_object.ts`, `size_scale.ts`) - COMPLETED
    - ✅ Format utilities (`patterns.ts`, `formatting.ts`, `colorformat.ts`, `numberformat.ts`) - COMPLETED
+   - ✅ Text utilities (`text_align.ts`, `text_utils.ts`, `text_block.ts`, `text_block_object.ts`, `text_measure_function.ts`) - COMPLETED
    - 🔄 Continue with visualization/, colorbar/, and remaining files
 
 2. **Address remaining Closure dependencies:**

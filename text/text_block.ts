@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Box} from '@npm//@closure/math/box';
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
+import * as asserts from '../common/assert';
+import {Box} from '../common/closure-math';
+import {Rect as GoogRect} from '../common/closure-math';
 import * as messages from '../common/messages';
 import {calcBoundingBox} from '../common/util';
 import {Brush} from '../graphics/brush';

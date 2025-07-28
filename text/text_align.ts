@@ -18,8 +18,8 @@
  * limitations under the License.
  */
 
-import {fail} from '@npm//@closure/asserts/asserts';
-import {average} from '@npm//@closure/math/math';
+import {fail} from '../common/assert';
+import {average} from '../common/closure-math';
 
 /**
  * Enumeration of the possible text alignment possibilities.

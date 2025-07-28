@@ -349,3 +349,21 @@ export function hslToRgb(h: number, s: number, l: number): number[] {
 
   return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
+
+/**
+ * Checks if a color string is valid.
+ * @param color The color string to validate
+ * @returns true if the color is valid, false otherwise
+ */
+export function isValidColor(color: string): boolean {
+  if (!color || typeof color !== 'string') {
+    return false;
+  }
+
+  try {
+    parse(color);
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -19,8 +19,8 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Box} from '@npm//@closure/math/box';
+import {assert} from '../common/assert';
+import {Box} from '../common/closure-math';
 import {calcBoundingBox as commonUtilCalcBoundingBox} from '../common/util';
 import {Brush} from '../graphics/brush';
 import {DrawingGroup} from '../graphics/drawing_group';
