@@ -4,6 +4,6 @@ export default defineConfig({
   test: {
     // Add your test configuration here
     globals: true,
-    environment: 'node',
+    environment: 'jsdom',
   },
 })

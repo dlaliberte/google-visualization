@@ -72,6 +72,13 @@ export class Scale {
           'colorsScale and valuesScale must be of the same length',
         );
       }
+
+      // Validate that values are sorted in ascending order
+      for (let i = 1; i < valuesScale.length; i++) {
+        if (valuesScale[i] < valuesScale[i - 1]) {
+          throw new Error('valuesScale must be sorted in ascending order');
+        }
+      }
     } else if (colorsScale.length !== 1) {
       throw new Error(
         'colorsScale must contain exactly one element when no ' +
@@ -89,7 +96,7 @@ export class Scale {
    * @return The scale values. May return null, if no values exists.
    */
   getValuesScale(): number[] | null {
-    return this.valuesScale;
+    return this.valuesScale ? [...this.valuesScale] : null;
   }
 
   /**

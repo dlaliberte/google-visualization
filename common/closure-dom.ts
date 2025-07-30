@@ -187,6 +187,15 @@ export class DomHelper {
   getInnerHtml(element: Element): string {
     return element.innerHTML;
   }
+
+  /**
+   * Checks if a value is node-like (has nodeType property).
+   * @param value The value to check.
+   * @returns true if the value is node-like.
+   */
+  isNodeLike(value: any): boolean {
+    return value != null && typeof value === 'object' && 'nodeType' in value;
+  }
 }
 
 /**
