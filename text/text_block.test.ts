@@ -10,14 +10,19 @@ describe('text/text_block', () => {
   describe('constructor', () => {
     it('should create TextBlock with required properties', () => {
       const textStyle = new TextStyle();
-      const line = new Line('test', textStyle, 100);
+      const line = new Line({ text: 'test', length: 100 });
       
       const textBlockObj = {
         text: 'Test text',
         textStyle,
         lines: [line],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: 'Test tooltip',
+        angle: 0,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -27,7 +32,7 @@ describe('text/text_block', () => {
       expect(textBlock.lines).toEqual([line]);
       expect(textBlock.paralAlign).toBe(TextAlign.START);
       expect(textBlock.perpenAlign).toBe(TextAlign.START);
-      expect(textBlock.tooltip).toBe('');
+      expect(textBlock.tooltip).toBe('Test tooltip');
     });
 
     it('should handle optional properties', () => {
@@ -40,10 +45,11 @@ describe('text/text_block', () => {
         boxStyle,
         lines: [],
         paralAlign: TextAlign.CENTER,
-        perpenAlign: TextAlign.MIDDLE,
+        perpenAlign: TextAlign.CENTER,
         tooltip: 'Test tooltip',
         angle: 45,
         anchor: new Coordinate(10, 20),
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -61,8 +67,13 @@ describe('text/text_block', () => {
         text: 'Test',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -81,8 +92,13 @@ describe('text/text_block', () => {
           text: 'Test',
           textStyle,
           lines: [],
+          boxStyle: undefined,
           paralAlign: align,
           perpenAlign: TextAlign.START,
+          tooltip: undefined,
+          angle: undefined,
+          anchor: undefined,
+          truncated: false,
         };
         
         const textBlock = new TextBlock(textBlockObj);
@@ -93,15 +109,20 @@ describe('text/text_block', () => {
     it('should handle different perpendicular alignments', () => {
       const textStyle = new TextStyle();
       
-      const alignments = [TextAlign.START, TextAlign.MIDDLE, TextAlign.END];
+      const alignments = [TextAlign.START, TextAlign.CENTER, TextAlign.END];
       
       alignments.forEach(align => {
         const textBlockObj = {
           text: 'Test',
           textStyle,
           lines: [],
+          boxStyle: undefined,
           paralAlign: TextAlign.START,
           perpenAlign: align,
+          tooltip: undefined,
+          angle: undefined,
+          anchor: undefined,
+          truncated: false,
         };
         
         const textBlock = new TextBlock(textBlockObj);
@@ -118,8 +139,13 @@ describe('text/text_block', () => {
         text: 'Test',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -128,15 +154,20 @@ describe('text/text_block', () => {
 
     it('should handle multiple lines', () => {
       const textStyle = new TextStyle();
-      const line1 = new Line('First line', textStyle, 100);
-      const line2 = new Line('Second line', textStyle, 120);
+      const line1 = new Line({ text: 'First line', length: 100, x: 0, y: 0 });
+      const line2 = new Line({ text: 'Second line', length: 120, x: 0, y: 20 });
       
       const textBlockObj = {
         text: 'Multi-line text',
         textStyle,
         lines: [line1, line2],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -150,7 +181,7 @@ describe('text/text_block', () => {
     it('should handle different text styles', () => {
       const textStyle = new TextStyle({
         fontSize: 14,
-        fontFamily: 'Arial',
+        fontName: 'Arial',
         color: '#000000',
       });
       
@@ -158,8 +189,13 @@ describe('text/text_block', () => {
         text: 'Styled text',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -181,6 +217,10 @@ describe('text/text_block', () => {
         lines: [],
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -199,9 +239,13 @@ describe('text/text_block', () => {
           text: 'Rotated text',
           textStyle,
           lines: [],
+          boxStyle: undefined,
           paralAlign: TextAlign.START,
           perpenAlign: TextAlign.START,
+          tooltip: undefined,
           angle,
+          anchor: undefined,
+          truncated: false,
         };
         
         const textBlock = new TextBlock(textBlockObj);
@@ -217,29 +261,37 @@ describe('text/text_block', () => {
         text: 'Anchored text',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
         anchor,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
       expect(textBlock.anchor).toBe(anchor);
     });
 
-    it('should handle null anchor', () => {
+    it('should handle undefined anchor', () => {
       const textStyle = new TextStyle();
       
       const textBlockObj = {
         text: 'Text without anchor',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
-        anchor: null,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
-      expect(textBlock.anchor).toBeNull();
+      expect(textBlock.anchor).toBeUndefined();
     });
   });
 
@@ -254,9 +306,13 @@ describe('text/text_block', () => {
           text: 'Text with tooltip',
           textStyle,
           lines: [],
+          boxStyle: undefined,
           paralAlign: TextAlign.START,
           perpenAlign: TextAlign.START,
           tooltip,
+          angle: undefined,
+          anchor: undefined,
+          truncated: false,
         };
         
         const textBlock = new TextBlock(textBlockObj);
@@ -276,8 +332,13 @@ describe('text/text_block', () => {
         text: 'Text with rich tooltip',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
         tooltipText,
       };
       
@@ -294,8 +355,12 @@ describe('text/text_block', () => {
         text: 'Very long text that might be truncated',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
         truncated: true,
       };
       
@@ -310,8 +375,12 @@ describe('text/text_block', () => {
         text: 'Short text',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
         truncated: false,
       };
       
@@ -324,7 +393,7 @@ describe('text/text_block', () => {
     it('should handle full configuration with all properties', () => {
       const textStyle = new TextStyle({
         fontSize: 16,
-        fontFamily: 'Helvetica',
+        fontName: 'Helvetica',
         color: '#333333',
       });
       
@@ -334,8 +403,8 @@ describe('text/text_block', () => {
         strokeWidth: 2,
       });
       
-      const line1 = new Line('First line of text', textStyle, 150);
-      const line2 = new Line('Second line of text', textStyle, 160);
+      const line1 = new Line({ text: 'First line of text', length: 150, x: 0, y: 0 });
+      const line2 = new Line({ text: 'Second line of text', length: 160, x: 0, y: 20 });
       
       const anchor = new Coordinate(50, 75);
       
@@ -351,7 +420,7 @@ describe('text/text_block', () => {
         boxStyle,
         lines: [line1, line2],
         paralAlign: TextAlign.CENTER,
-        perpenAlign: TextAlign.MIDDLE,
+        perpenAlign: TextAlign.CENTER,
         tooltip: 'Main tooltip',
         tooltipText,
         angle: 30,
@@ -366,7 +435,7 @@ describe('text/text_block', () => {
       expect(textBlock.boxStyle).toBe(boxStyle);
       expect(textBlock.lines).toEqual([line1, line2]);
       expect(textBlock.paralAlign).toBe(TextAlign.CENTER);
-      expect(textBlock.perpenAlign).toBe(TextAlign.MIDDLE);
+      expect(textBlock.perpenAlign).toBe(TextAlign.CENTER);
       expect(textBlock.tooltip).toBe('Main tooltip');
       expect(textBlock.tooltipText).toBe(tooltipText);
       expect(textBlock.angle).toBe(30);
@@ -383,8 +452,13 @@ describe('text/text_block', () => {
         text: '',
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -399,8 +473,13 @@ describe('text/text_block', () => {
         text: specialText,
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -415,8 +494,13 @@ describe('text/text_block', () => {
         text: longText,
         textStyle,
         lines: [],
+        boxStyle: undefined,
         paralAlign: TextAlign.START,
         perpenAlign: TextAlign.START,
+        tooltip: undefined,
+        angle: undefined,
+        anchor: undefined,
+        truncated: false,
       };
       
       const textBlock = new TextBlock(textBlockObj);
@@ -433,9 +517,13 @@ describe('text/text_block', () => {
           text: 'Extreme rotation',
           textStyle,
           lines: [],
+          boxStyle: undefined,
           paralAlign: TextAlign.START,
           perpenAlign: TextAlign.START,
+          tooltip: undefined,
           angle,
+          anchor: undefined,
+          truncated: false,
         };
         
         const textBlock = new TextBlock(textBlockObj);
@@ -457,9 +545,13 @@ describe('text/text_block', () => {
           text: 'Extreme position',
           textStyle,
           lines: [],
+          boxStyle: undefined,
           paralAlign: TextAlign.START,
           perpenAlign: TextAlign.START,
+          tooltip: undefined,
+          angle: undefined,
           anchor: coord,
+          truncated: false,
         };
         
         const textBlock = new TextBlock(textBlockObj);
