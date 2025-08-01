@@ -162,10 +162,11 @@ function runChartDefinerTestCase(testCase: ChartDefinerTestCase) {
       testCase.height,
     ).getChartDefinition();
   };
-  expect(makeDefiner).withContext(msg).not.toThrow();
-
-  // Add custom equality tester for numbers.
-  jasmine.addCustomEqualityTester(floatEquality);
+  try {
+    expect(makeDefiner).not.toThrow();
+  } catch (error) {
+    throw new Error(`${msg}: ${error}`);
+  }
 
   const expectedResult = testCase.result;
   if (expectedResult !== DONT_COMPARE) {
@@ -175,7 +176,27 @@ function runChartDefinerTestCase(testCase: ChartDefinerTestCase) {
       testCase.ignoreUnexpectedFields || false,
     );
 
-    expect(chartDef).withContext(msg).toEqual(expectedResult);
+    // Use custom equality comparison for floating point numbers
+    const customEqual = (a: any, b: any): boolean => {
+      if (typeof a === 'object' && typeof b === 'object' && a !== null && b !== null) {
+        if (Array.isArray(a) && Array.isArray(b)) {
+          if (a.length !== b.length) return false;
+          return a.every((item, index) => customEqual(item, b[index]));
+        }
+        const keysA = Object.keys(a);
+        const keysB = Object.keys(b);
+        if (keysA.length !== keysB.length) return false;
+        return keysA.every(key => customEqual(a[key], b[key]));
+      }
+      const floatResult = floatEquality(a, b);
+      return floatResult !== undefined ? floatResult : a === b;
+    };
+
+    try {
+      expect(customEqual(chartDef, expectedResult)).toBe(true);
+    } catch (error) {
+      throw new Error(`${msg}: ${error}`);
+    }
   }
 
   // Create div in the defined dimensions.
@@ -362,9 +383,11 @@ function performSpecificBarsGeometryTest(
         }
         // Verify that this bar has the same size as other bars,
         // plus or minus one, since we allow larger bars to vary.
-        expect(Math.abs(barSize - size) <= 1)
-          .withContext('sizes differ by more than one')
-          .toBe(true);
+        try {
+          expect(Math.abs(barSize - size) <= 1).toBe(true);
+        } catch (error) {
+          throw new Error(`sizes differ by more than one: ${error}`);
+        }
 
         // Verify that the geometry of this bar is not fractional,
         // other than half-pixels.
@@ -4487,9 +4510,11 @@ describe('ChartDefiner', () => {
       const chartDefiner = createChartDefiner(data, chartOptions, 400, 200);
       const chartDef = chartDefiner.getChartDefinition();
       const actual = chartDef.chartArea;
-      expect(actual)
-        .withContext('test ' + name)
-        .toEqual(expectedValue);
+      try {
+        expect(actual).toEqual(expectedValue);
+      } catch (error) {
+        throw new Error(`test ${name}: ${error}`);
+      }
     };
 
     testChartArea(
