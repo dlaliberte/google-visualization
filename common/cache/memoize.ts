@@ -16,11 +16,10 @@
  * limitations under the License.
  */
 
-import memoize from 'lodash/memoize';
+// Simple memoize implementation to avoid lodash dependency
 
 import {Cache} from './cache';
 import {LRU} from './lru';
-
 
 // tslint:disable:ban-types Migration
 // tslint:disable-next-line:no-any For use by external code.
@@ -38,6 +37,26 @@ type Fn<TArgs extends unknown[], TResult> = (...args: TArgs) => TResult;
  * Default maximum size of the cache.
  */
 const DEFAULT_CACHE_SIZE = 1000;
+
+/**
+ * Simple function to generate unique IDs for functions.
+ */
+let functionIdCounter = 0;
+const functionIds = new WeakMap<Function, number>();
+
+function getFunctionId(fn: Function): number {
+  if (!functionIds.has(fn)) {
+    functionIds.set(fn, ++functionIdCounter);
+  }
+  return functionIds.get(fn)!;
+}
+
+/**
+ * Simple serializer that converts arguments to JSON.
+ */
+function simpleSerializer(functionId: number, ...args: unknown[]): string {
+  return JSON.stringify([functionId, ...args]);
+}
 
 /**
  * Wraps a function to cache its return values given the same argument values.
@@ -60,7 +79,7 @@ const DEFAULT_CACHE_SIZE = 1000;
 export function customMemoize<TArgs extends unknown[], TResult>(
   fn: Fn<TArgs, TResult>,
   options: {
-    serializer?: (...args: TArgs) => string; // try: SerializerFn<TArgs>
+    serializer?: (functionId: number, ...args: TArgs) => string;
     cache?: Cache<AnyDuringMigration>; // Any should be TResult?
     size?: number;
   } = {}, //
@@ -74,7 +93,7 @@ export function customMemoize<TArgs extends unknown[], TResult>(
    */
   function internalMemoizedFunc(...args: TArgs): TResult {
     // Map the serialized list of args to the corresponding return value.
-    const key = serializer(goog.getUid(fn), [...args]);
+    const key = serializer(getFunctionId(fn), ...args);
     return cache.contains(key) ? cache.get(key) : cache.put(key, fn(...args));
   }
 
@@ -93,4 +112,27 @@ export function customMemoize<TArgs extends unknown[], TResult>(
   });
 
   return memoizedFunc;
+}
+
+/**
+ * Simple memoize implementation for basic use cases.
+ * This is the main export that most code should use.
+ */
+export function memoize<TArgs extends unknown[], TResult>(
+  fn: (...args: TArgs) => TResult,
+  resolver?: (...args: TArgs) => string
+): (...args: TArgs) => TResult {
+  const cache = new Map<string, TResult>();
+
+  return (...args: TArgs): TResult => {
+    const key = resolver ? resolver(...args) : JSON.stringify(args);
+
+    if (cache.has(key)) {
+      return cache.get(key)!;
+    }
+
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  };
 }

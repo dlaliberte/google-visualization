@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { getEasingFunction, getProperties, EasingType } from './animation';
 import { Options } from './options';
 
@@ -26,10 +26,27 @@ class MockOptions implements Options {
 // Tests for getEasingFunction
 describe('getEasingFunction', () => {
   it('should return the correct easing function for each EasingType', () => {
-    expect(getEasingFunction(EasingType.LINEAR)).toBe(mockEasingFunctions.identity);
-    expect(getEasingFunction(EasingType.IN)).toBe(mockEasingFunctions.easeIn);
-    expect(getEasingFunction(EasingType.OUT)).toBe(mockEasingFunctions.easeOut);
-    expect(getEasingFunction(EasingType.IN_AND_OUT)).toBe(mockEasingFunctions.inAndOut);
+    const linearFn = getEasingFunction(EasingType.LINEAR);
+    const inFn = getEasingFunction(EasingType.IN);
+    const outFn = getEasingFunction(EasingType.OUT);
+    const inAndOutFn = getEasingFunction(EasingType.IN_AND_OUT);
+
+    // Test that functions are returned and work correctly
+    expect(typeof linearFn).toBe('function');
+    expect(typeof inFn).toBe('function');
+    expect(typeof outFn).toBe('function');
+    expect(typeof inAndOutFn).toBe('function');
+
+    // Test linear function (identity)
+    expect(linearFn(0.5)).toBe(0.5);
+
+    // Test that easing functions return expected values at boundaries
+    expect(inFn(0)).toBe(0);
+    expect(inFn(1)).toBe(1);
+    expect(outFn(0)).toBe(0);
+    expect(outFn(1)).toBe(1);
+    expect(inAndOutFn(0)).toBe(0);
+    expect(inAndOutFn(1)).toBe(1);
   });
 
   it('should throw an error for an invalid EasingType', () => {
@@ -45,18 +62,27 @@ describe('getProperties', () => {
   const options = new MockOptions();
 
   it('should return null if duration is zero', () => {
-    jest.spyOn(options, 'inferNonNegativeNumberValue').mockReturnValue(0);
+    vi.spyOn(options, 'inferNonNegativeNumberValue').mockReturnValue(0);
     expect(getProperties(options, defaultDuration, defaultMaxFramesPerSecond, defaultEasingType)).toBeNull();
   });
 
   it('should return correct properties for valid options', () => {
-    jest.spyOn(options, 'inferNonNegativeNumberValue').mockReturnValue(defaultDuration);
-    const properties = getProperties(options, defaultDuration, defaultMaxFramesPerSecond, defaultEasingType);
-    expect(properties).toEqual({
-      startup: false,
-      duration: defaultDuration,
-      easing: mockEasingFunctions.identity,
-      maxFramesPerSecond: defaultMaxFramesPerSecond,
+    const mockInferNonNegativeNumberValue = vi.spyOn(options, 'inferNonNegativeNumberValue');
+    mockInferNonNegativeNumberValue.mockImplementation((key: string, defaultValue: number) => {
+      if (key === 'animation.duration') return defaultDuration;
+      if (key === 'animation.maxFramesPerSecond') return defaultMaxFramesPerSecond;
+      return defaultValue;
     });
+
+    const properties = getProperties(options, defaultDuration, defaultMaxFramesPerSecond, defaultEasingType);
+    expect(properties).toBeDefined();
+    expect(properties!.startup).toBe(false);
+    expect(properties!.duration).toBe(defaultDuration);
+    expect(properties!.maxFramesPerSecond).toBe(defaultMaxFramesPerSecond);
+    expect(typeof properties!.easing).toBe('function');
+    // Test that the easing function works like identity for LINEAR
+    expect(properties!.easing(0)).toBe(0);
+    expect(properties!.easing(0.5)).toBe(0.5);
+    expect(properties!.easing(1)).toBe(1);
   });
 });

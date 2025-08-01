@@ -17,9 +17,7 @@
  * limitations under the License.
  */
 
-export * as DateTimePatterns from 'goog:goog.i18n.DateTimePatterns'; // from //third_party/javascript/closure/i18n:datetimepatterns
-export * as DateTimeSymbols from 'goog:goog.i18n.DateTimeSymbols'; // from //third_party/javascript/closure/i18n:datetimesymbols
-export * as NumberFormatSymbols from 'goog:goog.i18n.NumberFormatSymbols'; // from //third_party/javascript/closure/i18n:numberformatsymbols
+export {DateTimePatterns, DateTimeSymbols, NumberFormatSymbols} from '../common/i18n-data';
 export {DateTimeFormat} from '@npm//@closure/i18n/datetimeformat';
 export {NumberFormat} from '@npm//@closure/i18n/numberformat';
 export {TimeZone} from '@npm//@closure/i18n/timezone';

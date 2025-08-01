@@ -18,6 +18,7 @@
 
 import { assert } from 'ts-essentials';
 import {memoize} from './cache/memoize';
+import {typeOf} from './closure-replacements';
 
 // tslint:disable:ban-types Migration
 // tslint:disable-next-line:no-any For use by external code.
@@ -193,7 +194,7 @@ export function unsafeClone(obj: AnyDuringMigration): AnyDuringMigration {
     ret.setTime(obj.valueOf() as number);
     return ret;
   }
-  const type = goog.typeOf(obj);
+  const type = typeOf(obj);
   if (type === 'object' || type === 'array') {
     if (obj.clone) {
       return obj.clone();

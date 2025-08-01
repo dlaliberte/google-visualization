@@ -130,7 +130,7 @@ export class TextBlock {
   angle: number;
 
   /** The text style. */
-  anchor: Coordinate | null;
+  anchor: Coordinate | null | undefined;
 
   /**
    * Whether we truncated the text.
@@ -150,7 +150,7 @@ export class TextBlock {
     this.tooltip = textBlock.tooltip !== undefined ? textBlock.tooltip : '';
     this.tooltipText = textBlock.tooltipText;
     this.angle = textBlock.angle != null ? textBlock.angle : 0;
-    this.anchor = textBlock.anchor !== undefined ? textBlock.anchor : null;
+    this.anchor = textBlock.anchor;
     this.truncated = !!textBlock.truncated;
   }
 

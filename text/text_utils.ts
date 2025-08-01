@@ -77,14 +77,17 @@ export function calcTextLayout(
     maxLines,
     {truncate: true, requireOneChar, dontBreakWords: true},
   );
+  // Handle empty text case - should return one empty line
+  const lines = brokenUpText.lines.length === 0 && text === '' ? [''] : brokenUpText.lines;
+
   return {
-    lines: brokenUpText.lines,
+    lines,
     needTooltip: brokenUpText.truncated,
     maxLineWidth:
-      brokenUpText.lines.length > 0
+      lines.length > 0
         ? Math.max.apply(
             null,
-            brokenUpText.lines
+            lines
               .map(simpleTextMeasure)
               .map((obj: Size) => obj.width),
           )
@@ -97,16 +100,16 @@ export function calcTextLayout(
  *     family will be copied to the css style.
  * @return An object that can be set as the style of a dom element using goog.style. @see goog.style.
  */
-export function tooltipCssStyle(textStyle: TextStyle): {
+export function tooltipCssStyle(textStyle: TextStyle | null): {
   [key: string]: string | undefined;
 } {
   const cssStyle = {
     'background': 'infobackground',
     'padding': '1px',
     'border': '1px solid infotext',
-    'fontSize': textStyle.fontSize ? `${textStyle.fontSize}px` : undefined,
-    'fontFamily': textStyle.fontName ? textStyle.fontName : undefined,
-    'margin': textStyle.fontSize ? `${textStyle.fontSize}px` : undefined,
+    'fontSize': textStyle?.fontSize !== undefined ? `${textStyle.fontSize}px` : undefined,
+    'fontFamily': textStyle?.fontName ? textStyle.fontName : undefined,
+    'margin': textStyle?.fontSize !== undefined ? `${textStyle.fontSize}px` : undefined,
   };
   return cssStyle;
 }

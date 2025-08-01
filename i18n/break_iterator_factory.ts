@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import * as singleton from '@npm//@closure/singleton/singleton';
+import * as singleton from '../common/singleton';
 import {BreakIteratorInterface} from './break_iterator_interface';
 import {ManualBreakIterator} from './manual_break_iterator';
 import {WrappedV8BreakIterator} from './wrapped_v8_break_iterator';

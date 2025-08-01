@@ -294,3 +294,6 @@ export function serializeDate(src: unknown): AnyDuringMigration {
   }
   return result;
 }
+
+// Export the typeOf function for use in other modules
+export { typeOf };

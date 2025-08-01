@@ -113,6 +113,24 @@ export class DateTimeFormat {
   private locale: string;
   private pattern: string;
 
+  /**
+   * Standard date/time format patterns.
+   */
+  static readonly Format = {
+    FULL_DATE: 'EEEE, MMMM d, y',
+    LONG_DATE: 'MMMM d, y',
+    MEDIUM_DATE: 'MMM d, y',
+    SHORT_DATE: 'M/d/yy',
+    FULL_TIME: 'h:mm:ss a zzzz',
+    LONG_TIME: 'h:mm:ss a z',
+    MEDIUM_TIME: 'h:mm:ss a',
+    SHORT_TIME: 'h:mm a',
+    FULL_DATETIME: 'EEEE, MMMM d, y \'at\' h:mm:ss a zzzz',
+    LONG_DATETIME: 'MMMM d, y \'at\' h:mm:ss a z',
+    MEDIUM_DATETIME: 'MMM d, y, h:mm:ss a',
+    SHORT_DATETIME: 'M/d/yy, h:mm a',
+  } as const;
+
   constructor(pattern: string, locale: string = 'en-US') {
     this.pattern = pattern;
     this.locale = locale;

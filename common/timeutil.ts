@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import * as asserts from '@npm//@closure/asserts/asserts';
+import {assert} from './assert';
 
 import * as util from './util';
 
@@ -191,7 +191,7 @@ function roundDurationInternal(
   for (i = 0; i < newduration.length && unit[i] === 0; ++i) {
     newduration[i] = 0;
   }
-  asserts.assert(i !== newduration.length);
+  assert(i !== newduration.length);
 
   if (i === 0) {
     newduration[0] = func(duration[0] / unit[0]) * unit[0];
@@ -399,7 +399,7 @@ export class DateRangeIter {
    * @return The next date in the range of dates.
    */
   next(): Date {
-    asserts.assert(this.hasNext());
+    assert(this.hasNext());
 
     const ret = this.nextDate;
     this.nextDate = new Date(this.startMs);

@@ -19,12 +19,12 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import * as asserts from '@npm//@closure/asserts/asserts';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import * as googMath from '@npm//@closure/math/math';
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
-import * as googObject from '@npm//@closure/object/object';
+import * as googArray from '../common/array';
+import * as asserts from '../common/assert';
+import {Coordinate} from '../math/coordinate';
+import * as googMath from '../common/closure-math';
+import {Rect as GoogRect} from '../math/rect';
+import * as googObject from '../common/closure-object';
 
 import {memoize} from '../common/cache/memoize';
 import {GOLDEN_RATIO} from '../common/constants';

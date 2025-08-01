@@ -64,9 +64,9 @@ export class ManualBreakIterator implements BreakIteratorInterface {
    * @return The index after the occurrence of the regexp.
    */
   private findNextRegexp(re: RegExp): number {
-    asserts.assert(re.global);
-    asserts.assert(this.cursor !== null);
-    asserts.assert(this.text !== null);
+    assert(re.global);
+    assert(this.cursor !== null);
+    assert(this.text !== null);
     re.lastIndex = this.cursor!;
     const result = re.exec(this.text!);
     if (!result || result.index < 0) {
@@ -134,8 +134,8 @@ export class ManualBreakIterator implements BreakIteratorInterface {
 
   /** Returns index of the next break at the given level. */
   peek(level: number): number {
-    asserts.assert(this.text !== null);
-    asserts.assert(this.cursor !== null);
+    assert(this.text !== null);
+    assert(this.cursor !== null);
     if (level === constants.HARD_LINE_BREAK) {
       return this.findNextHardBreak();
     } else if (level === constants.SOFT_LINE_BREAK) {

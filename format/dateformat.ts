@@ -16,8 +16,7 @@
  * limitations under the License.
  */
 
-import DateTimePatterns from 'goog:goog.i18n.DateTimePatterns'; // from //third_party/javascript/closure/i18n:datetimepatterns
-import DateTimeSymbols from 'goog:goog.i18n.DateTimeSymbols'; // from //third_party/javascript/closure/i18n:datetimesymbols
+import {DateTimePatterns, DateTimeSymbols} from '../common/i18n-data';
 import {DateTimeFormat, TimeZone} from '../common/closure-i18n';
 import {Options} from '../common/options';
 import {Formatter} from '../data/abstract_datatable_interface';

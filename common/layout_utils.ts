@@ -22,8 +22,9 @@ import * as googString from './closure-string';
 import {BreakIteratorFactory} from '../i18n/break_iterator_factory';
 import {BreakIteratorInterface} from '../i18n/break_iterator_interface';
 import * as constants from '../i18n/constants';
-import {memoize} from './cache/memoize';
+import {customMemoize} from './cache/memoize';
 import * as gvizJson from './json';
+import {LocaleInfo} from './i18n-data';
 
 // tslint:disable:ban-types
 // tslint:disable:ban-ts-suppressions TS migration
@@ -220,7 +221,7 @@ export function truncateText(
   } else {
     // Modify the breakiterator to use the line text and reset it.
     const breakIterator = BreakIteratorFactory.getInstance().getBreakIterator([
-      goog.LOCALE,
+      LocaleInfo.LOCALE,
     ]);
     breakIterator.adoptText(text);
     breakIterator.first();
@@ -329,7 +330,7 @@ function breakLinesInternal(
   };
 
   const breakIterator = BreakIteratorFactory.getInstance().getBreakIterator([
-    goog.LOCALE,
+    LocaleInfo.LOCALE,
   ]);
   breakIterator.adoptText(text);
   breakIterator.first();
@@ -441,12 +442,12 @@ function breakLinesInternal(
  *   dontBreakWords: If true, a line break will never be inserted in the middle of a word unless there is another hint, such as a zero-width space or soft hyphen, default = false.
  * @return An object containing the lines array and a 'truncated' boolean telling whether the text was truncated or not.
  */
-export const breakLines = memoize(
+export const breakLines = customMemoize(
   // tslint:disable-next-line:ban-types
   breakLinesInternal as (...p1: AnyDuringMigration[]) => AnyDuringMigration,
   {
-    serializer(functionUuid, ...args) {
-      const argArray = [functionUuid, ...args];
+    serializer(functionId, ...args) {
+      const argArray = [functionId, ...args];
       return gvizJson.stringify(argArray);
     },
   },

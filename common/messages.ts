@@ -21,13 +21,13 @@
  * @desc Separator for every 3 digits in large numbers.
  *
  */
-export const MSG_THOUSAND_SEPARATOR = goog.getMsg(',');
+export const MSG_THOUSAND_SEPARATOR = ',';
 
 /** @desc Decimal point between whole and fraction. */
-export const MSG_DECIMAL_POINT = goog.getMsg('.');
+export const MSG_DECIMAL_POINT = '.';
 
 /** @desc Indication that the text was cut due to lack of space (ellipsis). */
-export const MSG_MISSING_TEXT_INDICATION = goog.getMsg('...');
+export const MSG_MISSING_TEXT_INDICATION = '...';
 
 /**
  * @desc When we draw a pie chart, there may be small slices that are too
@@ -42,16 +42,14 @@ export const MSG_MISSING_TEXT_INDICATION = goog.getMsg('...');
  *   http://www.thesaurus.com/browse/leftovers or "odds and ends":
  *   http://www.thesaurus.com/browse/odds%20and%20ends
  */
-export const MSG_OTHER = goog.getMsg('Other');
+export const MSG_OTHER = 'Other';
 
 /**
  * @desc Message for browsers that do not support chart.  The user is using a
  *   browser that does not support features required to draw charts with Google
  * Charts.
  */
-export const MSG_NOT_SUPPORTED = goog.getMsg(
-  'Your browser does not support charts',
-);
+export const MSG_NOT_SUPPORTED = 'Your browser does not support charts';
 
 /** @desc Message when there is no data for drawing a chart. */
-export const MSG_NO_DATA = goog.getMsg('No data');
+export const MSG_NO_DATA = 'No data';

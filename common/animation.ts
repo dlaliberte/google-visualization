@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-import {fail} from '@npm//@closure/asserts/asserts';
-import * as functions from '@npm//@closure/functions/functions';
-import * as fxEasing from '@npm//@closure/fx/easing';
+import {fail} from './assert';
+import * as functions from './functions';
+import * as fxEasing from './easing';
 import {Options} from './options';
 
 /**
@@ -42,16 +42,16 @@ export enum EasingType {
  * @param easingType The easing function type.
  * @return The easing function.
  */
-function getEasingFunction(easingType: EasingType): (p1: number) => number {
+export function getEasingFunction(easingType: EasingType): (p1: number) => number {
   switch (easingType) {
     case EasingType.LINEAR:
       return functions.identity;
     case EasingType.IN:
-      return fxEasing.easeIn;
+      return fxEasing.easeInCubic;
     case EasingType.OUT:
-      return fxEasing.easeOut;
+      return fxEasing.easeOutCubic;
     case EasingType.IN_AND_OUT:
-      return fxEasing.inAndOut;
+      return fxEasing.easeInOutCubic;
     default:
       fail(`Invalid easing type "${easingType}"`);
   }

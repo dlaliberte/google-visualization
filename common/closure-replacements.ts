@@ -74,6 +74,7 @@ export { Tooltip, TooltipPosition, TooltipState } from './closure-tooltip';
 export { forEach } from './array';
 export { assert, assertIsElement, assertExists } from './assert';
 export { clone, getKeys, isEmpty, extend } from './closure-object';
-export { clamp, Box, Range, Coordinate, Rect, Size } from './closure-math';
+export { clamp } from './closure-math';
 export { dispose, disposeAll } from './disposable';
 export { setStyle, getComputedStyle, showElement, hideElement } from './style';
+export { typeOf } from './json';

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import NumberFormatSymbols from 'goog:goog.i18n.NumberFormatSymbols'; // from //third_party/javascript/closure/i18n:numberformatsymbols
+import {NumberFormatSymbols} from '../common/i18n-data';
 import * as asserts from '../common/assert';
 // TODO: Replace with modern i18n number formatting library
 const I18nNumberFormat = {

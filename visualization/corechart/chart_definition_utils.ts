@@ -18,9 +18,9 @@
  * limitations under the License.
  */
 
-import {assert} from '@npm//@closure/asserts/asserts';
-import {Coordinate} from '@npm//@closure/math/coordinate';
-import {Rect} from '@npm//@closure/math/rect';
+import {assert} from '../../common/assert';
+import {Coordinate} from '../../common/closure-math';
+import {Rect} from '../../common/closure-math';
 import {
   ChartType,
   Orientation,

@@ -18,7 +18,8 @@
  * limitations under the License.
  */
 
-import {isObject} from '../common/object';
+import {isObject, isDateLike} from '../common/object';
+import {typeOf} from '../common/json';
 
 import {DateFormat} from '../format/dateformat';
 import {Format} from '../format/format';
@@ -64,7 +65,7 @@ type AnyDuringMigration = any;
  */
 export function parseCell(cell: Value | AnyDuringMigration): Cell {
   const result: Cell = {} as Cell;
-  if (goog.typeOf(cell) === 'object' && !goog.isDateLike(cell)) {
+  if (typeOf(cell) === 'object' && !isDateLike(cell)) {
     result['v'] = typeof cell['v'] === 'undefined' ? null : cell['v'];
 
     // Check 'f' property
@@ -780,7 +781,7 @@ export function checkValueType(
       break;
     case ColumnType.DATE:
     case ColumnType.DATETIME:
-      if (goog.isDateLike(value)) {
+      if (isDateLike(value)) {
         return true;
       }
       break;
