@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import 'jasmine';
+import { describe, it, expect } from 'vitest';
 
 import {assertEquals, assertThrowsWithMessage} from '../common/test_utils';
 

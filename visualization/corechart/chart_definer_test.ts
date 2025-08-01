@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import 'jasmine';
+import { describe, it, expect } from 'vitest';
 
 import {AxisChartDefiner} from './axis_chart_definer';
 import {ChartDefiner} from './chart_definer';

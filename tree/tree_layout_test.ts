@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import 'jasmine';
+import { describe, it, expect } from 'vitest';
 
 import {NodeBase} from './node_base';
 import {TreeBase} from './tree_base';

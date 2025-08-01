@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import 'jasmine';
+import { describe, it, expect } from 'vitest';
 
 import * as testUtils from '../common/test_utils';
 import {TableSpec} from './types';

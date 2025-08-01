@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import 'jasmine';
+import { describe, it, expect } from 'vitest';
 
 import {LRU} from './lru';
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import 'jasmine';
+import { describe, it, expect } from 'vitest';
 
 import {Data} from './data';
 import {DataTable} from './datatable';
