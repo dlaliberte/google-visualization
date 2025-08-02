@@ -67,6 +67,28 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    // Custom plugin to inject Google Charts loader
+    function googleChartsPlugin() {
+      return {
+        name: 'google-charts-plugin',
+        injectHtmlTags() {
+          return {
+            headTags: [
+              {
+                tagName: 'script',
+                attributes: {
+                  type: 'text/javascript',
+                  src: 'https://www.gstatic.com/charts/loader.js',
+                },
+              },
+            ],
+          };
+        },
+      };
+    },
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
