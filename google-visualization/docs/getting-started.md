@@ -5,6 +5,8 @@ title: Getting Started
 
 import PieChartExample from '@site/src/components/PieChartExample';
 import GoogleChart from '@site/src/components/GoogleChart';
+import GoogleChartCode from '@site/src/components/GoogleChartCode';
+import LiveChartEditor from '@site/src/components/LiveChartEditor';
 
 # Getting Started
 
