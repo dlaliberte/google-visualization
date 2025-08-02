@@ -1,47 +1,28 @@
 ---
 sidebar_position: 1
 ---
+# Google Visualization API Documentation
 
-# Tutorial Intro
+Welcome to the official documentation for the Google Visualization API. This site provides guides, tutorials, and a comprehensive API reference to help you create rich, interactive charts and data tools.
 
-Let's discover **Docusaurus in less than 5 minutes**.
+The Google Visualization API is a powerful and easy-to-use JavaScript library for creating charts from your data. From simple line charts to complex hierarchical treemaps, the library provides a wide range of chart types for your data visualization needs.
 
-## Getting Started
+## Where to Start?
 
-Get started by **creating a new site**.
+- If you are new here, we recommend starting with the **Getting Started** guide to create your first chart in minutes.
+- To understand the core concepts, check out the guides on **DataTable and DataView**.
+- For a complete list of all available charts and their options, browse the **Chart Gallery**.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Documentation Plan
 
-### What you'll need
+This documentation is a work in progress. We are actively working on documenting the entire public API. You can view our progress and the overall structure in the **Documentation Plan**.
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+We welcome your feedback and contributions to make this documentation better!
 
-## Generate a new site
+## Project Modernization
 
-Generate a new Docusaurus site using the **classic template**.
+This library has recently undergone a significant modernization effort to replace the legacy Google Closure Library with modern TypeScript and standard JavaScript modules. This migration is now **99% complete**, resulting in a more maintainable, type-safe, and future-proof codebase.
 
-The classic template will automatically be added to your project after you run the command:
+This effort makes it easier for new developers to contribute and ensures the long-term health of the Google Visualization API.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+You can read more about the successful migration in the **[Project Modernization](./development-modernization)** page.
