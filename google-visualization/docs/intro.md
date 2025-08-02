@@ -10,14 +10,12 @@ The Google Visualization API is a powerful and easy-to-use JavaScript library fo
 ## Where to Start?
 
 - If you are new here, we recommend starting with the **[Getting Started](./getting-started)** guide to create your first chart in minutes.
-- For those who want to dive deeper into specific aspects of the API, check out the **[API Reference](./api-reference)** section.
-- To explore advanced topics like customizing chart behavior or integrating with other libraries, refer to the **[Advanced Topics](./advanced-topics)** section.
-- Looking for examples? Check out the **[Examples](./examples)** section where you'll find ready-made demos that showcase various features of the API.
-- Need support? Visit our **[Support Page](https://developers.google.com/chart/interactive/docs/support)** for resources such as FAQs, troubleshooting tips, and community forums.
+- To understand the core concepts, check out the guides on **[DataTable and DataView](./datatable)**.
+- For a complete list of all available charts and their options, browse the **[Chart Gallery](./chart-gallery)**.
 
 ## Documentation Plan
 
-This documentation is a work in progress. We are actively working on documenting the entire public API. You can view our progress and the overall structure in the **Documentation Plan**.
+This documentation is a work in progress. We are actively working on documenting the entire public API. You can view our progress and the overall structure in the **[Documentation Plan](./documentation-plan)**.
 
 We welcome your feedback and contributions to make this documentation better!
 

@@ -25,6 +25,7 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'getting-started',
+        'datatable',
       ],
     },
     {
@@ -41,6 +42,12 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Development',
+      link: {
+        type: 'generated-index',
+        title: 'Development',
+        description: 'Information for developers contributing to the Google Visualization API.',
+        slug: '/development',
+      },
       items: ['documentation-plan', 'development-modernization'],
     },
   ],
