@@ -25,7 +25,33 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'getting-started',
-        'datatable',
+        {
+          type: 'category',
+          label: 'Data Handling',
+          items: [
+            'datatable-overview',
+            'datatable-creation',
+            'datatable-data-types',
+            'dataview',
+            'advanced-data-manipulation',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Charts',
+          items: [
+            'chart-types',
+            'chart-integration',
+            'chartwrapper',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Advanced Topics',
+          items: [
+            'performance-best-practices',
+          ],
+        },
       ],
     },
     {

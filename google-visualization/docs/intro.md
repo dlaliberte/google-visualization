@@ -10,7 +10,10 @@ The Google Visualization API is a powerful and easy-to-use JavaScript library fo
 ## Where to Start?
 
 - If you are new here, we recommend starting with the **[Getting Started](./getting-started)** guide to create your first chart in minutes.
-- To understand the core concepts, check out the guides on **[DataTable and DataView](./datatable)**.
+- To understand the core concepts, check out the **[DataTable Overview](./datatable-overview)** and learn about **[Data Types and Formatting](./datatable-data-types)**.
+- For advanced data manipulation, explore **[DataView](./dataview)** and **[Advanced Data Manipulation](./advanced-data-manipulation)**.
+- Learn about different **[Chart Types](./chart-types)** and **[Chart Integration](./chart-integration)** techniques.
+- For production applications, review our **[Performance Best Practices](./performance-best-practices)**.
 - For a complete list of all available charts and their options, browse the **[Chart Gallery](./chart-gallery)**.
 
 ## Documentation Plan
