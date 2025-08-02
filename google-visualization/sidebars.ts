@@ -34,6 +34,7 @@ const sidebars: SidebarsConfig = {
             'datatable-data-types',
             'dataview',
             'advanced-data-manipulation',
+            'data-import-export',
           ],
         },
         {
@@ -43,13 +44,32 @@ const sidebars: SidebarsConfig = {
             'chart-types',
             'chart-integration',
             'chartwrapper',
+            'chart-events',
+            'chart-customization',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Interactive Features',
+          items: [
+            'controls',
+            'dashboard-creation',
           ],
         },
         {
           type: 'category',
           label: 'Advanced Topics',
           items: [
+            'advanced-formatting',
             'performance-best-practices',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Reference',
+          items: [
+            'api-reference',
+            'troubleshooting',
           ],
         },
       ],
