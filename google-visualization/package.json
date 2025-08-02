@@ -1,4 +1,2811 @@
-{
+---
+sidebar_position: 8
+title: Chart Types
+---
+
+# Chart Types
+
+Google Charts provides a wide variety of chart types to visualize your data. This guide covers the most commonly used chart types, their data requirements, and best use cases.
+
+## Core Charts (corechart package)
+
+### Pie Chart
+
+Perfect for showing parts of a whole. Requires exactly 2 columns: labels and values.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Browser', 'Usage'],
+  ['Chrome', 61.9],
+  ['Firefox', 15.6],
+  ['Safari', 11.2],
+  ['Edge', 8.7],
+  ['Other', 2.6]
+]);
+
+const options = {
+  title: 'Browser Usage',
+  pieHole: 0.4,        // Creates donut chart
+  sliceVisibilityThreshold: 0.02, // Hide slices smaller than 2%
+  colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+};
+
+const chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Market share analysis
+- Budget breakdowns
+- Survey results
+- Any part-to-whole relationships
+
+### Line Chart
+
+Ideal for showing trends over time or continuous data.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Month', 'Sales', 'Expenses', 'Profit'],
+  ['Jan', 1000, 400, 600],
+  ['Feb', 1170, 460, 710],
+  ['Mar', 660, 1120, -460],
+  ['Apr', 1030, 540, 490],
+  ['May', 1200, 580, 620],
+  ['Jun', 1100, 520, 580]
+]);
+
+const options = {
+  title: 'Company Performance',
+  curveType: 'function',    // Smooth curves
+  legend: { position: 'bottom' },
+  hAxis: { title: 'Month' },
+  vAxis: { title: 'Amount ($)' },
+  series: {
+    2: { color: '#e2431e', lineDashStyle: [4, 4] } // Dashed line for profit
+  }
+};
+
+const chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Time series data
+- Trend analysis
+- Performance tracking
+- Continuous data visualization
+
+### Column Chart
+
+Great for comparing values across categories.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['City', '2020 Population', '2021 Population'],
+  ['New York', 8175000, 8230000],
+  ['Los Angeles', 3792000, 3898000],
+  ['Chicago', 2695000, 2746000],
+  ['Houston', 2099000, 2304000],
+  ['Phoenix', 1445000, 1608000]
+]);
+
+const options = {
+  title: 'Population by City',
+  chartArea: { width: '50%' },
+  colors: ['#1f77b4', '#ff7f0e'],
+  hAxis: {
+    title: 'Total Population',
+    minValue: 0,
+    format: '#,###'
+  },
+  vAxis: { title: 'City' }
+};
+
+const chart = new google.visualization.ColumnChart(document.getElementById('column_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Comparing quantities
+- Ranking data
+- Survey responses
+- Performance comparisons
+
+### Bar Chart
+
+Similar to column chart but horizontal orientation.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Country', 'GDP (Trillions)'],
+  ['United States', 21.4],
+  ['China', 14.3],
+  ['Japan', 5.1],
+  ['Germany', 3.8],
+  ['India', 2.9]
+]);
+
+const options = {
+  title: 'GDP by Country',
+  chartArea: { width: '50%' },
+  hAxis: {
+    title: 'GDP (Trillions USD)',
+    minValue: 0
+  },
+  vAxis: { title: 'Country' }
+};
+
+const chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Long category names
+- Ranking with many items
+- When horizontal layout works better
+
+### Area Chart
+
+Shows trends and cumulative values over time.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Year', 'Desktop', 'Mobile', 'Tablet'],
+  ['2018', 1000, 400, 200],
+  ['2019', 1170, 460, 250],
+  ['2020', 660, 1120, 300],
+  ['2021', 1030, 1540, 350],
+  ['2022', 800, 1800, 400]
+]);
+
+const options = {
+  title: 'Device Usage Over Time',
+  hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
+  vAxis: { minValue: 0 },
+  isStacked: true,  // Stack areas on top of each other
+  colors: ['#1f77b4', '#ff7f0e', '#2ca02c']
+};
+
+const chart = new google.visualization.AreaChart(document.getElementById('area_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Cumulative data
+- Part-to-whole over time
+- Multiple series trends
+
+### Scatter Chart
+
+Perfect for showing relationships between two numeric variables.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Age', 'Weight', 'Height'],
+  [8, 12, 120],
+  [4, 5.5, 95],
+  [11, 14, 130],
+  [4, 5, 92],
+  [3, 3.5, 85],
+  [6.5, 7, 110]
+]);
+
+const options = {
+  title: 'Age vs. Weight',
+  hAxis: { title: 'Age', minValue: 0, maxValue: 15 },
+  vAxis: { title: 'Weight', minValue: 0, maxValue: 15 },
+  legend: 'none',
+  pointSize: 5,
+  colors: ['#e0440e']
+};
+
+const chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Correlation analysis
+- Scientific data
+- Performance vs. cost analysis
+- Any two-variable relationships
+
+### Combo Chart
+
+Combines different chart types in one visualization.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+  ['2004/05', 165, 938, 522, 998, 450, 614.6],
+  ['2005/06', 135, 1120, 599, 1268, 288, 682],
+  ['2006/07', 157, 1167, 587, 807, 397, 623],
+  ['2007/08', 139, 1110, 615, 968, 215, 609.4],
+  ['2008/09', 136, 691, 629, 1026, 366, 569.6]
+]);
+
+const options = {
+  title: 'Monthly Coffee Production by Country',
+  vAxis: { title: 'Cups' },
+  hAxis: { title: 'Month' },
+  seriesType: 'columns',
+  series: { 5: { type: 'line' } }  // Make the last series a line
+};
+
+const chart = new google.visualization.ComboChart(document.getElementById('combo_chart'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Comparing different metrics
+- Showing targets vs. actuals
+- Mixed data types
+
+## Specialized Charts
+
+### Table Chart
+
+Displays data in a sortable, interactive table format.
+
+```javascript
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Name');
+data.addColumn('number', 'Salary');
+data.addColumn('boolean', 'Full Time');
+data.addColumn('date', 'Start Date');
+
+data.addRows([
+  ['Mike', { v: 10000, f: '$10,000' }, true, new Date(2020, 1, 15)],
+  ['Jim', { v: 8000, f: '$8,000' }, false, new Date(2020, 3, 22)],
+  ['Alice', { v: 12500, f: '$12,500' }, true, new Date(2019, 11, 5)],
+  ['Bob', { v: 7000, f: '$7,000' }, true, new Date(2021, 0, 10)]
+]);
+
+const options = {
+  width: '100%',
+  height: '100%',
+  alternatingRowStyle: false,
+  sortColumn: 1,
+  sortAscending: false
+};
+
+const table = new google.visualization.Table(document.getElementById('table_div'));
+table.draw(data, options);
+```
+
+**Best for:**
+- Detailed data display
+- Sortable data
+- Mixed data types
+- Data exploration
+
+### Histogram
+
+Shows the distribution of a dataset.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Student', 'Score'],
+  ['Student 1', 85],
+  ['Student 2', 92],
+  ['Student 3', 78],
+  ['Student 4', 95],
+  ['Student 5', 88],
+  ['Student 6', 73],
+  ['Student 7', 91],
+  ['Student 8', 82],
+  ['Student 9', 87],
+  ['Student 10', 94]
+]);
+
+const options = {
+  title: 'Test Score Distribution',
+  legend: { position: 'none' },
+  colors: ['#1f77b4'],
+  histogram: {
+    bucketSize: 5,
+    minValue: 70,
+    maxValue: 100
+  }
+};
+
+const chart = new google.visualization.Histogram(document.getElementById('histogram_div'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Data distribution analysis
+- Quality control
+- Statistical analysis
+
+### Candlestick Chart
+
+Used for financial data showing open, high, low, and close values.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Date', 'Low', 'Open', 'Close', 'High'],
+  ['Mon', 20, 28, 38, 45],
+  ['Tue', 31, 38, 55, 66],
+  ['Wed', 50, 55, 77, 80],
+  ['Thu', 77, 77, 66, 50],
+  ['Fri', 68, 66, 22, 15]
+], true);
+
+const options = {
+  title: 'Stock Price Movement',
+  legend: 'none',
+  candlestick: {
+    fallingColor: { strokeWidth: 0, fill: '#a52714' },
+    risingColor: { strokeWidth: 0, fill: '#0d652d' }
+  }
+};
+
+const chart = new google.visualization.CandlestickChart(document.getElementById('candlestick_div'));
+chart.draw(data, options);
+```
+
+**Best for:**
+- Stock price analysis
+- Financial data
+- OHLC data visualization
+
+## Chart Selection Guide
+
+### By Data Type
+
+| Data Type | Recommended Charts |
+|-----------|-------------------|
+| Time Series | Line, Area, Column |
+| Categories | Column, Bar, Pie |
+| Relationships | Scatter, Bubble |
+| Distributions | Histogram |
+| Financial | Candlestick |
+| Detailed Data | Table |
+
+### By Use Case
+
+| Use Case | Best Chart Types |
+|----------|------------------|
+| Trends over time | Line, Area |
+| Comparisons | Column, Bar |
+| Parts of whole | Pie, Stacked Area |
+| Correlations | Scatter |
+| Rankings | Bar, Column |
+| Distributions | Histogram |
+| Multiple metrics | Combo, Multiple charts |
+
+## Common Chart Options
+
+### Universal Options
+
+```javascript
+const commonOptions = {
+  // Title and text
+  title: 'Chart Title',
+  titleTextStyle: {
+    color: '#333',
+    fontSize: 18,
+    bold: true
+  },
+
+  // Size
+  width: 600,
+  height: 400,
+
+  // Background
+  backgroundColor: '#f8f9fa',
+
+  // Chart area
+  chartArea: {
+    left: 80,
+    top: 60,
+    width: '75%',
+    height: '75%'
+  },
+
+  // Legend
+  legend: {
+    position: 'bottom',
+    alignment: 'center',
+    textStyle: { fontSize: 12 }
+  },
+
+  // Colors
+  colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'],
+
+  // Animation
+  animation: {
+    startup: true,
+    duration: 1000,
+    easing: 'out'
+  }
+};
+```
+
+### Axis Options
+
+```javascript
+const axisOptions = {
+  hAxis: {
+    title: 'X-Axis Title',
+    titleTextStyle: { color: '#333' },
+    textStyle: { fontSize: 11 },
+    gridlines: { color: '#e0e0e0' },
+    minValue: 0,
+    maxValue: 100,
+    format: '#,###'
+  },
+
+  vAxis: {
+    title: 'Y-Axis Title',
+    titleTextStyle: { color: '#333' },
+    textStyle: { fontSize: 11 },
+    gridlines: { color: '#e0e0e0' },
+    minValue: 0,
+    format: '$#,###'
+  }
+};
+```
+
+## Responsive Charts
+
+### Making Charts Responsive
+
+```javascript
+function drawResponsiveChart() {
+  const data = google.visualization.arrayToDataTable([
+    ['Year', 'Sales', 'Expenses'],
+    ['2019', 1000, 400],
+    ['2020', 1170, 460],
+    ['2021', 660, 1120],
+    ['2022', 1030, 540]
+  ]);
+
+  const options = {
+    title: 'Company Performance',
+    curveType: 'function',
+    legend: { position: 'bottom' },
+    // Make responsive
+    width: '100%',
+    height: 400
+  };
+
+  const chart = new google.visualization.LineChart(document.getElementById('responsive_chart'));
+
+  function drawChart() {
+    chart.draw(data, options);
+  }
+
+  drawChart();
+
+  // Redraw on window resize
+  window.addEventListener('resize', drawChart);
+}
+```
+
+### Mobile-Friendly Options
+
+```javascript
+function isMobile() {
+  return window.innerWidth < 768;
+}
+
+function getMobileOptions(baseOptions) {
+  if (isMobile()) {
+    return {
+      ...baseOptions,
+      legend: { position: 'none' },
+      chartArea: { width: '90%', height: '70%' },
+      hAxis: { textStyle: { fontSize: 10 } },
+      vAxis: { textStyle: { fontSize: 10 } }
+    };
+  }
+  return baseOptions;
+}
+```
+
+## Next Steps
+
+- Learn about [Chart Customization](./chart-customization.md) for advanced styling
+- Explore [Chart Events and Interactivity](./chart-events.md) for user interactions
+- See [ChartWrapper](./chartwrapper.md) for unified chart management
+- Check out [Performance Best Practices](./performance-best-practices.md) for optimization---
+sidebar_position: 7
+title: ChartWrapper
+---
+
+# ChartWrapper
+
+The `google.visualization.ChartWrapper` is a powerful wrapper class that provides a unified interface for creating and managing charts. It's the recommended approach for most chart implementations as it simplifies chart creation and provides additional functionality.
+
+## Why Use ChartWrapper?
+
+### Benefits over Direct Chart Classes
+
+1. **Unified Interface**: Same API for all chart types
+2. **Simplified Creation**: Less boilerplate code
+3. **Built-in Error Handling**: Better error management
+4. **Event Management**: Easier event handling
+5. **Dynamic Chart Types**: Can change chart type without recreating
+6. **Serialization**: Easy to save/load chart configurations
+
+## Basic Usage
+
+### Simple Chart Creation
+
+```javascript
+google.charts.load('current', {'packages': ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  const wrapper = new google.visualization.ChartWrapper({
+    chartType: 'PieChart',
+    dataTable: [
+      ['Task', 'Hours per Day'],
+      ['Work', 8],
+      ['Eat', 2],
+      ['Sleep', 8],
+      ['Exercise', 2],
+      ['Leisure', 4]
+    ],
+    options: {
+      title: 'My Daily Activities',
+      width: 400,
+      height: 300
+    },
+    containerId: 'chart_div'
+  });
+
+  wrapper.draw();
+}
+```
+
+### Using with DataTable
+
+```javascript
+function drawChartWithDataTable() {
+  // Create DataTable
+  const data = new google.visualization.DataTable();
+  data.addColumn('string', 'Month');
+  data.addColumn('number', 'Sales');
+  data.addRows([
+    ['Jan', 1000],
+    ['Feb', 1170],
+    ['Mar', 660],
+    ['Apr', 1030]
+  ]);
+
+  // Create ChartWrapper
+  const wrapper = new google.visualization.ChartWrapper({
+    chartType: 'LineChart',
+    dataTable: data,
+    options: {
+      title: 'Monthly Sales',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    },
+    containerId: 'chart_div'
+  });
+
+  wrapper.draw();
+}
+```
+
+## Configuration Options
+
+### Complete Configuration Object
+
+```javascript
+const wrapper = new google.visualization.ChartWrapper({
+  // Required: Chart type
+  chartType: 'ColumnChart',
+
+  // Required: Container element ID
+  containerId: 'my_chart_div',
+
+  // Data source (one of these)
+  dataTable: myDataTable,           // DataTable object
+  dataSourceUrl: 'data.csv',        // URL to data source
+  query: 'SELECT A, B FROM ...',    // Query string
+  refreshInterval: 5,               // Auto-refresh interval (seconds)
+
+  // Chart options
+  options: {
+    title: 'My Chart',
+    width: 600,
+    height: 400,
+    backgroundColor: '#f0f0f0',
+    colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+  },
+
+  // View specification (for DataView-like functionality)
+  view: {
+    columns: [0, 1, 2],
+    rows: [0, 1, 2, 3, 4]
+  }
+});
+```
+
+## Dynamic Chart Management
+
+### Changing Chart Type
+
+```javascript
+let wrapper = new google.visualization.ChartWrapper({
+  chartType: 'ColumnChart',
+  dataTable: data,
+  options: { title: 'Sales Data' },
+  containerId: 'chart_div'
+});
+
+wrapper.draw();
+
+// Change to line chart
+function switchToLineChart() {
+  wrapper.setChartType('LineChart');
+  wrapper.setOption('curveType', 'function');
+  wrapper.draw();
+}
+
+// Change to pie chart
+function switchToPieChart() {
+  wrapper.setChartType('PieChart');
+  wrapper.setOption('is3D', true);
+  wrapper.draw();
+}
+```
+
+### Updating Data
+
+```javascript
+// Update with new DataTable
+function updateData(newData) {
+  wrapper.setDataTable(newData);
+  wrapper.draw();
+}
+
+// Update with array data
+function updateWithArray(arrayData) {
+  wrapper.setDataTable(arrayData);
+  wrapper.draw();
+}
+
+// Update from URL
+function updateFromUrl(url) {
+  wrapper.setDataSourceUrl(url);
+  wrapper.draw();
+}
+```
+
+### Modifying Options
+
+```javascript
+// Set individual options
+wrapper.setOption('title', 'New Title');
+wrapper.setOption('width', 800);
+wrapper.setOption('height', 600);
+
+// Set multiple options
+wrapper.setOptions({
+  title: 'Updated Chart',
+  backgroundColor: '#ffffff',
+  colors: ['#ff0000', '#00ff00', '#0000ff']
+});
+
+// Get current options
+const currentOptions = wrapper.getOptions();
+console.log('Current title:', currentOptions.title);
+```
+
+## Event Handling
+
+### Chart Events
+
+```javascript
+const wrapper = new google.visualization.ChartWrapper({
+  chartType: 'ColumnChart',
+  dataTable: data,
+  options: { title: 'Interactive Chart' },
+  containerId: 'chart_div'
+});
+
+// Listen for ready event
+google.visualization.events.addListener(wrapper, 'ready', function() {
+  console.log('Chart is ready');
+
+  // Now you can add listeners to the actual chart
+  const chart = wrapper.getChart();
+
+  google.visualization.events.addListener(chart, 'select', function() {
+    const selection = chart.getSelection();
+    if (selection.length > 0) {
+      const row = selection[0].row;
+      const col = selection[0].column;
+      console.log('Selected:', row, col);
+    }
+  });
+});
+
+// Listen for error events
+google.visualization.events.addListener(wrapper, 'error', function(error) {
+  console.error('Chart error:', error);
+  document.getElementById('error_div').innerHTML =
+    `Error: ${error.message}`;
+});
+
+wrapper.draw();
+```
+
+### Wrapper-Specific Events
+
+```javascript
+// Listen for chart type changes
+google.visualization.events.addListener(wrapper, 'chartTypeChanged', function() {
+  console.log('Chart type changed to:', wrapper.getChartType());
+});
+
+// Listen for data changes
+google.visualization.events.addListener(wrapper, 'dataTableChanged', function() {
+  console.log('Data table updated');
+});
+
+// Listen for option changes
+google.visualization.events.addListener(wrapper, 'optionsChanged', function() {
+  console.log('Options updated');
+});
+```
+
+## Advanced Features
+
+### Using with DataView
+
+```javascript
+// Create base data
+const baseData = new google.visualization.DataTable();
+baseData.addColumn('string', 'Product');
+baseData.addColumn('number', 'Q1');
+baseData.addColumn('number', 'Q2');
+baseData.addColumn('number', 'Q3');
+baseData.addColumn('number', 'Q4');
+
+baseData.addRows([
+  ['Product A', 100, 120, 130, 140],
+  ['Product B', 200, 180, 190, 210],
+  ['Product C', 150, 160, 140, 180]
+]);
+
+// Use view specification in wrapper
+const wrapper = new google.visualization.ChartWrapper({
+  chartType: 'ColumnChart',
+  dataTable: baseData,
+  view: {
+    columns: [0, 1, 2] // Show only Product, Q1, Q2
+  },
+  options: { title: 'Q1 vs Q2 Performance' },
+  containerId: 'chart_div'
+});
+
+wrapper.draw();
+
+// Change view dynamically
+function showAllQuarters() {
+  wrapper.setView({ columns: [0, 1, 2, 3, 4] });
+  wrapper.draw();
+}
+
+function showOnlyQ4() {
+  wrapper.setView({ columns: [0, 4] });
+  wrapper.draw();
+}
+```
+
+### Query Integration
+
+```javascript
+// Using Google Sheets as data source
+const wrapper = new google.visualization.ChartWrapper({
+  chartType: 'LineChart',
+  dataSourceUrl: 'https://docs.google.com/spreadsheets/d/1234567890/edit#gid=0',
+  query: 'SELECT A, B, C WHERE B > 100',
+  refreshInterval: 30, // Refresh every 30 seconds
+  options: {
+    title: 'Live Data from Google Sheets'
+  },
+  containerId: 'chart_div'
+});
+
+wrapper.draw();
+```
+
+### Serialization and Storage
+
+```javascript
+// Save chart configuration
+function saveChartConfig() {
+  const config = {
+    chartType: wrapper.getChartType(),
+    options: wrapper.getOptions(),
+    containerId: wrapper.getContainerId()
+    // Note: DataTable needs special handling for serialization
+  };
+
+  localStorage.setItem('chartConfig', JSON.stringify(config));
+}
+
+// Load chart configuration
+function loadChartConfig() {
+  const configStr = localStorage.getItem('chartConfig');
+  if (configStr) {
+    const config = JSON.parse(configStr);
+
+    const newWrapper = new google.visualization.ChartWrapper({
+      chartType: config.chartType,
+      dataTable: getCurrentData(), // Get current data
+      options: config.options,
+      containerId: config.containerId
+    });
+
+    newWrapper.draw();
+    return newWrapper;
+  }
+}
+```
+
+## Multiple Charts Management
+
+### Chart Dashboard
+
+```javascript
+class ChartDashboard {
+  constructor() {
+    this.charts = new Map();
+  }
+
+  addChart(id, config) {
+    const wrapper = new google.visualization.ChartWrapper(config);
+
+    // Add common event handlers
+    google.visualization.events.addListener(wrapper, 'ready', () => {
+      console.log(`Chart ${id} is ready`);
+    });
+
+    google.visualization.events.addListener(wrapper, 'error', (error) => {
+      console.error(`Chart ${id} error:`, error);
+    });
+
+    this.charts.set(id, wrapper);
+    wrapper.draw();
+
+    return wrapper;
+  }
+
+  updateChart(id, newData) {
+    const wrapper = this.charts.get(id);
+    if (wrapper) {
+      wrapper.setDataTable(newData);
+      wrapper.draw();
+    }
+  }
+
+  changeChartType(id, newType) {
+    const wrapper = this.charts.get(id);
+    if (wrapper) {
+      wrapper.setChartType(newType);
+      wrapper.draw();
+    }
+  }
+
+  removeChart(id) {
+    const wrapper = this.charts.get(id);
+    if (wrapper) {
+      // Clear the container
+      const containerId = wrapper.getContainerId();
+      document.getElementById(containerId).innerHTML = '';
+      this.charts.delete(id);
+    }
+  }
+}
+
+// Usage
+const dashboard = new ChartDashboard();
+
+dashboard.addChart('sales', {
+  chartType: 'LineChart',
+  dataTable: salesData,
+  options: { title: 'Sales Trend' },
+  containerId: 'sales_chart'
+});
+
+dashboard.addChart('expenses', {
+  chartType: 'PieChart',
+  dataTable: expenseData,
+  options: { title: 'Expense Breakdown' },
+  containerId: 'expense_chart'
+});
+```
+
+## Error Handling and Debugging
+
+### Comprehensive Error Handling
+
+```javascript
+function createRobustChart(config) {
+  try {
+    const wrapper = new google.visualization.ChartWrapper(config);
+
+    // Handle wrapper errors
+    google.visualization.events.addListener(wrapper, 'error', function(error) {
+      console.error('Wrapper error:', error);
+
+      // Display user-friendly error message
+      const container = document.getElementById(config.containerId);
+      container.innerHTML = `
+        <div class="chart-error">
+          <h3>Chart Error</h3>
+          <p>${error.message}</p>
+          <button onclick="retryChart('${config.containerId}')">Retry</button>
+        </div>
+      `;
+    });
+
+    // Handle ready event
+    google.visualization.events.addListener(wrapper, 'ready', function() {
+      console.log('Chart loaded successfully');
+
+      // Add chart-specific event handlers
+      const chart = wrapper.getChart();
+      if (chart) {
+        google.visualization.events.addListener(chart, 'select', function() {
+          handleChartSelection(chart);
+        });
+      }
+    });
+
+    wrapper.draw();
+    return wrapper;
+
+  } catch (error) {
+    console.error('Failed to create chart:', error);
+
+    const container = document.getElementById(config.containerId);
+    container.innerHTML = `
+      <div class="chart-error">
+        <h3>Failed to Create Chart</h3>
+        <p>${error.message}</p>
+      </div>
+    `;
+  }
+}
+
+function retryChart(containerId) {
+  // Retry logic here
+  console.log('Retrying chart for container:', containerId);
+}
+```
+
+## Best Practices
+
+### Performance Optimization
+
+```javascript
+// Good - reuse wrapper for updates
+const wrapper = new google.visualization.ChartWrapper(config);
+
+function updateChart(newData) {
+  wrapper.setDataTable(newData);
+  wrapper.draw(); // Efficient update
+}
+
+// Avoid - creating new wrapper each time
+function inefficientUpdate(newData) {
+  const newWrapper = new google.visualization.ChartWrapper({
+    // ... full config
+    dataTable: newData
+  });
+  newWrapper.draw(); // Wasteful
+}
+```
+
+### Memory Management
+
+```javascript
+class ChartManager {
+  constructor() {
+    this.activeCharts = new Map();
+  }
+
+  createChart(id, config) {
+    // Clean up existing chart if any
+    this.destroyChart(id);
+
+    const wrapper = new google.visualization.ChartWrapper(config);
+    this.activeCharts.set(id, wrapper);
+    wrapper.draw();
+
+    return wrapper;
+  }
+
+  destroyChart(id) {
+    const wrapper = this.activeCharts.get(id);
+    if (wrapper) {
+      // Clear container
+      const containerId = wrapper.getContainerId();
+      const container = document.getElementById(containerId);
+      if (container) {
+        container.innerHTML = '';
+      }
+
+      // Remove from tracking
+      this.activeCharts.delete(id);
+    }
+  }
+
+  destroyAll() {
+    for (const [id] of this.activeCharts) {
+      this.destroyChart(id);
+    }
+  }
+}
+```
+
+## Next Steps
+
+- Learn about [Chart Events and Interactivity](./chart-events.md) for advanced event handling
+- Explore [Dashboard Creation](./dashboard-creation.md) for building complex dashboards
+- See [Chart Customization](./chart-customization.md) for styling and theming
+- Check out [Performance Best Practices](./performance-best-practices.md) for optimization tips---
+sidebar_position: 6
+title: Chart Integration
+---
+
+# Chart Integration
+
+This guide shows you how to integrate DataTables and DataViews with different chart types, handle events, and create interactive visualizations.
+
+## Basic Chart Integration
+
+### Using DataTable with Charts
+
+```javascript
+// Create data
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Month');
+data.addColumn('number', 'Sales');
+data.addColumn('number', 'Expenses');
+
+data.addRows([
+  ['Jan', 1000, 400],
+  ['Feb', 1170, 460],
+  ['Mar', 660, 1120],
+  ['Apr', 1030, 540]
+]);
+
+// Create chart
+const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+chart.draw(data, {
+  title: 'Company Performance',
+  curveType: 'function',
+  legend: { position: 'bottom' }
+});
+```
+
+### Using DataView with Charts
+
+```javascript
+// Original data with multiple metrics
+const fullData = new google.visualization.DataTable();
+fullData.addColumn('string', 'Product');
+fullData.addColumn('number', 'Q1');
+fullData.addColumn('number', 'Q2');
+fullData.addColumn('number', 'Q3');
+fullData.addColumn('number', 'Q4');
+
+fullData.addRows([
+  ['Product A', 100, 120, 130, 140],
+  ['Product B', 200, 180, 190, 210],
+  ['Product C', 150, 160, 140, 180]
+]);
+
+// Create view showing only Q1 and Q2
+const q1q2View = new google.visualization.DataView(fullData);
+q1q2View.setColumns([0, 1, 2]); // Product, Q1, Q2
+
+// Use view with chart
+const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+chart.draw(q1q2View, {
+  title: 'Q1 vs Q2 Performance',
+  hAxis: { title: 'Products' },
+  vAxis: { title: 'Sales' }
+});
+```
+
+## Chart Types and Data Requirements
+
+### Pie Chart
+Requires exactly 2 columns: labels (string) and values (number).
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Category', 'Percentage'],
+  ['Desktop', 58.9],
+  ['Mobile', 35.8],
+  ['Tablet', 5.3]
+]);
+
+const chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+chart.draw(data, {
+  title: 'Device Usage',
+  pieHole: 0.4 // Creates a donut chart
+});
+```
+
+### Line Chart
+First column: x-axis values, subsequent columns: data series.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Year', 'Sales', 'Expenses'],
+  ['2019', 1000, 400],
+  ['2020', 1170, 460],
+  ['2021', 660, 1120],
+  ['2022', 1030, 540]
+]);
+
+const chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+chart.draw(data, {
+  title: 'Company Performance',
+  curveType: 'function',
+  legend: { position: 'bottom' }
+});
+```
+
+### Bar/Column Chart
+Similar to line chart: categories and one or more data series.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['City', '2020 Population', '2021 Population'],
+  ['New York', 8175000, 8230000],
+  ['Los Angeles', 3792000, 3898000],
+  ['Chicago', 2695000, 2746000],
+  ['Houston', 2099000, 2304000]
+]);
+
+const chart = new google.visualization.ColumnChart(document.getElementById('column_chart'));
+chart.draw(data, {
+  title: 'Population by City',
+  chartArea: { width: '50%' },
+  hAxis: { title: 'Total Population', minValue: 0 },
+  vAxis: { title: 'City' }
+});
+```
+
+### Scatter Chart
+Requires at least 2 numeric columns for x and y coordinates.
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Age', 'Weight'],
+  [8, 12], [4, 5.5], [11, 14], [4, 5], [3, 3.5],
+  [6.5, 7], [3, 4], [6, 6.5], [7, 8], [2, 2]
+]);
+
+const chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart'));
+chart.draw(data, {
+  title: 'Age vs. Weight comparison',
+  hAxis: { title: 'Age', minValue: 0, maxValue: 15 },
+  vAxis: { title: 'Weight', minValue: 0, maxValue: 15 },
+  legend: 'none'
+});
+```
+
+### Table Chart
+Can display any DataTable structure.
+
+```javascript
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Name');
+data.addColumn('number', 'Salary');
+data.addColumn('boolean', 'Full Time Employee');
+
+data.addRows([
+  ['Mike', 10000, true],
+  ['Jim', 8000, false],
+  ['Alice', 12500, true],
+  ['Bob', 7000, true]
+]);
+
+const table = new google.visualization.Table(document.getElementById('table_div'));
+table.draw(data, {
+  width: '100%',
+  height: '100%',
+  alternatingRowStyle: false
+});
+```
+
+## Dynamic Data Updates
+
+### Updating Chart Data
+
+```javascript
+let data = new google.visualization.DataTable();
+data.addColumn('string', 'Month');
+data.addColumn('number', 'Sales');
+
+// Initial data
+data.addRows([
+  ['Jan', 1000],
+  ['Feb', 1170],
+  ['Mar', 660]
+]);
+
+const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+chart.draw(data, options);
+
+// Function to add new data
+function addDataPoint(month, sales) {
+  data.addRow([month, sales]);
+  chart.draw(data, options); // Redraw chart
+}
+
+// Function to update existing data
+function updateDataPoint(rowIndex, newValue) {
+  data.setValue(rowIndex, 1, newValue);
+  chart.draw(data, options);
+}
+
+// Usage
+addDataPoint('Apr', 1030);
+updateDataPoint(0, 1100); // Update January sales
+```
+
+### Real-time Data Updates
+
+```javascript
+function createRealtimeChart() {
+  const data = new google.visualization.DataTable();
+  data.addColumn('datetime', 'Time');
+  data.addColumn('number', 'Value');
+
+  const chart = new google.visualization.LineChart(document.getElementById('realtime_chart'));
+
+  const options = {
+    title: 'Real-time Data',
+    hAxis: { format: 'HH:mm:ss' },
+    vAxis: { minValue: 0 },
+    legend: { position: 'none' }
+  };
+
+  // Update every second
+  setInterval(() => {
+    const now = new Date();
+    const value = Math.random() * 100;
+
+    data.addRow([now, value]);
+
+    // Keep only last 50 points
+    if (data.getNumberOfRows() > 50) {
+      data.removeRow(0);
+    }
+
+    chart.draw(data, options);
+  }, 1000);
+}
+```
+
+## Event Handling
+
+### Chart Events
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Element', 'Density'],
+  ['Copper', 8.94],
+  ['Silver', 10.49],
+  ['Gold', 19.30],
+  ['Platinum', 21.45]
+]);
+
+const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+// Listen for select events
+google.visualization.events.addListener(chart, 'select', function() {
+  const selection = chart.getSelection();
+  if (selection.length > 0) {
+    const row = selection[0].row;
+    const element = data.getValue(row, 0);
+    const density = data.getValue(row, 1);
+    alert(`Selected: ${element} (${density})`);
+  }
+});
+
+// Listen for ready events
+google.visualization.events.addListener(chart, 'ready', function() {
+  console.log('Chart is ready');
+});
+
+// Listen for error events
+google.visualization.events.addListener(chart, 'error', function(error) {
+  console.error('Chart error:', error);
+});
+
+chart.draw(data, options);
+```
+
+### Mouse Events
+
+```javascript
+// Mouse over events
+google.visualization.events.addListener(chart, 'onmouseover', function(e) {
+  console.log('Mouse over row:', e.row, 'column:', e.column);
+});
+
+// Mouse out events
+google.visualization.events.addListener(chart, 'onmouseout', function(e) {
+  console.log('Mouse out');
+});
+```
+
+## Multiple Charts from One DataTable
+
+### Dashboard Example
+
+```javascript
+// Main data source
+const salesData = new google.visualization.DataTable();
+salesData.addColumn('string', 'Region');
+salesData.addColumn('number', 'Q1');
+salesData.addColumn('number', 'Q2');
+salesData.addColumn('number', 'Q3');
+salesData.addColumn('number', 'Q4');
+
+salesData.addRows([
+  ['North', 100, 120, 130, 140],
+  ['South', 200, 180, 190, 210],
+  ['East', 150, 160, 140, 180],
+  ['West', 180, 170, 160, 190]
+]);
+
+// Chart 1: Q1 Performance by Region
+const q1View = new google.visualization.DataView(salesData);
+q1View.setColumns([0, 1]);
+
+const chart1 = new google.visualization.PieChart(document.getElementById('chart1'));
+chart1.draw(q1View, { title: 'Q1 Sales by Region' });
+
+// Chart 2: Quarterly Trends
+const trendView = new google.visualization.DataView(salesData);
+// Keep all columns for trend analysis
+
+const chart2 = new google.visualization.LineChart(document.getElementById('chart2'));
+chart2.draw(trendView, {
+  title: 'Quarterly Sales Trends',
+  hAxis: { title: 'Quarter' }
+});
+
+// Chart 3: Total Sales by Region
+const totalView = new google.visualization.DataView(salesData);
+totalView.setColumns([
+  0, // Region
+  {
+    calc: function(dt, row) {
+      return dt.getValue(row, 1) + dt.getValue(row, 2) +
+             dt.getValue(row, 3) + dt.getValue(row, 4);
+    },
+    type: 'number',
+    label: 'Total Sales'
+  }
+]);
+
+const chart3 = new google.visualization.ColumnChart(document.getElementById('chart3'));
+chart3.draw(totalView, { title: 'Total Sales by Region' });
+```
+
+## Advanced Integration Patterns
+
+### Chart Synchronization
+
+```javascript
+function createSynchronizedCharts() {
+  const data = new google.visualization.DataTable();
+  // ... populate data
+
+  const chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
+  const chart2 = new google.visualization.ColumnChart(document.getElementById('chart2'));
+
+  // Synchronize selections
+  google.visualization.events.addListener(chart1, 'select', function() {
+    const selection = chart1.getSelection();
+    chart2.setSelection(selection);
+  });
+
+  google.visualization.events.addListener(chart2, 'select', function() {
+    const selection = chart2.getSelection();
+    chart1.setSelection(selection);
+  });
+
+  chart1.draw(data, options1);
+  chart2.draw(data, options2);
+}
+```
+
+### Conditional Chart Types
+
+```javascript
+function createAdaptiveChart(data, containerElement) {
+  const numRows = data.getNumberOfRows();
+  const numCols = data.getNumberOfColumns();
+
+  let chart;
+  let options = { title: 'Adaptive Chart' };
+
+  if (numCols === 2 && numRows <= 10) {
+    // Small dataset with 2 columns - use pie chart
+    chart = new google.visualization.PieChart(containerElement);
+  } else if (numCols === 2) {
+    // Two columns - use column chart
+    chart = new google.visualization.ColumnChart(containerElement);
+  } else if (numCols > 2) {
+    // Multiple series - use line chart
+    chart = new google.visualization.LineChart(containerElement);
+    options.curveType = 'function';
+  } else {
+    // Fallback to table
+    chart = new google.visualization.Table(containerElement);
+  }
+
+  chart.draw(data, options);
+  return chart;
+}
+```
+
+### Error Handling
+
+```javascript
+function drawChartWithErrorHandling(data, options) {
+  try {
+    const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+    google.visualization.events.addListener(chart, 'error', function(error) {
+      console.error('Chart error:', error);
+      document.getElementById('error_div').innerHTML =
+        `<p>Error: ${error.message}</p>`;
+    });
+
+    google.visualization.events.addListener(chart, 'ready', function() {
+      document.getElementById('error_div').innerHTML = '';
+    });
+
+    chart.draw(data, options);
+  } catch (error) {
+    console.error('Failed to create chart:', error);
+    document.getElementById('error_div').innerHTML =
+      `<p>Failed to create chart: ${error.message}</p>`;
+  }
+}
+```
+
+## Performance Optimization
+
+### Efficient Data Updates
+
+```javascript
+// Good - batch updates
+function updateMultiplePoints(updates) {
+  // Collect all updates
+  updates.forEach(update => {
+    data.setValue(update.row, update.col, update.value);
+  });
+
+  // Single redraw
+  chart.draw(data, options);
+}
+
+// Avoid - multiple redraws
+function inefficientUpdate(updates) {
+  updates.forEach(update => {
+    data.setValue(update.row, update.col, update.value);
+    chart.draw(data, options); // Expensive!
+  });
+}
+```
+
+### Large Dataset Handling
+
+```javascript
+function handleLargeDataset(largeData) {
+  // Use DataView to show only visible portion
+  const view = new google.visualization.DataView(largeData);
+
+  // Show only first 1000 rows
+  const visibleRows = [];
+  for (let i = 0; i < Math.min(1000, largeData.getNumberOfRows()); i++) {
+    visibleRows.push(i);
+  }
+  view.setRows(visibleRows);
+
+  const chart = new google.visualization.Table(document.getElementById('table_div'));
+  chart.draw(view, {
+    page: 'enable',
+    pageSize: 50,
+    pagingSymbols: { prev: 'prev', next: 'next' }
+  });
+}
+```
+
+## Next Steps
+
+- Explore [Chart Events and Interactivity](./chart-events.md) for advanced event handling
+- Learn about [Chart Customization](./chart-customization.md) for styling and theming
+- See [Dashboard Creation](./dashboard-creation.md) for building complex dashboards
+- Check out [Performance Best Practices](./performance-best-practices.md) for optimization tips---
+sidebar_position: 1
+title: Getting Started
+---
+
+# Getting Started
+
+This guide will walk you through the process of creating your first chart with the Google Visualization API. We'll create a simple pie chart and display it on a web page.
+
+## 1. Load the Library
+
+First, you need to include the Google Charts loader script on your web page. This script is responsible for loading the necessary packages for the charts you want to use.
+
+Place the following `<script>` tag in the `<head>` of your HTML file:
+
+```html
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+```
+
+Next, you need to load the specific chart packages you intend to use. For a pie chart, you'll need the `corechart` package:
+
+```javascript
+google.charts.load('current', {'packages':['corechart']});
+```
+
+## 2. Create Your Data
+
+Charts need data to display. The Google Visualization API uses a `DataTable` object to hold your data. Here's how to create a simple dataset for a pie chart:
+
+```javascript
+function drawChart() {
+  // Create the data table
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Task');
+  data.addColumn('number', 'Hours per Day');
+
+  data.addRows([
+    ['Work',     8],
+    ['Eat',      2],
+    ['Commute',  1],
+    ['Watch TV', 3],
+    ['Sleep',    8]
+  ]);
+}
+```
+
+Alternatively, you can use the `arrayToDataTable` helper method:
+
+```javascript
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Hours per Day'],
+    ['Work',     8],
+    ['Eat',      2],
+    ['Commute',  1],
+    ['Watch TV', 3],
+    ['Sleep',    8]
+  ]);
+}
+```
+
+## 3. Configure Chart Options
+
+You can customize your chart's appearance by setting various options:
+
+```javascript
+function drawChart() {
+  // ... data creation code ...
+
+  // Set chart options
+  var options = {
+    title: 'My Daily Activities',
+    width: 400,
+    height: 300
+  };
+}
+```
+
+## 4. Draw the Chart
+
+Finally, create the chart object and draw it:
+
+```javascript
+function drawChart() {
+  // ... data and options code ...
+
+  // Instantiate and draw the chart
+  var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
+  chart.draw(data, options);
+}
+```
+
+## 5. Complete Example
+
+Here's a complete HTML page that displays a pie chart:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Chart</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    // Load the Visualization API and the corechart package
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Create the data table
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Work',     8],
+        ['Eat',      2],
+        ['Commute',  1],
+        ['Watch TV', 3],
+        ['Sleep',    8]
+      ]);
+
+      // Set chart options
+      var options = {
+        title: 'My Daily Activities',
+        width: 400,
+        height: 300
+      };
+
+      // Instantiate and draw the chart
+      var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <h1>My First Google Chart</h1>
+  <div id="myPieChart"></div>
+</body>
+</html>
+```
+
+## Using ChartWrapper (Recommended)
+
+For more complex applications, we recommend using the `ChartWrapper` class, which provides a more flexible way to create and manage charts:
+
+```javascript
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var wrapper = new google.visualization.ChartWrapper({
+    chartType: 'PieChart',
+    dataTable: [
+      ['Task', 'Hours per Day'],
+      ['Work',     8],
+      ['Eat',      2],
+      ['Commute',  1],
+      ['Watch TV', 3],
+      ['Sleep',    8]
+    ],
+    options: {
+      title: 'My Daily Activities',
+      width: 400,
+      height: 300
+    },
+    containerId: 'myPieChart'
+  });
+
+  wrapper.draw();
+}
+```
+
+## Next Steps
+
+Now that you've created your first chart, you can:
+
+- Learn more about [DataTable Overview](./datatable-overview.md) to understand how to work with data
+- Explore [Creating DataTables](./datatable-creation.md) for different ways to create data
+- Discover [Data Types and Formatting](./datatable-data-types.md) for working with different data types
+- Try [DataView](./dataview.md) for advanced data filtering and transformation
+
+Congratulations! You've successfully created your first Google Chart. 🎉---
+sidebar_position: 5
+title: DataView
+---
+
+# DataView
+
+A `google.visualization.DataView` is a read-only view of a DataTable that allows you to select, reorder, and transform data without modifying the original DataTable. It's perfect for creating multiple charts from the same dataset or applying filters and calculations.
+
+## What is a DataView?
+
+Think of a DataView as a "lens" through which you can view your data differently:
+
+- **Non-destructive**: The original DataTable remains unchanged
+- **Efficient**: No data duplication - views reference the original data
+- **Flexible**: Multiple views can show different perspectives of the same data
+- **Dynamic**: Views can be updated to show different subsets
+
+## Creating a DataView
+
+### Basic Creation
+
+```javascript
+// Start with a DataTable
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Country');
+data.addColumn('number', 'Population');
+data.addColumn('number', 'Area');
+data.addColumn('number', 'GDP');
+
+data.addRows([
+  ['China', 1439323776, 9596961, 14342903],
+  ['India', 1380004385, 3287263, 3173398],
+  ['United States', 331002651, 9833517, 21427700],
+  ['Indonesia', 273523615, 1904569, 1289429],
+  ['Pakistan', 220892340, 881913, 346343]
+]);
+
+// Create a view of the data
+const view = new google.visualization.DataView(data);
+```
+
+## Column Operations
+
+### Selecting Columns
+
+```javascript
+// Show only specific columns (by index)
+view.setColumns([0, 1]); // Country and Population only
+
+// Show columns by ID (if columns have IDs)
+view.setColumns(['country', 'population']);
+
+// Reorder columns
+view.setColumns([1, 0, 2]); // Population, Country, Area
+```
+
+### Column Specifications
+
+For more control, use column specification objects:
+
+```javascript
+view.setColumns([
+  0, // Country (unchanged)
+  {
+    calc: function(dt, row) {
+      return dt.getValue(row, 1) / 1000000; // Population in millions
+    },
+    type: 'number',
+    label: 'Population (Millions)'
+  },
+  2 // Area (unchanged)
+]);
+```
+
+### Calculated Columns
+
+Create new columns based on existing data:
+
+```javascript
+view.setColumns([
+  0, // Country
+  1, // Population
+  2, // Area
+  {
+    calc: function(dt, row) {
+      const population = dt.getValue(row, 1);
+      const area = dt.getValue(row, 2);
+      return population / area; // Population density
+    },
+    type: 'number',
+    label: 'Population Density'
+  }
+]);
+```
+
+### Predefined Calculations
+
+Use built-in calculation functions:
+
+```javascript
+view.setColumns([
+  0, // Country
+  1, // Population
+  {
+    calc: 'stringify',
+    sourceColumn: 1,
+    type: 'string',
+    label: 'Population (Text)'
+  }
+]);
+```
+
+## Row Operations
+
+### Filtering Rows
+
+```javascript
+// Show only rows where population > 500 million
+view.setRows(view.getFilteredRows([{
+  column: 1,
+  minValue: 500000000
+}]));
+
+// Multiple filters
+view.setRows(view.getFilteredRows([
+  {column: 1, minValue: 100000000}, // Population > 100M
+  {column: 2, maxValue: 5000000}    // Area < 5M km²
+]));
+```
+
+### Custom Row Filtering
+
+```javascript
+// Filter with custom function
+const filteredRows = [];
+for (let i = 0; i < data.getNumberOfRows(); i++) {
+  const country = data.getValue(i, 0);
+  const population = data.getValue(i, 1);
+
+  // Include only countries starting with 'I' and population > 200M
+  if (country.startsWith('I') && population > 200000000) {
+    filteredRows.push(i);
+  }
+}
+view.setRows(filteredRows);
+```
+
+### Sorting Rows
+
+```javascript
+// Sort by population (descending)
+const sortedRows = data.getSortedRows([{column: 1, desc: true}]);
+view.setRows(sortedRows);
+
+// Multiple sort criteria
+const sortedRows = data.getSortedRows([
+  {column: 0, desc: false}, // Country A-Z
+  {column: 1, desc: true}   // Then by population (high to low)
+]);
+view.setRows(sortedRows);
+```
+
+## Practical Examples
+
+### Example 1: Top 5 Countries by Population
+
+```javascript
+// Create view showing top 5 countries by population
+const topCountriesView = new google.visualization.DataView(data);
+
+// Sort by population and take top 5
+const sortedRows = data.getSortedRows([{column: 1, desc: true}]);
+topCountriesView.setRows(sortedRows.slice(0, 5));
+
+// Show only country and population
+topCountriesView.setColumns([0, 1]);
+```
+
+### Example 2: Population Density Analysis
+
+```javascript
+const densityView = new google.visualization.DataView(data);
+
+densityView.setColumns([
+  0, // Country
+  {
+    calc: function(dt, row) {
+      return dt.getValue(row, 1) / dt.getValue(row, 2);
+    },
+    type: 'number',
+    label: 'Population Density (per km²)'
+  },
+  {
+    calc: function(dt, row) {
+      const density = dt.getValue(row, 1) / dt.getValue(row, 2);
+      if (density > 100) return 'High';
+      if (density > 50) return 'Medium';
+      return 'Low';
+    },
+    type: 'string',
+    label: 'Density Category'
+  }
+]);
+```
+
+### Example 3: Regional Filtering
+
+```javascript
+// Create views for different regions
+const asianCountries = ['China', 'India', 'Indonesia', 'Pakistan'];
+
+const asiaView = new google.visualization.DataView(data);
+const asianRows = [];
+
+for (let i = 0; i < data.getNumberOfRows(); i++) {
+  if (asianCountries.includes(data.getValue(i, 0))) {
+    asianRows.push(i);
+  }
+}
+
+asiaView.setRows(asianRows);
+```
+
+## Advanced Features
+
+### Conditional Formatting with Views
+
+```javascript
+view.setColumns([
+  0, // Country
+  1, // Population
+  {
+    calc: function(dt, row) {
+      const population = dt.getValue(row, 1);
+      return {
+        v: population,
+        f: population.toLocaleString(),
+        p: {
+          style: population > 1000000000 ? 'color: red; font-weight: bold;' : ''
+        }
+      };
+    },
+    type: 'number',
+    label: 'Population (Formatted)'
+  }
+]);
+```
+
+### Aggregation Views
+
+```javascript
+// Create summary statistics
+const summaryView = new google.visualization.DataView(data);
+
+summaryView.setColumns([
+  {
+    calc: function() { return 'Total'; },
+    type: 'string',
+    label: 'Statistic'
+  },
+  {
+    calc: function(dt) {
+      let total = 0;
+      for (let i = 0; i < dt.getNumberOfRows(); i++) {
+        total += dt.getValue(i, 1);
+      }
+      return total;
+    },
+    type: 'number',
+    label: 'World Population'
+  }
+]);
+
+// Show only one row with the summary
+summaryView.setRows([0]);
+```
+
+## Performance Considerations
+
+### Efficient Filtering
+
+```javascript
+// Good - use built-in filtering
+const filtered = view.getFilteredRows([{column: 1, minValue: 1000000}]);
+view.setRows(filtered);
+
+// Less efficient - manual filtering
+const manualFiltered = [];
+for (let i = 0; i < data.getNumberOfRows(); i++) {
+  if (data.getValue(i, 1) > 1000000) {
+    manualFiltered.push(i);
+  }
+}
+view.setRows(manualFiltered);
+```
+
+### Caching Calculations
+
+```javascript
+// Cache expensive calculations
+const calculationCache = new Map();
+
+view.setColumns([
+  0,
+  {
+    calc: function(dt, row) {
+      const key = `${row}`;
+      if (!calculationCache.has(key)) {
+        // Expensive calculation
+        const result = complexCalculation(dt.getValue(row, 1));
+        calculationCache.set(key, result);
+      }
+      return calculationCache.get(key);
+    },
+    type: 'number',
+    label: 'Calculated Value'
+  }
+]);
+```
+
+## Using Views with Charts
+
+### Multiple Charts from One DataTable
+
+```javascript
+// Original data
+const salesData = new google.visualization.DataTable();
+salesData.addColumn('string', 'Product');
+salesData.addColumn('number', 'Q1');
+salesData.addColumn('number', 'Q2');
+salesData.addColumn('number', 'Q3');
+salesData.addColumn('number', 'Q4');
+
+// Chart 1: Q1 vs Q2
+const q1q2View = new google.visualization.DataView(salesData);
+q1q2View.setColumns([0, 1, 2]);
+
+const chart1 = new google.visualization.ScatterChart(document.getElementById('chart1'));
+chart1.draw(q1q2View, {title: 'Q1 vs Q2 Sales'});
+
+// Chart 2: Total sales by product
+const totalView = new google.visualization.DataView(salesData);
+totalView.setColumns([
+  0,
+  {
+    calc: function(dt, row) {
+      return dt.getValue(row, 1) + dt.getValue(row, 2) +
+             dt.getValue(row, 3) + dt.getValue(row, 4);
+    },
+    type: 'number',
+    label: 'Total Sales'
+  }
+]);
+
+const chart2 = new google.visualization.ColumnChart(document.getElementById('chart2'));
+chart2.draw(totalView, {title: 'Total Sales by Product'});
+```
+
+## Best Practices
+
+### 1. Use Views for Data Transformation
+
+```javascript
+// Good - use views for different perspectives
+const originalData = new google.visualization.DataTable();
+// ... populate data
+
+const monthlyView = new google.visualization.DataView(originalData);
+const quarterlyView = new google.visualization.DataView(originalData);
+const yearlyView = new google.visualization.DataView(originalData);
+```
+
+### 2. Minimize Recalculation
+
+```javascript
+// Good - calculate once, reuse
+const processedView = new google.visualization.DataView(data);
+processedView.setColumns([/* calculated columns */]);
+
+// Use the same view for multiple charts
+chart1.draw(processedView, options1);
+chart2.draw(processedView, options2);
+```
+
+### 3. Clear Views When Done
+
+```javascript
+// Clean up when no longer needed
+view = null; // Allow garbage collection
+```
+
+## Common Use Cases
+
+### Dashboard Creation
+
+```javascript
+// Main data
+const dashboardData = loadData();
+
+// KPI view
+const kpiView = new google.visualization.DataView(dashboardData);
+kpiView.setColumns([/* summary calculations */]);
+
+// Trend view
+const trendView = new google.visualization.DataView(dashboardData);
+trendView.setRows(trendView.getFilteredRows([{column: 0, minValue: lastMonth}]));
+
+// Comparison view
+const comparisonView = new google.visualization.DataView(dashboardData);
+comparisonView.setColumns([0, 1, 3]); // Skip column 2
+```
+
+### Data Exploration
+
+```javascript
+// Interactive filtering
+function updateView(minValue, maxValue) {
+  const filtered = data.getFilteredRows([
+    {column: 1, minValue: minValue},
+    {column: 1, maxValue: maxValue}
+  ]);
+
+  view.setRows(filtered);
+  chart.draw(view, options);
+}
+```
+
+## Next Steps
+
+- Learn about [Chart Integration](./chart-integration.md) for using DataViews with charts
+- Explore [Advanced Data Manipulation](./advanced-data-manipulation.md) for complex transformations
+- See [Dashboard Creation](./dashboard-creation.md) for building interactive dashboards---
+sidebar_position: 4
+title: Data Types and Formatting
+---
+
+# Data Types and Formatting
+
+Understanding data types is crucial for working with Google Charts. Each column in a DataTable has a specific data type that determines how the data is interpreted and displayed.
+
+## Supported Data Types
+
+### string
+Text data. This is the default type if none is specified.
+
+```javascript
+data.addColumn('string', 'Product Name');
+data.addRow(['iPhone 15']);
+```
+
+**Use cases:**
+- Labels, categories, names
+- Text annotations
+- IDs that shouldn't be treated as numbers
+
+### number
+Numeric data including integers and floating-point numbers.
+
+```javascript
+data.addColumn('number', 'Price');
+data.addRow([999.99]);
+```
+
+**Use cases:**
+- Measurements, quantities, prices
+- Chart values for most chart types
+- Calculations and aggregations
+
+### boolean
+True/false values.
+
+```javascript
+data.addColumn('boolean', 'In Stock');
+data.addRow([true]);
+```
+
+**Use cases:**
+- Yes/no indicators
+- Feature flags
+- Conditional formatting
+
+### date
+Date values (year, month, day only).
+
+```javascript
+data.addColumn('date', 'Launch Date');
+data.addRow([new Date(2023, 8, 12)]); // September 12, 2023
+```
+
+**Use cases:**
+- Timeline charts
+- Date-based filtering
+- Historical data analysis
+
+### datetime
+Date and time values with full precision.
+
+```javascript
+data.addColumn('datetime', 'Timestamp');
+data.addRow([new Date(2023, 8, 12, 14, 30, 0)]); // Sep 12, 2023 2:30 PM
+```
+
+**Use cases:**
+- Precise time tracking
+- Real-time data
+- Event logging
+
+### timeofday
+Time of day as an array of numbers [hours, minutes, seconds, milliseconds].
+
+```javascript
+data.addColumn('timeofday', 'Meeting Time');
+data.addRow([[14, 30, 0, 0]]); // 2:30 PM
+```
+
+**Use cases:**
+- Daily schedules
+- Time-based patterns
+- Duration calculations
+
+## Working with Different Data Types
+
+### String Data
+
+```javascript
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Category');
+data.addColumn('string', 'Description');
+
+data.addRows([
+  ['Electronics', 'Consumer electronics and gadgets'],
+  ['Books', 'Fiction and non-fiction literature'],
+  ['Clothing', 'Apparel and accessories']
+]);
+```
+
+### Numeric Data
+
+```javascript
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Product');
+data.addColumn('number', 'Price');
+data.addColumn('number', 'Quantity');
+data.addColumn('number', 'Revenue');
+
+data.addRows([
+  ['Laptop', 1299.99, 50, 64999.50],
+  ['Mouse', 29.99, 200, 5998.00],
+  ['Keyboard', 79.99, 100, 7999.00]
+]);
+```
+
+### Date and Time Data
+
+```javascript
+const data = new google.visualization.DataTable();
+data.addColumn('date', 'Date');
+data.addColumn('datetime', 'Timestamp');
+data.addColumn('timeofday', 'Time');
+
+data.addRows([
+  [new Date(2023, 0, 1), new Date(2023, 0, 1, 9, 30), [9, 30, 0]],
+  [new Date(2023, 0, 2), new Date(2023, 0, 2, 14, 15), [14, 15, 0]],
+  [new Date(2023, 0, 3), new Date(2023, 0, 3, 16, 45), [16, 45, 0]]
+]);
+```
+
+### Boolean Data
+
+```javascript
+const data = new google.visualization.DataTable();
+data.addColumn('string', 'Feature');
+data.addColumn('boolean', 'Available');
+data.addColumn('boolean', 'Premium Only');
+
+data.addRows([
+  ['Dark Mode', true, false],
+  ['Advanced Analytics', true, true],
+  ['Custom Themes', false, true]
+]);
+```
+
+## Cell Formatting
+
+Each cell can have three components:
+- **v** (value): The actual data value
+- **f** (formatted): How the value should be displayed
+- **p** (properties): Additional metadata
+
+### Basic Formatting
+
+```javascript
+data.addRow([
+  'Q1 Sales',
+  {
+    v: 1234567.89,           // Actual value
+    f: '$1.23M'              // Displayed value
+  }
+]);
+```
+
+### Advanced Cell Properties
+
+```javascript
+data.addRow([
+  'Important Metric',
+  {
+    v: 95.5,
+    f: '95.5%',
+    p: {
+      style: 'color: green; font-weight: bold;',
+      className: 'highlight-cell',
+      customData: 'exceeds-target'
+    }
+  }
+]);
+```
+
+## Data Type Conversion
+
+### Automatic Conversion
+
+Google Charts automatically converts compatible types:
+
+```javascript
+// These are equivalent for number columns
+data.addRow([42]);        // number
+data.addRow(['42']);      // string that looks like number
+data.addRow([{v: 42}]);   // cell object
+```
+
+### Manual Conversion
+
+```javascript
+// Convert string to number
+const stringValue = '123.45';
+const numberValue = parseFloat(stringValue);
+data.addRow([numberValue]);
+
+// Convert date string to Date object
+const dateString = '2023-09-12';
+const dateValue = new Date(dateString);
+data.addRow([dateValue]);
+```
+
+## Formatting Patterns
+
+### Number Patterns
+
+Use patterns to control how numbers are displayed:
+
+```javascript
+data.addColumn({
+  type: 'number',
+  label: 'Price',
+  pattern: '$#,###.##'
+});
+
+data.addColumn({
+  type: 'number',
+  label: 'Percentage',
+  pattern: '#.##%'
+});
+```
+
+### Date Patterns
+
+```javascript
+data.addColumn({
+  type: 'date',
+  label: 'Date',
+  pattern: 'MMM dd, yyyy'
+});
+```
+
+## Using Formatters
+
+For more advanced formatting, use formatter objects:
+
+### Number Formatter
+
+```javascript
+const formatter = new google.visualization.NumberFormat({
+  prefix: '$',
+  suffix: ' USD',
+  negativeColor: 'red',
+  negativeParens: true,
+  fractionDigits: 2
+});
+
+formatter.format(data, 1); // Format column 1
+```
+
+### Date Formatter
+
+```javascript
+const formatter = new google.visualization.DateFormat({
+  pattern: 'MMM dd, yyyy'
+});
+
+formatter.format(data, 0); // Format column 0
+```
+
+### Percentage Formatter
+
+```javascript
+const formatter = new google.visualization.NumberFormat({
+  suffix: '%',
+  fractionDigits: 1
+});
+
+formatter.format(data, 2); // Format column 2
+```
+
+## Data Validation
+
+### Type Checking
+
+```javascript
+function validateDataTypes(data) {
+  const numRows = data.getNumberOfRows();
+  const numCols = data.getNumberOfColumns();
+
+  for (let row = 0; row < numRows; row++) {
+    for (let col = 0; col < numCols; col++) {
+      const value = data.getValue(row, col);
+      const type = data.getColumnType(col);
+
+      if (!isValidType(value, type)) {
+        console.warn(`Invalid value at row ${row}, col ${col}: ${value} (expected ${type})`);
+      }
+    }
+  }
+}
+
+function isValidType(value, expectedType) {
+  if (value === null) return true; // null is valid for any type
+
+  switch (expectedType) {
+    case 'string': return typeof value === 'string';
+    case 'number': return typeof value === 'number';
+    case 'boolean': return typeof value === 'boolean';
+    case 'date':
+    case 'datetime': return value instanceof Date;
+    case 'timeofday': return Array.isArray(value) && value.length >= 3;
+    default: return true;
+  }
+}
+```
+
+## Best Practices
+
+### Choose the Right Type
+
+```javascript
+// Good - use appropriate types
+data.addColumn('date', 'Date');        // For dates
+data.addColumn('number', 'Revenue');   // For numeric calculations
+data.addColumn('string', 'Category');  // For labels
+
+// Avoid - using wrong types
+data.addColumn('string', 'Date');      // Dates as strings
+data.addColumn('string', 'Revenue');   // Numbers as strings
+```
+
+### Consistent Formatting
+
+```javascript
+// Good - consistent date format
+data.addRows([
+  [new Date(2023, 0, 1), 100],
+  [new Date(2023, 0, 2), 150],
+  [new Date(2023, 0, 3), 200]
+]);
+
+// Avoid - mixed formats
+data.addRows([
+  [new Date(2023, 0, 1), 100],
+  ['2023-01-02', 150],           // String instead of Date
+  [new Date(2023, 0, 3), 200]
+]);
+```
+
+### Handle Null Values
+
+```javascript
+// Explicitly handle missing data
+data.addRows([
+  ['Product A', 100],
+  ['Product B', null],  // Missing value
+  ['Product C', 200]
+]);
+```
+
+## Common Pitfalls
+
+### Date Constructor Issues
+
+```javascript
+// Wrong - months are 0-indexed
+new Date(2023, 12, 1); // This is January 1, 2024!
+
+// Correct
+new Date(2023, 11, 1); // December 1, 2023
+new Date('2023-12-01'); // December 1, 2023
+```
+
+### Number Precision
+
+```javascript
+// Be aware of floating-point precision
+const value = 0.1 + 0.2; // 0.30000000000000004
+
+// Round when necessary
+const rounded = Math.round(value * 100) / 100; // 0.3
+```
+
+### String vs Number
+
+```javascript
+// These behave differently in calculations
+data.addRow(['10']);  // String - won't sum properly
+data.addRow([10]);    // Number - will sum correctly
+```
+
+## Next Steps
+
+- Learn about [DataView](./dataview.md) for data transformation
+- Explore [Chart Integration](./chart-integration.md) for using formatted data in charts
+- See [Advanced Formatting](./advanced-formatting.md) for complex formatting scenarios---
+sidebar_position: 3
+title: Creating DataTables
+---
+
+# Creating DataTables
+
+There are several ways to create and populate a `google.visualization.DataTable`. This guide covers all the methods you can use to get data into your charts.
+
+## Method 1: Create Empty and Add Data
+
+The most common approach is to create an empty DataTable and then add columns and rows:
+
+```javascript
+// Create an empty DataTable
+const data = new google.visualization.DataTable();
+
+// Add columns (specify type and optional label)
+data.addColumn('string', 'Country');
+data.addColumn('number', 'Population');
+data.addColumn('number', 'Area');
+
+// Add rows one at a time
+data.addRow(['China', 1439323776, 9596961]);
+data.addRow(['India', 1380004385, 3287263]);
+data.addRow(['United States', 331002651, 9833517]);
+
+// Or add multiple rows at once
+data.addRows([
+  ['Indonesia', 273523615, 1904569],
+  ['Pakistan', 220892340, 881913]
+]);
+```
+
+## Method 2: Initialize with Data Object
+
+You can create a DataTable with initial data by passing a data object to the constructor:
+
+```javascript
+const data = new google.visualization.DataTable({
+  cols: [
+    {id: 'country', label: 'Country', type: 'string'},
+    {id: 'population', label: 'Population', type: 'number'},
+    {id: 'area', label: 'Area (km²)', type: 'number'}
+  ],
+  rows: [
+    {c: [{v: 'China'}, {v: 1439323776}, {v: 9596961}]},
+    {c: [{v: 'India'}, {v: 1380004385}, {v: 3287263}]},
+    {c: [{v: 'United States'}, {v: 331002651}, {v: 9833517}]}
+  ]
+});
+```
+
+## Method 3: Using arrayToDataTable()
+
+The simplest method for creating a DataTable from a 2D array:
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['Country', 'Population', 'Area (km²)'],
+  ['China', 1439323776, 9596961],
+  ['India', 1380004385, 3287263],
+  ['United States', 331002651, 9833517],
+  ['Indonesia', 273523615, 1904569],
+  ['Pakistan', 220892340, 881913]
+]);
+```
+
+### Without Headers
+
+If your array doesn't include headers, set the second parameter to `true`:
+
+```javascript
+const data = google.visualization.arrayToDataTable([
+  ['China', 1439323776, 9596961],
+  ['India', 1380004385, 3287263],
+  ['United States', 331002651, 9833517]
+], true); // true means no headers in first row
+
+// You'll need to set column labels manually
+data.setColumnLabel(0, 'Country');
+data.setColumnLabel(1, 'Population');
+data.setColumnLabel(2, 'Area (km²)');
+```
+
+## Method 4: From JSON String
+
+You can create a DataTable from a JSON string representation:
+
+```javascript
+const jsonString = `{
+  "cols": [
+    {"id": "country", "label": "Country", "type": "string"},
+    {"id": "population", "label": "Population", "type": "number"}
+  ],
+  "rows": [
+    {"c": [{"v": "China"}, {"v": 1439323776}]},
+    {"c": [{"v": "India"}, {"v": 1380004385}]}
+  ]
+}`;
+
+const data = new google.visualization.DataTable(jsonString);
+```
+
+## Adding Columns
+
+### Basic Column Addition
+
+```javascript
+// Add a simple column
+data.addColumn('number', 'Sales');
+
+// Add column with ID
+data.addColumn('string', 'Product Name', 'product_id');
+```
+
+### Column Specification Object
+
+For more control, use a column specification object:
+
+```javascript
+data.addColumn({
+  type: 'number',
+  label: 'Revenue',
+  id: 'revenue',
+  role: 'data',
+  pattern: '#,###'
+});
+```
+
+### Column Properties
+
+Columns can have additional properties:
+
+```javascript
+data.addColumn({
+  type: 'number',
+  label: 'Sales',
+  id: 'sales',
+  p: {
+    style: 'color: blue;',
+    customProperty: 'myValue'
+  }
+});
+```
+
+## Adding Rows
+
+### Single Row
+
+```javascript
+// Simple values
+data.addRow(['Product A', 100, 1500]);
+
+// With formatted values and properties
+data.addRow([
+  'Product A',
+  {v: 100, f: '100 units'},
+  {v: 1500, f: '$1,500', p: {style: 'color: green;'}}
+]);
+```
+
+### Multiple Rows
+
+```javascript
+// Add multiple rows at once
+data.addRows([
+  ['Product A', 100, 1500],
+  ['Product B', 200, 2500],
+  ['Product C', 150, 1800]
+]);
+
+// Add empty rows (will be filled with null values)
+data.addRows(5); // Adds 5 empty rows
+```
+
+## Cell Format
+
+Each cell can contain:
+- **v**: The actual value
+- **f**: Formatted string representation
+- **p**: Properties object
+
+```javascript
+data.addRow([
+  'Q1 2023',
+  {
+    v: 1234567.89,
+    f: '$1.23M',
+    p: {
+      style: 'color: green; font-weight: bold;',
+      note: 'Record quarter'
+    }
+  }
+]);
+```
+
+## Best Practices
+
+### Performance Tips
+
+1. **Use `addRows()` instead of multiple `addRow()` calls**:
+   ```javascript
+// Good - single call
+   data.addRows([
+     ['A', 1], ['B', 2], ['C', 3]
+   ]);
+
+   // Avoid - multiple calls
+   data.addRow(['A', 1]);
+   data.addRow(['B', 2]);
+   data.addRow(['C', 3]);
+```
+
+2. **Use `arrayToDataTable()` for simple data**:
+   ```javascript
+// Fastest for simple 2D arrays
+   const data = google.visualization.arrayToDataTable(myArray);
+```
+
+### Data Validation
+
+Always ensure your data matches the column types:
+
+```javascript
+data.addColumn('number', 'Value');
+data.addColumn('date', 'Date');
+
+// Good
+data.addRow([123, new Date('2023-01-01')]);
+
+// Bad - will cause errors
+data.addRow(['not a number', 'not a date']);
+```
+
+### Memory Considerations
+
+For large datasets, consider using DataView to show subsets rather than creating multiple DataTables:
+
+```javascript
+// Create one large DataTable
+const fullData = new google.visualization.DataTable();
+// ... populate with all data
+
+// Create views for different charts
+const view1 = new google.visualization.DataView(fullData);
+view1.setColumns([0, 1]); // Show only first two columns
+
+const view2 = new google.visualization.DataView(fullData);
+view2.setRows([0, 1, 2]); // Show only first three rows
+```
+
+## Next Steps
+
+- Learn about [Data Types and Formatting](./datatable-data-types.md)
+- Explore [DataView](./dataview.md) for data transformation
+- See [Chart Integration](./chart-integration.md) for using DataTables with charts{
   "name": "google-visualization",
   "version": "0.0.0",
   "private": true,
