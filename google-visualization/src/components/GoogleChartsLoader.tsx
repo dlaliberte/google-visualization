@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 // TypeScript declarations for Google Charts
 declare global {
@@ -20,7 +20,7 @@ declare global {
         ComboChart: new (element: HTMLElement) => any;
         Table: new (element: HTMLElement) => any;
         Histogram: new (element: HTMLElement) => any;
-        CandlestickChart: new (element: HTMLElement) => any;
+
         [key: string]: any;
       };
     };
@@ -32,6 +32,8 @@ interface GoogleChartsLoaderProps {
   packages?: string[];
   version?: string;
   timeout?: number;
+  showCode?: boolean;
+  codeString?: string;
 }
 
 const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
@@ -39,6 +41,8 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
   packages = ['corechart', 'table'],
   version = 'current',
   timeout = 10000,
+  showCode = false,
+  codeString = '',
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -99,7 +103,58 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
     return () => clearTimeout(timeoutId);
   }, [packages, version, timeout]);
 
-  return <>{children(isLoaded)}</>;
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // You could add a toast notification here if desired
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
+  return (
+    <>
+      {children(isLoaded)}
+      {showCode && codeString && (
+        <div style={{ marginTop: '20px', border: '1px solid #ddd', borderRadius: '4px' }}>
+          <div style={{
+            backgroundColor: '#f5f5f5',
+            padding: '8px 12px',
+            borderBottom: '1px solid #ddd',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <span style={{ fontWeight: 'bold', fontSize: '14px' }}>Chart Code</span>
+            <button
+              onClick={() => copyToClipboard(codeString)}
+              style={{
+                padding: '4px 8px',
+                fontSize: '12px',
+                backgroundColor: '#007cba',
+                color: 'white',
+                border: 'none',
+                borderRadius: '3px',
+                cursor: 'pointer'
+              }}
+            >
+              Copy Code
+            </button>
+          </div>
+          <pre style={{
+            margin: 0,
+            padding: '12px',
+            backgroundColor: '#fafafa',
+            overflow: 'auto',
+            fontSize: '13px',
+            lineHeight: '1.4'
+          }}>
+            <code>{codeString}</code>
+          </pre>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default GoogleChartsLoader;

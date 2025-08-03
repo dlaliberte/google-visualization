@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { CandlestickChart } from '../../../visualization/corechart/corecharts';
 
 interface GoogleChartProps {
   chartType: string;
@@ -49,6 +50,7 @@ const GoogleChart: React.FC<GoogleChartProps> = ({
           case 'Table':
             chart = new window.google.visualization.Table(chartRef.current);
             break;
+
           default:
             console.error(`Unsupported chart type: ${chartType}`);
             return;
