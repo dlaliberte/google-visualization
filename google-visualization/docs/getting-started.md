@@ -280,52 +280,6 @@ The GoogleChart component supports these chart types:
 
 The interactive charts above are created using MDX components. Here's how you can add them to your own documentation pages:
 
-### 1. Import the Component
-
-At the top of your `.md` or `.mdx` file, import the GoogleChart component:
-
-```jsx
-import GoogleChart from '@site/src/components/GoogleChart';
-```
-
-### 2. Use the Component
-
-Then use it anywhere in your content:
-
-```jsx
-<GoogleChart
-  chartType="PieChart"
-  data={[
-    ['Task', 'Hours per Day'],
-    ['Work', 8],
-    ['Eat', 2],
-    ['Sleep', 8]
-  ]}
-  options={{
-    title: 'My Chart',
-    width: 400,
-    height: 300
-  }}
-/>
-```
-
-### 3. Supported Chart Types
-
-The GoogleChart component supports these chart types:
-- `PieChart`
-- `ColumnChart`
-- `LineChart`
-- `BarChart`
-- `AreaChart`
-
-### 4. Component Props
-
-- `chartType`: The type of chart to render
-- `data`: 2D array with chart data (first row should be headers)
-- `options`: Chart configuration options (optional)
-- `width`: Chart width (optional, defaults to '100%')
-- `height`: Chart height (optional, defaults to 400)
-
 ## Next Steps
 
 Now that you've created your first chart, you can:

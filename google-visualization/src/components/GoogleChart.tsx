@@ -46,6 +46,9 @@ const GoogleChart: React.FC<GoogleChartProps> = ({
           case 'AreaChart':
             chart = new window.google.visualization.AreaChart(chartRef.current);
             break;
+          case 'Table':
+            chart = new window.google.visualization.Table(chartRef.current);
+            break;
           default:
             console.error(`Unsupported chart type: ${chartType}`);
             return;

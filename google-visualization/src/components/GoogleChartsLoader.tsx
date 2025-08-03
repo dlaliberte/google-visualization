@@ -1,5 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
+// TypeScript declarations for Google Charts
+declare global {
+  interface Window {
+    google: {
+      charts: {
+        load: (version: string, options: { packages: string[] }) => void;
+        setOnLoadCallback: (callback: () => void) => void;
+      };
+      visualization: {
+        arrayToDataTable: (data: any[][]) => any;
+        DataTable: new () => any;
+        PieChart: new (element: HTMLElement) => any;
+        LineChart: new (element: HTMLElement) => any;
+        ColumnChart: new (element: HTMLElement) => any;
+        BarChart: new (element: HTMLElement) => any;
+        AreaChart: new (element: HTMLElement) => any;
+        ScatterChart: new (element: HTMLElement) => any;
+        ComboChart: new (element: HTMLElement) => any;
+        Table: new (element: HTMLElement) => any;
+        Histogram: new (element: HTMLElement) => any;
+        CandlestickChart: new (element: HTMLElement) => any;
+        [key: string]: any;
+      };
+    };
+  }
+}
+
 interface GoogleChartsLoaderProps {
   children: (isLoaded: boolean) => React.ReactNode;
   packages?: string[];
@@ -9,15 +36,23 @@ interface GoogleChartsLoaderProps {
 
 const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
   children,
-  packages = ['corechart'],
+  packages = ['corechart', 'table'],
   version = 'current',
   timeout = 10000,
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if Google Charts is already loaded
-    if (window.google && window.google.charts) {
+    // Helper function to check if Google Charts and visualization API are fully loaded
+    const isGoogleChartsReady = () => {
+      return window.google &&
+             window.google.charts &&
+             window.google.visualization &&
+             window.google.visualization.arrayToDataTable;
+    };
+
+    // Check if Google Charts is already fully loaded with the required packages
+    if (isGoogleChartsReady()) {
       setIsLoaded(true);
       return;
     }
@@ -29,15 +64,28 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
       script.onload = () => {
         window.google.charts.load(version, { packages });
         window.google.charts.setOnLoadCallback(() => {
-          setIsLoaded(true);
+          // Double-check that visualization API is available before setting loaded
+          if (isGoogleChartsReady()) {
+            setIsLoaded(true);
+          } else {
+            console.error('Google Charts loaded but visualization API not available');
+          }
         });
+      };
+      script.onerror = () => {
+        console.error('Failed to load Google Charts script');
       };
       document.head.appendChild(script);
     } else {
-      // Google is loaded but charts might not be
+      // Google is loaded but charts might not be, or packages might be different
       window.google.charts.load(version, { packages });
       window.google.charts.setOnLoadCallback(() => {
-        setIsLoaded(true);
+        // Double-check that visualization API is available before setting loaded
+        if (isGoogleChartsReady()) {
+          setIsLoaded(true);
+        } else {
+          console.error('Google Charts loaded but visualization API not available');
+        }
       });
     }
 
@@ -49,7 +97,7 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
     }, timeout);
 
     return () => clearTimeout(timeoutId);
-  }, [packages, version, timeout, isLoaded]);
+  }, [packages, version, timeout]);
 
   return <>{children(isLoaded)}</>;
 };
