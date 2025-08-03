@@ -119,14 +119,14 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
     if (!window.google) {
       window.__googleChartsLoading = new Promise((resolve, reject) => {
         const script = document.createElement('script');
-          script.src = 'https://www.gstatic.com/charts/loader.js';
+        script.src = 'https://www.gstatic.com/charts/loader.js';
         script.onload = () => {
-        window.google.charts.load(version, { packages });
+          window.google.charts.load(version, { packages });
           window.google.charts.setOnLoadCallback(() => {
-              // Mark packages as loaded
+            // Mark packages as loaded
             packages.forEach(pkg => window.__googleChartsLoadedPackages!.add(pkg));
 
-          if (isGoogleChartsReady()) {
+            if (isGoogleChartsReady()) {
               setIsLoaded(true);
               resolve();
             } else {

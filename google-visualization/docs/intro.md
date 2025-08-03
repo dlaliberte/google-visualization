@@ -14,7 +14,7 @@ The Google Visualization API is a powerful and easy-to-use JavaScript library fo
 - For advanced data manipulation, explore **[DataView](./dataview)** and **[Advanced Data Manipulation](./advanced-data-manipulation)**.
 - Learn about different **[Chart Types](./chart-types)** and **[Chart Integration](./chart-integration)** techniques.
 - For production applications, review our **[Performance Best Practices](./performance-best-practices)**.
-- For a complete list of all available charts and their options, browse the **[Chart Gallery](./chart-gallery)**.
+- For a complete list of all available charts and their options, browse the **[Chart Types](./chart-types)**.
 
 ## Documentation Plan
 
