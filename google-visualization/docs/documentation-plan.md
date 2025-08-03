@@ -8,10 +8,12 @@ This document outlines the plan for creating comprehensive documentation for the
 
 ## Guiding Principles
 
-- **User-Focused**: Documentation should be written from the perspective of a developer using the library.
-- **Example-Driven**: Every feature should be accompanied by clear, working code examples.
-- **Comprehensive**: Cover all public APIs, including charts, options, methods, and events.
-- **Discoverable**: The documentation structure should make it easy for users to find what they need.
+-   **User-Focused**: Documentation should be written from the perspective of a developer using the library, addressing common questions and use cases.
+-   **Example-Driven**: Every feature should be accompanied by clear, working code examples.
+-   **Interactive & Live**: Wherever possible, examples should be presented in a live editor (like the `LiveChartEditor` component) so users can modify the code and see the results instantly.
+-   **Comprehensive**: Cover all public APIs, including charts, options, methods, and events.
+-   **Discoverable & Searchable**: The documentation structure should make it easy for users to find what they need. A powerful search functionality is key.
+-   **Progressive Disclosure**: Start with simple concepts and gradually introduce more advanced topics. Avoid overwhelming new users.
 
 ## Documentation Structure
 
@@ -22,39 +24,54 @@ The documentation will be organized into the following major sections:
 This section will provide a gentle introduction for new users.
 
 - **Overview**: What is the Google Visualization API? What can it do?
-- **Quick Start**: A simple, step-by-step guide to drawing your first chart (e.g., a PieChart).
-- **Loading the Library**: How to include the necessary scripts.
-- **ChartWrapper**: Introduce the `ChartWrapper` class as the recommended way to create and manage charts.
+-   **Quick Start**: A simple, step-by-step guide to drawing your first chart (e.g., a PieChart) using the `GoogleChartCode` or `GoogleChartsLoader` components.
+-   **Loading the Library**: How to include the necessary scripts and use the `GoogleChartsLoader` component in React environments.
+-   **ChartWrapper**: Introduce the `ChartWrapper` class as the recommended way to create and manage charts in plain JavaScript.
 
 ### 2. Core Concepts (High Priority)
 
 This section will cover the fundamental building blocks of the API.
 
 - **`DataTable` and `DataView`**:
-  - Creating a `DataTable` from scratch.
-  - Understanding data types (string, number, boolean, date, etc.).
-  - Using a `DataView` to transform and filter data.
-  - Data Roles (e.g., `tooltip`, `style`, `annotation`).
+    -   Creating a `DataTable` from scratch (`arrayToDataTable`, `new DataTable()`).
+    -   Understanding data types (string, number, boolean, date, etc.) and their formatting.
+    -   Adding/removing rows and columns.
+    -   Using a `DataView` to transform and filter data without modifying the original `DataTable`.
+    -   Data Roles (e.g., `tooltip`, `style`, `annotation`, `interval`).
 - **Configuration Options**:
   - How to pass options to a chart.
   - Common options available for most charts (e.g., `title`, `width`, `height`, `colors`, `legend`, `tooltip`).
 - **Events**:
   - How to listen for events (`ready`, `select`, `error`, `onmouseover`).
-  - Getting event properties.
+  - Getting event properties and interacting with the chart based on events.
 - **Formatting Data**:
-  - `NumberFormat`, `DateFormat`, `PatternFormat`, `ColorFormat`.
+    -   Using formatters like `NumberFormat`, `DateFormat`, `PatternFormat`, and `ColorFormat` to customize how data is displayed.
 
 ### 3. Chart Gallery & Reference (Medium Priority)
 
-This will be a comprehensive reference for every chart type. We will add charts one by one.
+This will be a comprehensive, searchable reference for every chart type. We will add charts one by one, following a standardized template for each.
 
 **Priority List:**
 1.  PieChart, BarChart / ColumnChart, LineChart
 2.  ScatterChart, AreaChart, Table
 3.  **TreeMap** (since the code is present)
 4.  Gauge, GeoChart, CandlestickChart, Histogram, ComboChart
+5.  Other charts.
 
-For each chart, the documentation will include an overview, data format, configuration options, methods, and events.
+**Template for each Chart Page:**
+
+-   **Overview**: A brief description of the chart and its common use cases.
+-   **Live Example**: A live, editable example using the `LiveChartEditorComposed` component.
+-   **Data Format**: A clear explanation of the required `DataTable` structure, including column types and roles.
+-   **Configuration Options**: A searchable and filterable table of all specific configuration options for that chart. Each option will have:
+    -   Name (e.g., `hAxis.title`)
+    -   Type (e.g., `string`, `number`, `object`)
+    -   Default value
+    -   Description
+    -   A small, live example demonstrating the option.
+-   **Methods**: Documentation for public methods (e.g., `getSelection()`, `setSelection()`).
+-   **Events**: Documentation for events specific to the chart.
+-   **Advanced Examples**: A gallery of more complex examples (e.g., using a `DataView`, custom HTML tooltips, event handling).
 
 ### 4. Controls and Dashboards (Medium Priority)
 
