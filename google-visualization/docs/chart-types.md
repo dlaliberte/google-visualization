@@ -17,6 +17,16 @@ Google Charts provides a wide variety of chart types to visualize your data. Thi
 
 Perfect for showing parts of a whole. Requires exactly 2 columns: labels and values.
 
+
+
+**Best for:**
+
+- Market share analysis
+- Budget breakdowns
+- Survey results
+- Any part-to-whole relationships
+
+
 <GoogleChartsLoader
   packages={['corechart']}
   showCode={true}
@@ -77,18 +87,17 @@ chart.draw(data, options);`}
   }}
 </GoogleChartsLoader>
 
-
-
-**Best for:**
-
-- Market share analysis
-- Budget breakdowns
-- Survey results
-- Any part-to-whole relationships
-
 ### Line Chart
 
 Ideal for showing trends over time or continuous data.
+
+**Best for:**
+
+- Time series data
+- Trend analysis
+- Performance tracking
+- Continuous data visualization
+
 
 <GoogleChartsLoader
   packages={['corechart']}
@@ -160,16 +169,17 @@ chart.draw(data, options);`}
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Time series data
-- Trend analysis
-- Performance tracking
-- Continuous data visualization
-
 ### Column Chart
 
 Great for comparing values across categories.
+
+**Best for:**
+
+- Comparing quantities
+- Ranking data
+- Survey responses
+- Performance comparisons
+
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -215,16 +225,16 @@ Great for comparing values across categories.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Comparing quantities
-- Ranking data
-- Survey responses
-- Performance comparisons
-
 ### Bar Chart
 
 Similar to column chart but horizontal orientation.
+
+**Best for:**
+
+- Long category names
+- Ranking with many items
+- When horizontal layout works better
+
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -268,15 +278,16 @@ Similar to column chart but horizontal orientation.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Long category names
-- Ranking with many items
-- When horizontal layout works better
-
 ### Area Chart
 
 Shows trends and cumulative values over time.
+
+**Best for:**
+
+- Cumulative data
+- Part-to-whole over time
+- Multiple series trends
+
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -318,15 +329,16 @@ Shows trends and cumulative values over time.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Cumulative data
-- Part-to-whole over time
-- Multiple series trends
-
 ### Scatter Chart
 
 Perfect for showing relationships between two numeric variables.
+
+**Best for:**
+
+- Correlation analysis
+- Scientific data
+- Performance vs. cost analysis
+- Any two-variable relationships
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -370,16 +382,16 @@ Perfect for showing relationships between two numeric variables.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Correlation analysis
-- Scientific data
-- Performance vs. cost analysis
-- Any two-variable relationships
-
 ### Combo Chart
 
 Combines different chart types in one visualization.
+
+**Best for:**
+
+- Comparing different metrics
+- Showing targets vs. actuals
+- Mixed data types
+
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -421,17 +433,20 @@ Combines different chart types in one visualization.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Comparing different metrics
-- Showing targets vs. actuals
-- Mixed data types
-
 ## Specialized Charts
 
 ### Table Chart
 
 Displays data in a sortable, interactive table format.
+
+
+**Best for:**
+
+- Detailed data display
+- Sortable data
+- Mixed data types
+- Data exploration
+
 
 <GoogleChartsLoader packages={['table']}>
   {(isLoaded) => {
@@ -477,16 +492,15 @@ Displays data in a sortable, interactive table format.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-
-- Detailed data display
-- Sortable data
-- Mixed data types
-- Data exploration
-
 ### Histogram
 
 Shows the distribution of a dataset.
+
+**Best for:**
+
+- Data distribution analysis
+- Quality control
+- Statistical analysis
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -536,14 +550,16 @@ Shows the distribution of a dataset.
   }}
 </GoogleChartsLoader>
 
-**Best for:**
-- Data distribution analysis
-- Quality control
-- Statistical analysis
-
 ### Candlestick Chart
 
 Used for financial data showing open, high, low, and close values.
+
+**Best for:**
+
+- Stock price analysis
+- Financial data
+- OHLC data visualization
+
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -585,11 +601,6 @@ Used for financial data showing open, high, low, and close values.
     );
   }}
 </GoogleChartsLoader>
-
-**Best for:**
-- Stock price analysis
-- Financial data
-- OHLC data visualization
 
 ## Chart Selection Guide
 
