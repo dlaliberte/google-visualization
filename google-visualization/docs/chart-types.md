@@ -27,28 +27,7 @@ Perfect for showing parts of a whole. Requires exactly 2 columns: labels and val
 - Any part-to-whole relationships
 
 
-<GoogleChartsLoader
-  packages={['corechart']}
-  showCode={true}
-  codeString={`const data = google.visualization.arrayToDataTable([
-  ['Browser', 'Usage'],
-  ['Chrome', 61.9],
-  ['Firefox', 15.6],
-  ['Safari', 11.2],
-  ['Edge', 8.7],
-  ['Other', 2.6]
-]);
-
-const options = {
-  title: 'Browser Usage',
-  pieHole: 0.4,        // Creates donut chart
-  sliceVisibilityThreshold: 0.02, // Hide slices smaller than 2%
-  colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
-};
-
-const chart = new google.visualization.PieChart(chartRef.current);
-chart.draw(data, options);`}
->
+<GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
 
@@ -98,33 +77,7 @@ Ideal for showing trends over time or continuous data.
 - Performance tracking
 - Continuous data visualization
 
-<GoogleChartsLoader
-  packages={['corechart']}
-  showCode={true}
-  codeString={`const data = google.visualization.arrayToDataTable([
-  ['Month', 'Sales', 'Expenses', 'Profit'],
-  ['Jan', 1000, 400, 600],
-  ['Feb', 1170, 460, 710],
-  ['Mar', 660, 1120, -460],
-  ['Apr', 1030, 540, 490],
-  ['May', 1200, 580, 620],
-  ['Jun', 1100, 520, 580]
-]);
-
-const options = {
-  title: 'Company Performance',
-  curveType: 'function',    // Smooth curves
-  legend: { position: 'bottom' },
-  hAxis: { title: 'Month' },
-  vAxis: { title: 'Amount ($)' },
-  series: {
-    2: { color: '#e2431e', lineDashStyle: [4, 4] } // Dashed line for profit
-  }
-};
-
-const chart = new google.visualization.LineChart(chartRef.current);
-chart.draw(data, options);`}
->
+<GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
 

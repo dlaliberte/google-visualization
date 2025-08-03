@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import CodeBlock from './CodeBlock';
 
 // TypeScript declarations for Google Charts
 declare global {
@@ -31,7 +32,6 @@ interface GoogleChartsLoaderProps {
   version?: string;
   timeout?: number;
   showCode?: boolean;
-  codeString?: string;
 }
 
 // Global state to track loaded packages and prevent conflicts
@@ -42,15 +42,76 @@ declare global {
   }
 }
 
+// Helper function to extract chart creation code from the children function
+const extractChartCode = (functionString: string): string => {
+  try {
+    // Remove the outer function wrapper and extract the useEffect content
+    const useEffectMatch = functionString.match(/useEffect\(\(\) => \{([\s\S]*?)\}, \[isLoaded\]\);/);
+    if (!useEffectMatch) return '';
+
+    let code = useEffectMatch[1];
+
+    // Remove the conditional wrapper and chartRef check
+    const conditionalMatch = code.match(/if \(isLoaded && chartRef\.current\) \{([\s\S]*?)\n\s*\}/s);
+    if (conditionalMatch) {
+      code = conditionalMatch[1];
+    }
+
+    // Clean up indentation and remove unnecessary parts
+    const lines = code.split('\n');
+    const nonEmptyLines = lines.filter(line => line.trim() !== '');
+
+    if (nonEmptyLines.length === 0) return '';
+
+    // Find the minimum indentation (excluding the first line which might be special)
+    const indentations = nonEmptyLines
+      .slice(1) // Skip first line
+      .map(line => line.match(/^\s*/)?.[0]?.length || 0)
+      .filter(indent => indent > 0);
+
+    const minIndent = indentations.length > 0 ? Math.min(...indentations) : 0;
+
+    // Remove the common indentation and clean up
+    const cleanedLines = nonEmptyLines.map(line => {
+      if (line.trim() === '') return '';
+      const currentIndent = line.match(/^\s*/)?.[0]?.length || 0;
+      const newIndent = Math.max(0, currentIndent - minIndent);
+      return ' '.repeat(newIndent) + line.trim();
+    });
+
+    code = cleanedLines.join('\n').trim();
+
+    return code;
+  } catch (error) {
+    console.warn('Error extracting code:', error);
+    return '';
+  }
+};
+
 const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
   children,
   packages = ['corechart', 'table'],
   version = 'current',
   timeout = 10000,
-  showCode = false,
-  codeString = '',
+  showCode = true,
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [extractedCode, setExtractedCode] = useState<string>('');
+
+  // Extract code from the children function for display
+  useEffect(() => {
+    if (showCode) {
+      try {
+        const childrenStr = children.toString();
+        const codeMatch = extractChartCode(childrenStr);
+        if (codeMatch) {
+          setExtractedCode(codeMatch);
+        }
+      } catch (error) {
+        console.warn('Could not extract code for display:', error);
+      }
+    }
+  }, [children, showCode]);
 
   useEffect(() => {
     // Helper function to check if Google Charts and visualization API are fully loaded
@@ -157,54 +218,18 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
     return () => clearTimeout(timeoutId);
   }, [packages, version, timeout]);
 
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      // You could add a toast notification here if desired
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
-  };
-
   return (
     <>
       {children(isLoaded)}
-      {showCode && codeString && (
-        <div style={{ marginTop: '20px', border: '1px solid #ddd', borderRadius: '4px' }}>
-          <div style={{
-            backgroundColor: '#f5f5f5',
-            padding: '8px 12px',
-            borderBottom: '1px solid #ddd',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <span style={{ fontWeight: 'bold', fontSize: '14px' }}>Chart Code</span>
-            <button
-              onClick={() => copyToClipboard(codeString)}
-              style={{
-                padding: '4px 8px',
-                fontSize: '12px',
-                backgroundColor: '#007cba',
-                color: 'white',
-                border: 'none',
-                borderRadius: '3px',
-                cursor: 'pointer'
-              }}
-            >
-              Copy Code
-            </button>
-          </div>
-          <pre style={{
-            margin: 0,
-            padding: '12px',
-            backgroundColor: '#fafafa',
-            overflow: 'auto',
-            fontSize: '13px',
-            lineHeight: '1.4'
-          }}>
-            <code>{codeString}</code>
-          </pre>
+      {showCode && extractedCode && (
+        <div style={{ marginTop: '20px' }}>
+          <CodeBlock
+            code={extractedCode}
+            language="javascript"
+            title="Chart Code"
+            showLineNumbers={true}
+            showCopyButton={true}
+          />
         </div>
       )}
     </>
