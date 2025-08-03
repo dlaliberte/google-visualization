@@ -45,43 +45,78 @@ declare global {
 // Helper function to extract chart creation code from the children function
 const extractChartCode = (functionString: string): string => {
   try {
-    // Remove the outer function wrapper and extract the useEffect content
-    const useEffectMatch = functionString.match(/useEffect\(\(\) => \{([\s\S]*?)\}, \[isLoaded\]\);/);
-    if (!useEffectMatch) return '';
+    console.log('Full function string:', functionString);
 
-    let code = useEffectMatch[1];
+    // Look for key patterns in the function to identify chart type and data
+    const patterns = {
+      // Data patterns
+      arrayToDataTable: /google\.visualization\.arrayToDataTable\(\[([\s\S]*?)\]\)/,
 
-    // Remove the conditional wrapper and chartRef check
-    const conditionalMatch = code.match(/if \(isLoaded && chartRef\.current\) \{([\s\S]*?)\n\s*\}/s);
-    if (conditionalMatch) {
-      code = conditionalMatch[1];
+      // Chart type patterns
+      pieChart: /new google\.visualization\.PieChart/,
+      lineChart: /new google\.visualization\.LineChart/,
+      columnChart: /new google\.visualization\.ColumnChart/,
+      barChart: /new google\.visualization\.BarChart/,
+      areaChart: /new google\.visualization\.AreaChart/,
+      scatterChart: /new google\.visualization\.ScatterChart/,
+      comboChart: /new google\.visualization\.ComboChart/,
+      table: /new google\.visualization\.Table/,
+      histogram: /new google\.visualization\.Histogram/,
+
+      // Options pattern
+      options: /const options = \{([\s\S]*?)\};/,
+    };
+
+    // Extract data
+    const dataMatch = functionString.match(patterns.arrayToDataTable);
+    let dataCode = '';
+    if (dataMatch) {
+      dataCode = `const data = google.visualization.arrayToDataTable([${dataMatch[1]}]);`;
     }
 
-    // Clean up indentation and remove unnecessary parts
-    const lines = code.split('\n');
-    const nonEmptyLines = lines.filter(line => line.trim() !== '');
+    // Extract options
+    const optionsMatch = functionString.match(patterns.options);
+    let optionsCode = '';
+    if (optionsMatch) {
+      optionsCode = `const options = {${optionsMatch[1]}};`;
+    }
 
-    if (nonEmptyLines.length === 0) return '';
+    // Determine chart type
+    let chartType = '';
+    let chartCode = '';
 
-    // Find the minimum indentation (excluding the first line which might be special)
-    const indentations = nonEmptyLines
-      .slice(1) // Skip first line
-      .map(line => line.match(/^\s*/)?.[0]?.length || 0)
-      .filter(indent => indent > 0);
+    if (patterns.pieChart.test(functionString)) {
+      chartType = 'PieChart';
+    } else if (patterns.lineChart.test(functionString)) {
+      chartType = 'LineChart';
+    } else if (patterns.columnChart.test(functionString)) {
+      chartType = 'ColumnChart';
+    } else if (patterns.barChart.test(functionString)) {
+      chartType = 'BarChart';
+    } else if (patterns.areaChart.test(functionString)) {
+      chartType = 'AreaChart';
+    } else if (patterns.scatterChart.test(functionString)) {
+      chartType = 'ScatterChart';
+    } else if (patterns.comboChart.test(functionString)) {
+      chartType = 'ComboChart';
+    } else if (patterns.table.test(functionString)) {
+      chartType = 'Table';
+    } else if (patterns.histogram.test(functionString)) {
+      chartType = 'Histogram';
+    }
 
-    const minIndent = indentations.length > 0 ? Math.min(...indentations) : 0;
+    if (chartType) {
+      chartCode = `const chart = new google.visualization.${chartType}(chartRef.current);
+chart.draw(data, options);`;
+    }
 
-    // Remove the common indentation and clean up
-    const cleanedLines = nonEmptyLines.map(line => {
-      if (line.trim() === '') return '';
-      const currentIndent = line.match(/^\s*/)?.[0]?.length || 0;
-      const newIndent = Math.max(0, currentIndent - minIndent);
-      return ' '.repeat(newIndent) + line.trim();
-    });
+    // Combine all parts
+    const parts = [dataCode, optionsCode, chartCode].filter(part => part.trim() !== '');
+    const result = parts.join('\n\n');
 
-    code = cleanedLines.join('\n').trim();
+    console.log('Generated code:', result);
+    return result;
 
-    return code;
   } catch (error) {
     console.warn('Error extracting code:', error);
     return '';
@@ -100,15 +135,24 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
 
   // Extract code from the children function for display
   useEffect(() => {
-    if (showCode) {
+    if (showCode && typeof window !== 'undefined') {
       try {
         const childrenStr = children.toString();
+        console.log('Function string:', childrenStr);
         const codeMatch = extractChartCode(childrenStr);
+        console.log('Extracted code match:', codeMatch);
         if (codeMatch) {
           setExtractedCode(codeMatch);
+        } else {
+          // Fallback: provide a basic template
+          setExtractedCode(`// Chart code will be displayed here once the component loads
+// The actual implementation is in the chart above`);
         }
       } catch (error) {
         console.warn('Could not extract code for display:', error);
+        // Fallback for extraction errors
+        setExtractedCode(`// Code extraction failed
+// Please check the browser console for more details`);
       }
     }
   }, [children, showCode]);

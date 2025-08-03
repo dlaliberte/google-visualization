@@ -126,10 +126,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
               const lineNumber = i + 1;
               const isHighlighted = highlightLinesArray.includes(lineNumber);
 
+              const lineProps = getLineProps({ line });
               return (
                 <div
                   key={i}
-                  {...getLineProps({ line, key: i })}
+                  {...lineProps}
                   style={{
                     display: 'flex',
                     backgroundColor: isHighlighted
@@ -160,9 +161,10 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
                     </span>
                   )}
                   <span style={{ flex: 1 }}>
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token, key })} />
-                    ))}
+                    {line.map((token, key) => {
+                      const tokenProps = getTokenProps({ token });
+                      return <span key={key} {...tokenProps} />;
+                    })}
                   </span>
                 </div>
               );
