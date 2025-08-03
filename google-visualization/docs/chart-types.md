@@ -5,7 +5,7 @@ title: Chart Types
 
 import React, { useRef, useEffect } from 'react';
 import GoogleChartsLoader from '@site/src/components/GoogleChartsLoader';
-
+import CodeBlock from '@site/src/components/CodeBlock';
 
 # Chart Types
 
@@ -98,7 +98,6 @@ Ideal for showing trends over time or continuous data.
 - Performance tracking
 - Continuous data visualization
 
-
 <GoogleChartsLoader
   packages={['corechart']}
   showCode={true}
@@ -180,7 +179,6 @@ Great for comparing values across categories.
 - Survey responses
 - Performance comparisons
 
-
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
@@ -235,7 +233,6 @@ Similar to column chart but horizontal orientation.
 - Ranking with many items
 - When horizontal layout works better
 
-
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
@@ -287,7 +284,6 @@ Shows trends and cumulative values over time.
 - Cumulative data
 - Part-to-whole over time
 - Multiple series trends
-
 
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
@@ -392,7 +388,6 @@ Combines different chart types in one visualization.
 - Showing targets vs. actuals
 - Mixed data types
 
-
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
@@ -439,7 +434,6 @@ Combines different chart types in one visualization.
 
 Displays data in a sortable, interactive table format.
 
-
 **Best for:**
 
 - Detailed data display
@@ -447,8 +441,7 @@ Displays data in a sortable, interactive table format.
 - Mixed data types
 - Data exploration
 
-
-<GoogleChartsLoader packages={['table']}>
+<GoogleChartsLoader packages={['corechart', 'table']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
 
@@ -560,7 +553,6 @@ Used for financial data showing open, high, low, and close values.
 - Financial data
 - OHLC data visualization
 
-
 <GoogleChartsLoader packages={['corechart']}>
   {(isLoaded) => {
     const chartRef = useRef(null);
@@ -631,8 +623,9 @@ Used for financial data showing open, high, low, and close values.
 
 ### Universal Options
 
-```javascript
-const commonOptions = {
+<CodeBlock
+  title="Universal Chart Options"
+  code={`const commonOptions = {
   // Title and text
   title: 'Chart Title',
   titleTextStyle: {
@@ -672,13 +665,15 @@ const commonOptions = {
     duration: 1000,
     easing: 'out'
   }
-};
-```
+};`}
+  language="javascript"
+/>
 
 ### Axis Options
 
-```javascript
-const axisOptions = {
+<CodeBlock
+  title="Axis Configuration Options"
+  code={`const axisOptions = {
   hAxis: {
     title: 'X-Axis Title',
     titleTextStyle: { color: '#333' },
@@ -697,15 +692,17 @@ const axisOptions = {
     minValue: 0,
     format: '$#,###'
   }
-};
-```
+};`}
+  language="javascript"
+/>
 
 ## Responsive Charts
 
 ### Making Charts Responsive
 
-```javascript
-function drawResponsiveChart() {
+<CodeBlock
+  title="Responsive Chart Implementation"
+  code={`function drawResponsiveChart() {
   const data = google.visualization.arrayToDataTable([
     ['Year', 'Sales', 'Expenses'],
     ['2019', 1000, 400],
@@ -733,13 +730,16 @@ function drawResponsiveChart() {
 
   // Redraw on window resize
   window.addEventListener('resize', drawChart);
-}
-```
+}`}
+  language="javascript"
+  highlightLines={[14, 15, 25]}
+/>
 
 ### Mobile-Friendly Options
 
-```javascript
-function isMobile() {
+<CodeBlock
+  title="Mobile-Friendly Chart Options"
+  code={`function isMobile() {
   return window.innerWidth < 768;
 }
 
@@ -754,8 +754,10 @@ function getMobileOptions(baseOptions) {
     };
   }
   return baseOptions;
-}
-```
+}`}
+  language="javascript"
+  highlightLines={[2, 9, 10, 11, 12]}
+/>
 
 ## Next Steps
 

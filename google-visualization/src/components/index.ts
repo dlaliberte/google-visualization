@@ -1,5 +1,6 @@
 // Core composable components
 export { default as ChartRenderer } from './ChartRenderer';
+export { default as CodeBlock } from './CodeBlock';
 export { default as CodeEditor } from './CodeEditor';
 export { default as ErrorDisplay } from './ErrorDisplay';
 export { default as GoogleChartsLoader } from './GoogleChartsLoader';

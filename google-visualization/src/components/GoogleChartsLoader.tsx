@@ -20,8 +20,6 @@ declare global {
         ComboChart: new (element: HTMLElement) => any;
         Table: new (element: HTMLElement) => any;
         Histogram: new (element: HTMLElement) => any;
-
-        [key: string]: any;
       };
     };
   }
@@ -34,6 +32,14 @@ interface GoogleChartsLoaderProps {
   timeout?: number;
   showCode?: boolean;
   codeString?: string;
+}
+
+// Global state to track loaded packages and prevent conflicts
+declare global {
+  interface Window {
+    __googleChartsLoadedPackages?: Set<string>;
+    __googleChartsLoading?: Promise<void>;
+  }
 }
 
 const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
@@ -55,42 +61,90 @@ const GoogleChartsLoader: React.FC<GoogleChartsLoaderProps> = ({
              window.google.visualization.arrayToDataTable;
     };
 
+    // Helper function to check if all required packages are loaded
+    const arePackagesLoaded = (requiredPackages: string[]) => {
+      if (!window.__googleChartsLoadedPackages) return false;
+      return requiredPackages.every(pkg => window.__googleChartsLoadedPackages!.has(pkg));
+    };
+
+    // Initialize loaded packages set if not exists
+    if (!window.__googleChartsLoadedPackages) {
+      window.__googleChartsLoadedPackages = new Set();
+    }
+
     // Check if Google Charts is already fully loaded with the required packages
-    if (isGoogleChartsReady()) {
+    if (isGoogleChartsReady() && arePackagesLoaded(packages)) {
       setIsLoaded(true);
       return;
     }
 
-    // Load Google Charts if not already loaded
-    if (!window.google) {
-      const script = document.createElement('script');
-      script.src = 'https://www.gstatic.com/charts/loader.js';
-      script.onload = () => {
-        window.google.charts.load(version, { packages });
-        window.google.charts.setOnLoadCallback(() => {
-          // Double-check that visualization API is available before setting loaded
-          if (isGoogleChartsReady()) {
-            setIsLoaded(true);
-          } else {
-            console.error('Google Charts loaded but visualization API not available');
-          }
-        });
-      };
-      script.onerror = () => {
-        console.error('Failed to load Google Charts script');
-      };
-      document.head.appendChild(script);
-    } else {
-      // Google is loaded but charts might not be, or packages might be different
-      window.google.charts.load(version, { packages });
+    // If already loading, wait for it to complete
+    if (window.__googleChartsLoading) {
+      window.__googleChartsLoading.then(() => {
+        if (isGoogleChartsReady() && arePackagesLoaded(packages)) {
+          setIsLoaded(true);
+        } else {
+          // Need to load additional packages
+          loadAdditionalPackages();
+        }
+      });
+      return;
+    }
+
+    const loadAdditionalPackages = () => {
+      const missingPackages = packages.filter(pkg => !window.__googleChartsLoadedPackages!.has(pkg));
+
+      if (missingPackages.length === 0) {
+        setIsLoaded(true);
+        return;
+      }
+
+      // Merge with already loaded packages to avoid conflicts
+      const allPackages = Array.from(new Set([...Array.from(window.__googleChartsLoadedPackages!), ...packages]));
+
+      window.google.charts.load(version, { packages: allPackages });
       window.google.charts.setOnLoadCallback(() => {
-        // Double-check that visualization API is available before setting loaded
+        // Mark packages as loaded
+        packages.forEach(pkg => window.__googleChartsLoadedPackages!.add(pkg));
+
         if (isGoogleChartsReady()) {
           setIsLoaded(true);
         } else {
           console.error('Google Charts loaded but visualization API not available');
         }
       });
+    };
+
+    // Load Google Charts if not already loaded
+    if (!window.google) {
+      window.__googleChartsLoading = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+          script.src = 'https://www.gstatic.com/charts/loader.js';
+        script.onload = () => {
+        window.google.charts.load(version, { packages });
+          window.google.charts.setOnLoadCallback(() => {
+              // Mark packages as loaded
+            packages.forEach(pkg => window.__googleChartsLoadedPackages!.add(pkg));
+
+          if (isGoogleChartsReady()) {
+              setIsLoaded(true);
+              resolve();
+            } else {
+              console.error('Google Charts loaded but visualization API not available');
+              reject(new Error('Visualization API not available'));
+            }
+          });
+        };
+        script.onerror = () => {
+          const error = new Error('Failed to load Google Charts script');
+          console.error(error.message);
+          reject(error);
+        };
+        document.head.appendChild(script);
+      });
+    } else {
+      // Google is loaded, load additional packages if needed
+      loadAdditionalPackages();
     }
 
     // Timeout fallback
