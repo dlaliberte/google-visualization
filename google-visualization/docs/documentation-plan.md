@@ -41,11 +41,23 @@ This section will cover the fundamental building blocks of the API.
 - **Configuration Options**:
   - How to pass options to a chart.
   - Common options available for most charts (e.g., `title`, `width`, `height`, `colors`, `legend`, `tooltip`).
+- **Selection**:
+  - How to get the selected items (`getSelection()`).
+  - How to set the selection programmatically (`setSelection()`).
+  - Responding to selection changes.
 - **Events**:
-  - How to listen for events (`ready`, `select`, `error`, `onmouseover`).
+  - How to listen for events (`ready`, `select`, `error`, `onmouseover`, `onmouseout`).
   - Getting event properties and interacting with the chart based on events.
-- **Formatting Data**:
-    -   Using formatters like `NumberFormat`, `DateFormat`, `PatternFormat`, and `ColorFormat` to customize how data is displayed.
+- **Actions**:
+  - Adding custom actions to charts (e.g., context menu items).
+- **Tooltips**:
+  - Customizing tooltips (HTML tooltips, custom content).
+- **Explorers**:
+  - Enabling and configuring chart explorers for zooming and panning.
+- **Controls and Dashboards**:
+  - Overview: What are Controls and Dashboards?
+  - Using `ControlWrapper`: How to set up a control (e.g., `CategoryFilter`, `NumberRangeFilter`).
+  - Using `Dashboard`: How to bind controls to charts.
 
 ### 3. Chart Gallery & Reference (Medium Priority)
 
@@ -73,18 +85,15 @@ This will be a comprehensive, searchable reference for every chart type. We will
 -   **Events**: Documentation for events specific to the chart.
 -   **Advanced Examples**: A gallery of more complex examples (e.g., using a `DataView`, custom HTML tooltips, event handling).
 
-### 4. Controls and Dashboards (Medium Priority)
+### 4. Chart Interactivity (Medium Priority)
 
-This section will explain how to create interactive dashboards.
+This section will detail all the ways users can interact with charts, beyond just viewing them.
 
-- **Overview**: What are Controls and Dashboards?
-- **Using `ControlWrapper`**: How to set up a control (e.g., `CategoryFilter`, `NumberRangeFilter`).
-- **Using `Dashboard`**: How to bind controls to charts.
+- **Overview**: What are the different ways users can interact with charts?
 
 ### 5. Advanced Topics (Low Priority)
 
 - **Using the `Query` Class**: Fetching data from Google Sheets.
-- **Customizing Tooltips**: HTML tooltips and advanced customization.
 - **Performance Best Practices**.
 
 ## Implementation Plan
@@ -92,4 +101,5 @@ This section will explain how to create interactive dashboards.
 1.  **Write the "Getting Started" guide** to onboard new users.
 2.  **Document `DataTable` and `DataView`**, as they are fundamental.
 3.  **Begin the Chart Reference**, starting with `PieChart` and `TreeMap`.
-4.  **Incrementally add more charts and concepts** following the priority list.
+4.  **Document Chart Interactivity**, covering selection, events, actions, tooltips, and explorers.
+5.  **Incrementally add more charts and concepts** following the priority list.
