@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Chart Basic Example</title>
+  <script src="../../dist/google-visualization.js"></script>
+  <style>
+    #chart {
+      width: 800px;
+      height: 400px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create data table
+      const data = new google.visualization.DataTable();
+      data.addColumn('string', 'Month');
+      data.addColumn('number', 'Sales');
+      data.addColumn('number', 'Expenses');
+
+      data.addRows([
+        ['Jan', 1000, 800],
+        ['Feb', 1170, 860],
+        ['Mar', 660, 1120],
+        ['Apr', 1030, 540],
+        ['May', 1000, 700],
+        ['Jun', 1170, 600],
+        ['Jul', 660, 550],
+        ['Aug', 1030, 740],
+        ['Sep', 1000, 800],
+        ['Oct', 1170, 850],
+        ['Nov', 660, 650],
+        ['Dec', 1030, 700]
+      ]);
+
+      // Set chart options
+      const options = {
+        title: 'Monthly Sales and Expenses',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        width: 800,
+        height: 400,
+        animation: {
+          startup: true,
+          duration: 500,
+          easing: 'out'
+        }
+      };
+
+      // Create and draw the chart
+      const chart = new google.visualization.LineChart(document.getElementById('chart'));
+      chart.draw(data, options);
+    });
+  </script>
+</body>
+</html>

@@ -4,7 +4,17 @@
   "description": "This repository contains the open-source subset of the Google Visualization API, aka Google Charts.",
   "main": "index.js",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report",
+    "test:all": "node scripts/run-all-tests.js",
+    "test:analyze-coverage": "node scripts/analyze-test-coverage.js",
+    "serve-examples": "http-server ./examples -p 3000"
   },
   "keywords": [],
   "author": "",

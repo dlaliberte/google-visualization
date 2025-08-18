@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip Example</title>
+  <script src="../../dist/google-visualization.js"></script>
+  <style>
+    #chart {
+      width: 800px;
+      height: 400px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create data table
+      const data = new google.visualization.DataTable();
+      data.addColumn('string', 'Country');
+      data.addColumn('number', 'GDP');
+      data.addColumn({type: 'string', role: 'tooltip'});
+      data.addColumn('number', 'Population');
+      data.addColumn({type: 'string', role: 'tooltip'});
+
+      data.addRows([
+        ['USA', 21400, 'GDP: $21.4 trillion', 331, 'Population: 331 million'],
+        ['China', 14300, 'GDP: $14.3 trillion', 1398, 'Population: 1.398 billion'],
+        ['Japan', 5080, 'GDP: $5.08 trillion', 126, 'Population: 126 million'],
+        ['Germany', 3860, 'GDP: $3.86 trillion', 83, 'Population: 83 million'],
+        ['UK', 2830, 'GDP: $2.83 trillion', 67, 'Population: 67 million'],
+        ['India', 2710, 'GDP: $2.71 trillion', 1366, 'Population: 1.366 billion'],
+        ['France', 2710, 'GDP: $2.71 trillion', 65, 'Population: 65 million'],
+        ['Italy', 2000, 'GDP: $2.00 trillion', 60, 'Population: 60 million']
+      ]);
+
+      // Set chart options
+      const options = {
+        title: 'GDP and Population by Country',
+        legend: { position: 'top' },
+        width: 800,
+        height: 400,
+        series: {
+          0: { targetAxisIndex: 0 },
+          1: { targetAxisIndex: 1 }
+        },
+        vAxes: {
+          0: { title: 'GDP ($ trillion)' },
+          1: { title: 'Population (millions)' }
+        },
+        tooltip: { isHtml: true },
+        animation: {
+          startup: true,
+          duration: 500,
+          easing: 'out'
+        }
+      };
+
+      // Create and draw the chart
+      const chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+      chart.draw(data, options);
+    });
+  </script>
+</body>
+</html>
