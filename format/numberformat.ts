@@ -254,6 +254,10 @@ export class NumberFormat extends Format {
    */
   override format(dataTable: AbstractDataTableInterface, columnIndex: number) {
     if (dataTable.getColumnType(columnIndex) !== 'number') {
+      // For non-number columns, set formatted values to null
+      for (let row = 0; row < dataTable.getNumberOfRows(); row++) {
+        dataTable.setFormattedValue(row, columnIndex, null);
+      }
       return;
     }
 
@@ -356,7 +360,15 @@ export class NumberFormat extends Format {
         // even though it could be too many, because the default is only 3.
         numFormat.setMaximumFractionDigits(this.significantDigits);
       }
-      formattedValue = this.applyPrefixAndSuffix(numFormat.format(scaledValue));
+      let icuFormattedValue = numFormat.format(scaledValue);
+      if (this.negativeParens && numberValue < 0) {
+        // For negative values with parentheses, put prefix and suffix inside parentheses
+        // ICU formatter might have already handled the negative sign, so we need to remove it
+        icuFormattedValue = icuFormattedValue.replace(/^-/, '');
+        formattedValue = '(' + this.applyPrefixAndSuffix(icuFormattedValue) + ')';
+      } else {
+        formattedValue = this.applyPrefixAndSuffix(icuFormattedValue);
+      }
       I18nNumberFormat.setEnforceAsciiDigits(prevEnforceAsciiDigits);
     } else {
       if (isNaN(this.fractionDigits)) {
@@ -369,9 +381,12 @@ export class NumberFormat extends Format {
         valueToFormat = Math.abs(valueToFormat);
       }
       formattedValue = this.formatValueNonICU(valueToFormat);
-      formattedValue = this.applyPrefixAndSuffix(formattedValue);
+
       if (this.negativeParens && numberValue < 0) {
-        formattedValue = '(' + formattedValue + ')';
+        // For negative values with parentheses, put prefix and suffix inside parentheses
+        formattedValue = '(' + this.applyPrefixAndSuffix(formattedValue) + ')';
+      } else {
+        formattedValue = this.applyPrefixAndSuffix(formattedValue);
       }
 
       if (this.negativeColor) {

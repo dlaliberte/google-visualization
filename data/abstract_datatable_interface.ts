@@ -172,7 +172,7 @@ export interface AbstractDataTableInterface {
     rowIndex: number,
     columnIndex: number,
     formatter?: FormatInterface,
-  ): string;
+  ): string | null;
 
   /**
    * Sets the formatted value in a given cell.

@@ -371,7 +371,7 @@ export class DataTable extends AbstractDataTable {
     rowIndex: number,
     columnIndex: number,
     formatter?: FormatInterface,
-  ): string {
+  ): string | null {
     datautils.validateRowIndex(this, rowIndex);
     datautils.validateColumnIndex(this, columnIndex);
     const cell = this.getCell(rowIndex, columnIndex);
@@ -397,12 +397,15 @@ export class DataTable extends AbstractDataTable {
             if (formattedValue == null) {
               formattedValue = undefined;
             }
+          } else {
+            // For null values, return null as formatted value
+            formattedValue = null;
           }
           cellCache.formattedValue = formattedValue;
         }
       }
     }
-    return formattedValue == null ? '' : formattedValue.toString();
+    return formattedValue == null ? null : formattedValue.toString();
   }
 
   /**

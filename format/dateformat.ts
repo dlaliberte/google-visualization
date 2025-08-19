@@ -17,7 +17,7 @@
  */
 
 import {DateTimePatterns, DateTimeSymbols} from '../common/i18n-data';
-import {DateTimeFormat, TimeZone} from '../common/closure-i18n';
+import {DateTimeFormat, TimeZone, createTimeZone} from '../common/closure-i18n';
 import {Options} from '../common/options';
 import {Formatter} from '../data/abstract_datatable_interface';
 import {ColumnType, Value} from '../data/types';
@@ -232,7 +232,7 @@ export class DateFormat extends Format {
     this.timeZone = null;
     const timeZone = options.inferOptionalNumberValue('timeZone');
     if (timeZone != null) {
-      this.timeZone = TimeZone.createTimeZone(-timeZone * 60);
+      this.timeZone = createTimeZone((-timeZone * 60).toString());
     }
   }
 
@@ -410,11 +410,16 @@ export class DateFormat extends Format {
       return '';
     }
 
+    // Check if value is actually a Date object
+    if (!(value instanceof Date)) {
+      return '';
+    }
+
     // Getting the right timezone - from the options if was given, or otherwise
     // from the value itself.
     let timeZone = this.timeZone;
     if (timeZone == null) {
-      timeZone = TimeZone.createTimeZone(value.getTimezoneOffset());
+      timeZone = createTimeZone(value.getTimezoneOffset().toString());
     }
 
     // Set the minutes to 00 in an i18n friendly way (i.e. preserve the
