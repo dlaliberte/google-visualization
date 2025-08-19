@@ -8,7 +8,7 @@ This guide provides instructions for continuing the migration from Google Closur
 
 | Closure Import | New Import | Notes |
 |----------------|------------|-------|
-| `@npm//@closure/array/array` | `../common/array` | forEach, map, every, etc. |
+| `@npm//@closure/array/array` | Built-in JavaScript Array methods | Use native forEach, map, every, etc. |
 | `@npm//@closure/asserts/asserts` | `../common/assert` | assert, assertExists, etc. |
 | `@npm//@closure/asserts/dom` | `../common/assert` | assertIsElement |
 | `@npm//@closure/object/object` | `../common/closure-object` | clone, getKeys, isEmpty, etc. |
@@ -18,11 +18,19 @@ This guide provides instructions for continuing the migration from Google Closur
 | `@npm//@closure/math/vec2` | `../common/closure-math` | Vec2 class |
 | `@npm//@closure/disposable/disposable` | `../common/disposable` | Disposable class |
 | `@npm//@closure/disposable/dispose` | `../common/disposable` | dispose function |
-| `@npm//@closure/dom/dom` | `../common/closure-dom` | DOM manipulation |
+| `@npm//@closure/dom/dom` | Built-in DOM APIs | Use native document and element methods. |
 | `@npm//@closure/style/style` | `../common/style` | setStyle, getComputedStyle |
-| `@npm//@closure/events/events` | `../common/events` | Event handling |
-| `@npm//@closure/uri/uri` | `../common/uri` | Uri class |
-| `@npm//@closure/string/string` | `../common/closure-string` | String utilities |
+| `@npm//@closure/events/events` | Built-in Event APIs | Use native event handling mechanisms. |
+| `@npm//@closure/uri/uri` | Use URL and URLSearchParams | Built-in APIs for URI handling. |
+| `@npm//@closure/string/string` | Built-in String methods | Utilize native JavaScript string capabilities. |
+| `@npm//@closure/i18n` | Intl API | Use for internationalization and localization. |
+| `@npm//@closure/a11y` | ARIA and Semantic HTML | Ensure accessibility with ARIA and HTML. |
+| `@npm//@closure/html` | Safe HTML processing | Use libraries like React or Vue. |
+| `@npm//@closure/crypt/crypt` | Web Crypto API | Use crypto.subtle for cryptographic operations. |
+| `@npm//@closure/proto` | Libraries like protobufjs or ts-proto | Use for Protocol Buffers in JS. |
+| `@npm//@closure/ui` | Modern frameworks | Use React, Angular, or Vue for UI development. |
+| `@npm//@closure/editor` | Quill, Slate, TinyMCE | Use robust libraries for rich text editing. |
+| `@npm//@closure/test` | Mocha, Jest, Jasmine, Chai | Use modern testing frameworks. |
 
 ### Migration Steps
 

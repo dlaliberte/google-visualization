@@ -17,16 +17,16 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
+import * as googArray from '../common/array';
 import {
   assert,
   assertNumber,
-} from '@npm//@closure/asserts/asserts';
+} from '../common/assert';
 
-import * as googObject from '@npm//@closure/object/object';
+import * as googObject from '../common/closure-object';
 
-import * as googColor from '@npm//@closure/color/color';
-import {Rect as GoogRect} from '@npm//@closure/math/rect';
+import * as googColor from '../common/closure-color';
+import {Rect as GoogRect} from '../common/closure-math';
 import {Options} from '../../common/options';
 import {AxisChartDefinerInterface} from './axis_chart_definer_interface';
 
