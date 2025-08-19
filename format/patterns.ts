@@ -181,7 +181,7 @@ export function canApplyPatterns(options: UserOptions): boolean {
   ];
 
   for (let i = 0; i < axisNames.length; i++) {
-    if (goog.getObjectByName(axisNames[i] + '.format', options)) {
+    if (typeof goog !== 'undefined' && goog.getObjectByName && goog.getObjectByName(axisNames[i] + '.format', options)) {
       // The caller passed in an axis format. Leave them all alone.
       return false;
     }
@@ -213,14 +213,15 @@ export function setAxisFormat(
     return;
   }
 
-  if (!isEmptyOrWhitespace(makeSafe(axis['format']))) {
+  const axisFormat = axis['format'];
+  if (axisFormat != null) {
     return;
   }
 
   // Remove the empty patterns.
   patterns = filter(
     patterns,
-    (pattern) => !isEmptyOrWhitespace(makeSafe(pattern)),
+    (pattern) => pattern != null && !isEmptyOrWhitespace(pattern),
   );
 
   // Remove duplicate patterns.
@@ -292,11 +293,14 @@ function getTargetAxis(
  * @return The normalized pattern, or null, if the input is null.
  */
 export function normalizePattern(pattern: string | null): string | null {
-  if (!isEmptyOrWhitespace(makeSafe(pattern))) {
-    // TODO(dlaliberte): remove this hack when ICU in closure supports rounding.
-    pattern = pattern!.replace(/\d/g, '0');
-    // Allow only 10 digits patterns.
-    pattern = pattern.replace(/#{10,}/, repeat('#', 10));
+  if (pattern == null || isEmptyOrWhitespace(pattern)) {
+    return null;
   }
+
+  // TODO(dlaliberte): remove this hack when ICU in closure supports rounding.
+  pattern = pattern.replace(/\d/g, '0');
+  // Allow only 10 digits patterns.
+  pattern = pattern.replace(/#{10,}/, repeat('#', 10));
+
   return pattern;
 }

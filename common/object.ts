@@ -134,7 +134,7 @@ export function unsafeEquals(
         if (obj1.hasOwnProperty(key1)) {
           // Avoiding the 'constructor' and any inherited and native keys.
           if (
-            !obj2.hasOwnProperty(key1) ||
+            !obj2 || !obj2.hasOwnProperty(key1) ||
             !unsafeEquals(obj1[key1], obj2[key1])
           ) {
             return false;
@@ -142,9 +142,11 @@ export function unsafeEquals(
         }
       }
       // Verify that obj2 does not contain any additional properties.
-      for (const key2 in obj2) {
-        if (obj2.hasOwnProperty(key2) && !obj1.hasOwnProperty(key2)) {
-          return false;
+      if (obj2) {
+        for (const key2 in obj2) {
+          if (obj2.hasOwnProperty(key2) && !obj1.hasOwnProperty(key2)) {
+            return false;
+          }
         }
       }
       return true;

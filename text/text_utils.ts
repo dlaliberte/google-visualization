@@ -58,6 +58,11 @@ export function calcTextLayout(
   maxLines?: number,
   requireOneChar?: boolean,
 ): TextLayout {
+  // Handle undefined or null text
+  if (text == null) {
+    return {lines: [], needTooltip: false, maxLineWidth: 0};
+  }
+
   maxLines = maxLines != null ? Math.floor(maxLines) : 1;
   requireOneChar = requireOneChar != null ? requireOneChar : false;
   if (width <= 0) {

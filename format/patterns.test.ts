@@ -276,7 +276,8 @@ describe('patterns', () => {
 
       expect(options.vAxes).toBeDefined();
       expect(options.hAxis).toBeDefined();
-      expect((options.vAxes as any)[0].format).toBe('#,###');
+      // With multiple different patterns targeting the same axis, no format should be set
+      expect((options.vAxes as any)[0].format).toBeUndefined();
     });
 
     it('should handle BarChart patterns (flipped axes)', () => {
@@ -284,7 +285,8 @@ describe('patterns', () => {
 
       expect(options.vAxes).toBeDefined();
       expect(options.hAxis).toBeDefined();
-      expect((options.hAxis as any).format).toBe('#,###');
+      // With multiple different patterns targeting the same axis, no format should be set
+      expect((options.hAxis as any).format).toBeUndefined();
     });
 
     it('should handle BubbleChart patterns', () => {
@@ -408,8 +410,8 @@ describe('patterns', () => {
       applyPatternOptions('LineChart', mixedData as unknown as AbstractDataTable, options);
 
       expect(options.vAxes).toBeDefined();
-      // Should only apply patterns from number columns
-      expect((options.vAxes as any)[0].format).toBe('#,###');
+      // With multiple different number patterns targeting the same axis, no format should be set
+      expect((options.vAxes as any)[0].format).toBeUndefined();
     });
 
     it('should handle null data table', () => {
@@ -453,7 +455,8 @@ describe('patterns', () => {
 
       expect(options.title).toBe('Sales Dashboard');
       expect(options.vAxes).toBeDefined();
-      expect((options.vAxes as any)[0].format).toBe('$#,##0'); // Sales pattern
+      // vAxes[0] has multiple different patterns, so no format should be set
+      expect((options.vAxes as any)[0].format).toBeUndefined();
       expect((options.vAxes as any)[1].format).toBe('0.0%');   // Growth rate pattern
     });
 

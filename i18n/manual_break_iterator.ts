@@ -33,7 +33,7 @@ export class ManualBreakIterator implements BreakIteratorInterface {
 
   /** Assigns text to be segmented to the iterator. */
   adoptText(text: string) {
-    this.text = text;
+    this.text = text || '';
   }
 
   /** Returns index of the first break and moves pointer to it. */

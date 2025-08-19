@@ -57,9 +57,10 @@ export interface EventData {
  * Whether the browser supports touch events.
  */
 export const SUPPORT_TOUCH_EVENTS =
+  typeof document !== 'undefined' &&
   typeof document.documentElement !== 'undefined' &&
-  document.documentElement.ontouchstart &&
-  document.documentElement.ontouchend;
+  document.documentElement.ontouchstart !== undefined &&
+  document.documentElement.ontouchend !== undefined;
 
 /**
  * The object that is passed from the chart builder to the chart with the

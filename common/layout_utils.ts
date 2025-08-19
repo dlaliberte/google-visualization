@@ -175,6 +175,9 @@ export function generatePartialTextFunction(
   text: string,
 ): (p1: number, p2: number) => string {
   return (start, end) => {
+    if (!text) {
+      return '';
+    }
     let slicedText = googString.trim(text.slice(start, end));
     if (slicedText[slicedText.length - 1] === constants.SOFT_HYPHEN) {
       slicedText = slicedText.slice(0, slicedText.length - 1) + '-';
