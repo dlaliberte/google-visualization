@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-import {Range} from '@npm//@closure/math/range';
+import {Range} from '../common/closure-math';
 
 import {Options} from '../../common/options';
 import {DataView} from '../../data/dataview';

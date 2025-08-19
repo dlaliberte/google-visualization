@@ -17,17 +17,19 @@
  * limitations under the License.
  */
 
-import {extend} from '@npm//@closure/array/array';
+import {extend} from '../common/array';
 import {
   assert,
   fail,
-} from '@npm//@closure/asserts/asserts';
-import {Box} from '@npm//@closure/math/box';
-import * as googMath from '@npm//@closure/math/math';
-import {Range} from '@npm//@closure/math/range';
-import {Size} from '@npm//@closure/math/size';
-import {Vec2} from '@npm//@closure/math/vec2';
-import {isEmpty} from '@npm//@closure/object/object';
+} from '../common/assert';
+import {
+  Box,
+  Vec2,
+  Range,
+  Size,
+} from '../common/closure-math';
+import * as googMath from '../common/closure-math';
+import {isEmpty} from '../common/closure-object';
 import {GOLDEN_RATIO} from '../../common/constants';
 import * as defaults from '../../common/defaults';
 import {MSG_OTHER} from '../../common/messages';

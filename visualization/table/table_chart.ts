@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import * as googArray from '@npm//@closure/array/array';
-import {assert} from '@npm//@closure/asserts/asserts';
-import {assertIsElement} from '@npm//@closure/asserts/dom';
-import {dispose} from '@npm//@closure/disposable/dispose';
+import * as googArray from '../common/array';
+import {assert} from '../common/assert';
+import {assertIsElement} from '../common/assert';
+import {dispose} from '../common/disposable';
 import {
   add,
   addAll,
@@ -32,7 +32,7 @@ import {
 import {
   DomHelper,
   removeChildren,
-} from '@npm//@closure/dom/dom';
+} from '../common/closure-dom';
 import {TagName} from '@npm//@closure/dom/tagname';
 import {BrowserEvent} from '@npm//@closure/events/browserevent';
 import {EventHandler} from '@npm//@closure/events/eventhandler';
@@ -41,14 +41,14 @@ import {KeyCodes} from '@npm//@closure/events/keycodes';
 import {
   clone,
   forEach,
-} from '@npm//@closure/object/object';
+} from '../common/closure-object';
 import {
   isEmptyOrWhitespace,
   isNumeric,
   makeSafe,
   trim,
-} from '@npm//@closure/string/string';
-import * as style from '@npm//@closure/style/style';
+} from '../common/closure-string';
+import * as style from '../common/style';
 import {ButtonSide} from '@npm//@closure/ui/buttonside';
 import {Component} from '@npm//@closure/ui/component';
 import {ControlContent} from '@npm//@closure/ui/controlcontent';
