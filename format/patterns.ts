@@ -123,25 +123,35 @@ export function applyPatternOptions(
     }
   }
 
+  const hasContinuousDomain = cols > 0 && data.getColumnType(0) !== 'string';
+
   if (type === 'BarChart') {
-    // BarChart is flipped, so the X axis of a BarChart is kind of like
-    // the Y axis of the other axis charts, except that there is no
-    // support for "dual X".
-    // Actually, we do support "multi X", but this is not to be
-    // confused with "dual X".
-    const hAxisPatterns = vAxisPatterns;
-    setAxisFormat(hAxis, hAxisPatterns);
+    if (hasContinuousDomain) {
+      // For BarChart with continuous domain, data columns stay on vAxis
+      setAxisFormat(vAxis, vAxisPatterns);
+      setAxisFormat(rAxis, rAxisPatterns);
+      // Domain goes to hAxis
+      pattern = data.getColumnPattern(0);
+      setAxisFormat(hAxis, [pattern]);
+    } else {
+      // BarChart is flipped, so the X axis of a BarChart is kind of like
+      // the Y axis of the other axis charts, except that there is no
+      // support for "dual X".
+      // Actually, we do support "multi X", but this is not to be
+      // confused with "dual X".
+      const hAxisPatterns = vAxisPatterns;
+      setAxisFormat(hAxis, hAxisPatterns);
+    }
   } else {
     setAxisFormat(vAxis, vAxisPatterns);
     setAxisFormat(rAxis, rAxisPatterns);
-  }
 
-  if (cols > 0 && data.getColumnType(0) !== 'string') {
-    const domainAxis = type === 'BarChart' ? vAxis : hAxis;
-    // A non-string type in column 0 indicates a continuous domain
-    // (ScatterChart always has a continuous domain).
-    pattern = data.getColumnPattern(0);
-    setAxisFormat(domainAxis, [pattern]);
+    if (hasContinuousDomain) {
+      // A non-string type in column 0 indicates a continuous domain
+      // (ScatterChart always has a continuous domain).
+      pattern = data.getColumnPattern(0);
+      setAxisFormat(hAxis, [pattern]);
+    }
   }
 
   vAxes[0] = vAxis;
@@ -225,7 +235,7 @@ export function setAxisFormat(
   );
 
   // Remove duplicate patterns.
-  removeDuplicates(patterns);
+  patterns = removeDuplicates(patterns);
 
   if (patterns.length !== 1) {
     return;
