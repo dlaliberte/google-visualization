@@ -14,7 +14,11 @@
     "test:e2e:report": "playwright show-report",
     "test:all": "node scripts/run-all-tests.js",
     "test:analyze-coverage": "node scripts/analyze-test-coverage.js",
-    "serve-examples": "http-server ./examples -p 3000"
+    "serve-examples": "http-server ./examples -p 3000",
+    "migration:check": "node scripts/migrate-closure-imports.js check",
+    "migration:list": "node scripts/migrate-closure-imports.js list",
+    "migration:migrate": "node scripts/migrate-closure-imports.js migrate",
+    "migration:migrate-all": "node scripts/migrate-closure-imports.js migrate-all"
   },
   "keywords": [],
   "author": "",
