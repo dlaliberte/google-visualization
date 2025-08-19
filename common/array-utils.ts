@@ -1,7 +1,11 @@
 /**
- * @fileoverview Array manipulation utilities.
+ * Array manipulation utilities.
+ *
+ * This file provides utility functions for working with arrays.
+ * It replaces the Closure Library's array module.
+ *
  * @license
- * Copyright 2021 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,8 +116,12 @@ export function arrayMultiSlice<T>(
 
 /**
  * Binary search implementation to replace googArray.binarySearch
+ * @param arr The array to search.
+ * @param target The target value to search for.
+ * @param compareFn Optional comparison function.
+ * @return The index of the target if found, otherwise a negative number.
  */
-export function binarySearchArray<T>(
+export function binarySearch<T>(
   arr: T[],
   target: T,
   compareFn?: (a: T, b: T) => number
@@ -339,4 +347,218 @@ export function nextNonNull<T>(
     }
   }
   return null;
+}
+
+/**
+ * Iterates over an array and calls a function for each element.
+ * @param arr The array to iterate over.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ */
+export function forEach<T>(
+  arr: T[] | NodeList | HTMLCollection,
+  f: (item: T, index: number, arr: T[] | NodeList | HTMLCollection) => void,
+  opt_obj?: any
+): void {
+  if (Array.isArray(arr)) {
+    arr.forEach((item, index) => f.call(opt_obj, item, index, arr));
+  } else {
+    // Handle NodeList and HTMLCollection
+    for (let i = 0; i < arr.length; i++) {
+      f.call(opt_obj, arr[i] as unknown as T, i, arr);
+    }
+  }
+}
+
+/**
+ * Default comparison function for sorting.
+ * @param a First element.
+ * @param b Second element.
+ * @return Negative if a < b, 0 if a = b, positive if a > b.
+ */
+export function defaultCompare<T>(a: T, b: T): number {
+  if (a === b) {
+    return 0;
+  }
+  return a < b ? -1 : 1;
+}
+
+/**
+ * Checks if the array contains the given element.
+ * @param arr The array to check.
+ * @param obj The element to check for.
+ * @return True if the array contains the element.
+ */
+export function contains<T>(arr: T[], obj: T): boolean {
+  return arr.indexOf(obj) !== -1;
+}
+
+/**
+ * Removes all occurrences of an element from an array.
+ * @param arr The array to modify.
+ * @param obj The element to remove.
+ * @return True if any elements were removed.
+ */
+export function remove<T>(arr: T[], obj: T): boolean {
+  const i = arr.indexOf(obj);
+  if (i === -1) {
+    return false;
+  }
+  arr.splice(i, 1);
+  return true;
+}
+
+/**
+ * Removes from an array the element at the specified index.
+ * @param arr The array to modify.
+ * @param index The index to remove.
+ * @return The removed element.
+ */
+export function removeAt<T>(arr: T[], index: number): T | undefined {
+  if (index < 0 || index >= arr.length) {
+    return undefined;
+  }
+  return arr.splice(index, 1)[0];
+}
+
+/**
+ * Inserts an element at the specified index.
+ * @param arr The array to modify.
+ * @param obj The element to insert.
+ * @param index The index at which to insert the element.
+ */
+export function insertAt<T>(arr: T[], obj: T, index: number): void {
+  arr.splice(index, 0, obj);
+}
+
+/**
+ * Finds the first index of an element in an array that satisfies a condition.
+ * @param arr The array to search.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return The index of the first element that satisfies the condition, or -1 if none.
+ */
+export function findIndex<T>(
+  arr: T[],
+  f: (item: T, index: number, arr: T[]) => boolean,
+  opt_obj?: any
+): number {
+  return arr.findIndex((item, index, array) => f.call(opt_obj, item, index, array));
+}
+
+/**
+ * Finds the first element in an array that satisfies a condition.
+ * @param arr The array to search.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return The first element that satisfies the condition, or undefined if none.
+ */
+export function find<T>(
+  arr: T[],
+  f: (item: T, index: number, arr: T[]) => boolean,
+  opt_obj?: any
+): T | undefined {
+  return arr.find((item, index, array) => f.call(opt_obj, item, index, array));
+}
+
+/**
+ * Maps an array to a new array.
+ * @param arr The array to map.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return The new array.
+ */
+export function map<T, U>(
+  arr: T[],
+  f: (item: T, index: number, arr: T[]) => U,
+  opt_obj?: any
+): U[] {
+  return arr.map((item, index, array) => f.call(opt_obj, item, index, array));
+}
+
+/**
+ * Filters an array.
+ * @param arr The array to filter.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return The filtered array.
+ */
+export function filter<T>(
+  arr: T[],
+  f: (item: T, index: number, arr: T[]) => boolean,
+  opt_obj?: any
+): T[] {
+  return arr.filter((item, index, array) => f.call(opt_obj, item, index, array));
+}
+
+/**
+ * Checks if every element in an array satisfies a condition.
+ * @param arr The array to check.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return True if every element satisfies the condition.
+ */
+export function every<T>(
+  arr: T[],
+  f: (item: T, index: number, arr: T[]) => boolean,
+  opt_obj?: any
+): boolean {
+  return arr.every((item, index, array) => f.call(opt_obj, item, index, array));
+}
+
+/**
+ * Checks if some element in an array satisfies a condition.
+ * @param arr The array to check.
+ * @param f The function to call for each element.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return True if some element satisfies the condition.
+ */
+export function some<T>(
+  arr: T[],
+  f: (item: T, index: number, arr: T[]) => boolean,
+  opt_obj?: any
+): boolean {
+  return arr.some((item, index, array) => f.call(opt_obj, item, index, array));
+}
+
+/**
+ * Reduces an array to a single value.
+ * @param arr The array to reduce.
+ * @param f The function to call for each element.
+ * @param val The initial value.
+ * @param opt_obj The object to be used as the value of 'this' within f.
+ * @return The reduced value.
+ */
+export function reduce<T, U>(
+  arr: T[],
+  f: (prev: U, curr: T, index: number, arr: T[]) => U,
+  val: U,
+  opt_obj?: any
+): U {
+  return arr.reduce(
+    (prev, curr, index, array) => f.call(opt_obj, prev, curr, index, array),
+    val
+  );
+}
+
+/**
+ * Sorts an array in place.
+ * @param arr The array to sort.
+ * @param opt_compareFn Optional comparison function.
+ * @return The sorted array.
+ */
+export function sort<T>(
+  arr: T[],
+  opt_compareFn?: (a: T, b: T) => number
+): T[] {
+  return arr.sort(opt_compareFn);
+}
+
+/**
+ * Creates a shallow clone of an array.
+ * @param arr The array to clone.
+ * @return The cloned array.
+ */
+export function clone<T>(arr: T[]): T[] {
+  return arr.slice();
 }

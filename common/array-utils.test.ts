@@ -4,11 +4,26 @@ import {
   removeLastElement,
   arraysAlmostEqual,
   arrayMultiSlice,
-  binarySearchArray,
+  binarySearch,
   peekArray,
   mergeArrays,
   rangeMap,
   nextNonNull,
+  forEach,
+  defaultCompare,
+  contains,
+  remove,
+  removeAt,
+  insertAt,
+  findIndex,
+  find,
+  map,
+  filter,
+  every,
+  some,
+  reduce,
+  sort,
+  clone,
 } from './array-utils';
 
 // Tests for removeFirstElement
@@ -55,14 +70,14 @@ describe('arrayMultiSlice', () => {
   });
 });
 
-// Tests for binarySearchArray
-describe('binarySearchArray', () => {
+// Tests for binarySearch
+describe('binarySearch', () => {
   it('should return the index of the target element', () => {
-    expect(binarySearchArray([1, 2, 3, 4, 5], 3)).toBe(2);
+    expect(binarySearch([1, 2, 3, 4, 5], 3)).toBe(2);
   });
 
   it('should return negative insertion point for non-existent element', () => {
-    expect(binarySearchArray([1, 2, 4, 5], 3)).toBe(-3);
+    expect(binarySearch([1, 2, 4, 5], 3)).toBe(-3);
   });
 });
 
@@ -116,5 +131,202 @@ describe('nextNonNull', () => {
   it('should return null if no non-null value is found', () => {
     const array = [null, null, null];
     expect(nextNonNull(array, 0, 1, false)).toBeNull();
+  });
+});
+
+// Tests for forEach
+describe('forEach', () => {
+  it('should iterate over an array', () => {
+    const arr = [1, 2, 3];
+    const result: number[] = [];
+
+    forEach(arr, (item) => {
+      result.push(item * 2);
+    });
+
+    expect(result).toEqual([2, 4, 6]);
+  });
+});
+
+// Tests for defaultCompare
+describe('defaultCompare', () => {
+  it('should compare numbers', () => {
+    expect(defaultCompare(1, 2)).toBeLessThan(0);
+    expect(defaultCompare(2, 1)).toBeGreaterThan(0);
+    expect(defaultCompare(1, 1)).toBe(0);
+  });
+
+  it('should compare strings', () => {
+    expect(defaultCompare('a', 'b')).toBeLessThan(0);
+    expect(defaultCompare('b', 'a')).toBeGreaterThan(0);
+    expect(defaultCompare('a', 'a')).toBe(0);
+  });
+});
+
+// Tests for contains
+describe('contains', () => {
+  it('should check if an array contains an element', () => {
+    expect(contains([1, 2, 3], 2)).toBe(true);
+    expect(contains([1, 2, 3], 4)).toBe(false);
+  });
+});
+
+// Tests for remove
+describe('remove', () => {
+  it('should remove an element from an array', () => {
+    const arr = [1, 2, 3];
+    const result = remove(arr, 2);
+
+    expect(result).toBe(true);
+    expect(arr).toEqual([1, 3]);
+  });
+
+  it('should return false if the element is not in the array', () => {
+    const arr = [1, 2, 3];
+    const result = remove(arr, 4);
+
+    expect(result).toBe(false);
+    expect(arr).toEqual([1, 2, 3]);
+  });
+});
+
+// Tests for removeAt
+describe('removeAt', () => {
+  it('should remove an element at the specified index', () => {
+    const arr = [1, 2, 3];
+    const result = removeAt(arr, 1);
+
+    expect(result).toBe(2);
+    expect(arr).toEqual([1, 3]);
+  });
+
+  it('should return undefined if the index is out of bounds', () => {
+    const arr = [1, 2, 3];
+    const result = removeAt(arr, 3);
+
+    expect(result).toBeUndefined();
+    expect(arr).toEqual([1, 2, 3]);
+  });
+});
+
+// Tests for insertAt
+describe('insertAt', () => {
+  it('should insert an element at the specified index', () => {
+    const arr = [1, 2, 3];
+    insertAt(arr, 4, 1);
+
+    expect(arr).toEqual([1, 4, 2, 3]);
+  });
+});
+
+// Tests for findIndex
+describe('findIndex', () => {
+  it('should find the index of an element that satisfies a condition', () => {
+    const arr = [1, 2, 3];
+    const result = findIndex(arr, (item) => item > 1);
+
+    expect(result).toBe(1);
+  });
+
+  it('should return -1 if no element satisfies the condition', () => {
+    const arr = [1, 2, 3];
+    const result = findIndex(arr, (item) => item > 3);
+
+    expect(result).toBe(-1);
+  });
+});
+
+// Tests for find
+describe('find', () => {
+  it('should find an element that satisfies a condition', () => {
+    const arr = [1, 2, 3];
+    const result = find(arr, (item) => item > 1);
+
+    expect(result).toBe(2);
+  });
+
+  it('should return undefined if no element satisfies the condition', () => {
+    const arr = [1, 2, 3];
+    const result = find(arr, (item) => item > 3);
+
+    expect(result).toBeUndefined();
+  });
+});
+
+// Tests for map
+describe('map', () => {
+  it('should map an array to a new array', () => {
+    const arr = [1, 2, 3];
+    const result = map(arr, (item) => item * 2);
+
+    expect(result).toEqual([2, 4, 6]);
+  });
+});
+
+// Tests for filter
+describe('filter', () => {
+  it('should filter an array', () => {
+    const arr = [1, 2, 3];
+    const result = filter(arr, (item) => item > 1);
+
+    expect(result).toEqual([2, 3]);
+  });
+});
+
+// Tests for every
+describe('every', () => {
+  it('should check if every element satisfies a condition', () => {
+    const arr = [1, 2, 3];
+
+    expect(every(arr, (item) => item > 0)).toBe(true);
+    expect(every(arr, (item) => item > 1)).toBe(false);
+  });
+});
+
+// Tests for some
+describe('some', () => {
+  it('should check if some element satisfies a condition', () => {
+    const arr = [1, 2, 3];
+
+    expect(some(arr, (item) => item > 2)).toBe(true);
+    expect(some(arr, (item) => item > 3)).toBe(false);
+  });
+});
+
+// Tests for reduce
+describe('reduce', () => {
+  it('should reduce an array to a single value', () => {
+    const arr = [1, 2, 3];
+    const result = reduce(arr, (prev, curr) => prev + curr, 0);
+
+    expect(result).toBe(6);
+  });
+});
+
+// Tests for sort
+describe('sort', () => {
+  it('should sort an array', () => {
+    const arr = [3, 1, 2];
+    const result = sort([...arr]); // Create a copy to avoid modifying the original
+
+    expect(result).toEqual([1, 2, 3]);
+  });
+
+  it('should sort an array with a custom comparison function', () => {
+    const arr = [3, 1, 2];
+    const result = sort([...arr], (a, b) => b - a); // Create a copy to avoid modifying the original
+
+    expect(result).toEqual([3, 2, 1]);
+  });
+});
+
+// Tests for clone
+describe('clone', () => {
+  it('should create a shallow clone of an array', () => {
+    const arr = [1, 2, 3];
+    const result = clone(arr);
+
+    expect(result).toEqual([1, 2, 3]);
+    expect(result).not.toBe(arr);
   });
 });

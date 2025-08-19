@@ -6,12 +6,26 @@
 /**
  * Sets a style property on an element.
  * @param element The element to style.
- * @param property The CSS property name.
- * @param value The CSS property value.
+ * @param property The CSS property name or an object containing CSS property-value pairs.
+ * @param value The CSS property value (optional when property is an object).
  */
-export function setStyle(element: Element, property: string, value: string): void {
+export function setStyle(
+  element: Element,
+  property: string | Record<string, string>,
+  value?: string
+): void {
   const htmlElement = element as HTMLElement;
-  if (htmlElement.style) {
+  if (!htmlElement.style) {
+    return;
+  }
+
+  if (typeof property === 'object') {
+    // Handle object-based style setting
+    for (const [prop, val] of Object.entries(property)) {
+      htmlElement.style.setProperty(prop, val);
+    }
+  } else if (value !== undefined) {
+    // Handle single property-value pair
     htmlElement.style.setProperty(property, value);
   }
 }

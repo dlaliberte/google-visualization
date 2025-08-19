@@ -1,8 +1,50 @@
-This repository contains the open-source subset of the Google Visualization API, aka Google Charts.
+# Google Visualization Library
+
+This repository contains the open-source subset of the Google Visualization API, also known as Google Charts. It provides a library for creating interactive charts and data visualizations.
 
 The user documentation for Google Charts is at: https://developers.google.com/chart.
 
-All the code in this repo will be TypeScript, with dependencies only on Google's Javascript Closure library.
+## Migration Status
+
+The library is currently being modernized by replacing Closure Library dependencies with internal utilities. See [MIGRATION.md](MIGRATION.md) for details on the migration progress.
+
+## Getting Started
+
+### Installation
+
+```bash
+npm install
+```
+
+### Running Tests
+
+```bash
+npm test
+```
+
+## Project Structure
+
+- **axis**: Components for chart axis functionality
+- **colorbar**: Color bar visualization components
+- **common**: Shared utilities and common functionality
+- **controls**: UI controls for charts
+- **data**: Data handling and manipulation components
+- **dom**: DOM manipulation utilities
+- **events**: Event handling for chart interactions
+- **format**: Formatting utilities for data display
+- **graphics**: Rendering and graphics utilities
+- **i18n**: Internationalization support
+- **legend**: Chart legend components
+- **loader**: Script and resource loading utilities
+- **math**: Mathematical utilities and functions
+- **query**: Data query functionality
+- **text**: Text handling and formatting
+- **tooltip**: Tooltip components for charts
+- **tree**: Tree data structure implementations
+- **trendlines**: Trend line calculation and rendering
+- **ui**: UI components for charts
+- **visualization**: Core visualization components and chart types
+- **wrapper**: Wrapper classes for charts and controls
 
 Issues for this library may be posted by members of the public in the associated repo: https://github.com/google/google-visualization-issues/issues
 

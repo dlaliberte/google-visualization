@@ -116,7 +116,7 @@ Track the migration status here:
 
 | File | Status | Notes |
 |------|--------|-------|
-| `visualization/table/table_chart.ts` | Pending | 19 dependencies |
+| `visualization/table/table_chart.ts` | In Progress | Imports updated, UI components commented out |
 | `visualization/corechart/axis_chart_definer.ts` | Pending | 12 dependencies |
 | `graphics/drawing_frame.ts` | Pending | 11 dependencies |
 | `graphics/svg_renderer.ts` | Pending | 11 dependencies |
@@ -126,14 +126,28 @@ Track the migration status here:
 
 | Utility | Status | Notes |
 |---------|--------|-------|
-| `common/array` | Exists | |
+| `common/array-utils.ts` | Updated | Added missing functions |
 | `common/assert` | Exists | |
-| `common/dom_assert` | Created | |
+| `common/browser.ts` | Created | Replaces useragent module |
+| `common/dom_assert.ts` | Created | |
 | `common/disposable` | Exists | |
-| `dom/classlist` | Exists | |
-| `dom/dom` | Exists | |
-| `dom/tagname` | Exists | |
-| `dom/node_type` | Created | |
-| ... | ... | ... |
+| `common/domUtils.ts` | Updated | Added missing functions |
+| `common/i18n.ts` | Created | Replaces goog.getMsg |
+| `common/object-utils.ts` | Exists | |
+| `common/string-utils.ts` | Exists | |
+| `common/style.ts` | Updated | Added support for object-based styles |
+| `common/types.ts` | Created | Replaces goog.is* functions |
+| `common/types-migration.ts` | Created | Provides AnyDuringMigration type |
+| `dom/dom.ts` | Updated | Added missing functions |
+| `dom/tagname.ts` | Created | |
+| `dom/node_type.ts` | Created | |
+| `events/browser_event.ts` | Created | |
+| `events/event_type.ts` | Created | |
+| `events/key_codes.ts` | Created | |
+| `events/events.ts` | Exists | |
+| `ui/button_side.ts` | Created | |
+| `ui/component.ts` | Created | |
+| `ui/control_content.ts` | Created | |
+| `ui/custom_button.ts` | Created | |
 
 Update this table as you create new utilities and migrate files.
