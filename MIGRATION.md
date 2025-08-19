@@ -116,7 +116,7 @@ Track the migration status here:
 
 | File | Status | Notes |
 |------|--------|-------|
-| `visualization/table/table_chart.ts` | In Progress | Imports updated, UI components commented out |
+| `visualization/table/table_chart.ts` | Completed | Imports updated to use internal utilities |
 | `visualization/corechart/axis_chart_definer.ts` | Pending | 12 dependencies |
 | `graphics/drawing_frame.ts` | Pending | 11 dependencies |
 | `graphics/svg_renderer.ts` | Pending | 11 dependencies |
