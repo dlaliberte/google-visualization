@@ -1012,6 +1012,11 @@ export function format(
     if (gvizFormat.getValueType(columnType) == null) {
       // TODO(dlaliberte): Decide whether/when we should throw an error.
       // console.warn(`Invalid formatter for column ${columnIndex}`);
+      // For incompatible formatters, set all formatted values to null
+      const numberOfRows = dataTable.getNumberOfRows();
+      for (let r = 0; r < numberOfRows; r++) {
+        dataTable.setFormattedValue(r, columnIndex, null);
+      }
       return;
     }
   }

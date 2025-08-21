@@ -247,39 +247,31 @@ export class NumberFormat extends Format {
   }
 
   /**
-   * Formats the data table.
-   * TODO(dlaliberte): Generalize this to use the Format.format.
+   * Formats the data table, delegating to base class but adding color styling.
    * @param dataTable The data table.
    * @param columnIndex The column to format.
    */
-  override format(dataTable: AbstractDataTableInterface, columnIndex: number) {
-    if (dataTable.getColumnType(columnIndex) !== 'number') {
-      // For non-number columns, set formatted values to null
-      for (let row = 0; row < dataTable.getNumberOfRows(); row++) {
-        dataTable.setFormattedValue(row, columnIndex, null);
-      }
-      return;
-    }
+  override format(
+    dataTable: AbstractDataTableInterface,
+    columnIndex: number,
+    gvizFormat?: Format,
+  ) {
+    // First, delegate to the base class to handle the actual formatting
+    super.format(dataTable, columnIndex, gvizFormat);
 
-    for (let row = 0; row < dataTable.getNumberOfRows(); row++) {
-      let value = dataTable.getValue(row, columnIndex);
-
-      if (value != null) {
-        value = value as number;
-        const formattedValue = this.formatValue(value);
-        dataTable.setFormattedValue(row, columnIndex, formattedValue);
-
-        // Color formatting.
-        if (value < 0) {
-          const negativeColorStr = this.negativeColor || '';
-          if (negativeColorStr !== '') {
-            dataTable.setProperty(
-              row,
-              columnIndex,
-              'style',
-              `color:${negativeColorStr};`,
-            );
-          }
+    // Then add color styling for negative values if negativeColor is set
+    if (this.negativeColor && dataTable.getColumnType(columnIndex) === 'number') {
+      const numberOfRows = dataTable.getNumberOfRows();
+      for (let row = 0; row < numberOfRows; row++) {
+        const value = dataTable.getValue(row, columnIndex);
+        if (value != null && (value as number) < 0) {
+          const negativeColorStr = this.negativeColor;
+          dataTable.setProperty(
+            row,
+            columnIndex,
+            'style',
+            `color:${negativeColorStr};`,
+          );
         }
       }
     }
