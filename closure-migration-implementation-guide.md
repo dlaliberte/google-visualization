@@ -96,6 +96,7 @@ Check if the replacement APIs have any differences and update the code according
 3. Update any type annotations
 
 Example:
+
 ```typescript
 // Before
 const handler = new EventHandler();
@@ -115,6 +116,7 @@ If you encounter functionality that doesn't have a direct replacement:
 3. Update the code to use your new implementation
 
 Example for implementing missing functionality:
+
 ```typescript
 // In common/style.ts
 export function getVisibleRectForElement(element: Element): Rect {
@@ -139,6 +141,7 @@ Test files require special attention:
 4. Update expected values if behavior has changed slightly
 
 Example for updating a test file:
+
 ```typescript
 // Before
 import {assertEquals} from '@npm//@closure/testing/asserts';
@@ -264,12 +267,14 @@ const transformed = map(items, (item) => {
 **Issue**: TypeScript compiler errors after migration.
 
 **Solution**:
+
 1. Check if the replacement API has different type definitions
 2. Update type annotations in your code
 3. Add type assertions if necessary (`as` keyword)
 4. Check if you need to import additional types
 
 Example:
+
 ```typescript
 // Before
 const element = dom.getElement('my-element');
@@ -283,12 +288,14 @@ const element = dom.getElement('my-element') as HTMLElement;
 **Issue**: Code runs but throws errors at runtime.
 
 **Solution**:
+
 1. Check if the replacement API has different behavior
 2. Add console.log statements to debug the issue
 3. Compare the behavior of the original and replacement APIs
 4. Add conditional logic to handle differences
 
 Example:
+
 ```typescript
 // If the new API behaves differently
 if (someCondition) {
@@ -303,6 +310,7 @@ if (someCondition) {
 **Issue**: The replacement API doesn't provide all the functionality you need.
 
 **Solution**:
+
 1. Check if there's an alternative approach using other utilities
 2. Implement the missing functionality yourself
 3. Consider using a third-party library for complex functionality
@@ -313,6 +321,7 @@ if (someCondition) {
 **Issue**: Tests fail after migration.
 
 **Solution**:
+
 1. Check if the test is expecting specific behavior from the Closure API
 2. Update test expectations to match the new behavior
 3. Update test mocks to match the new API
